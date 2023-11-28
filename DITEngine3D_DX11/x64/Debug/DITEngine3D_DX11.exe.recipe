@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\DITEngine3D_DX11.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\unlitTexturePS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\unlitTextureVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\vertexLightingPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\vertexLightingVS.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
