@@ -3,7 +3,7 @@
 void Camera::Init()
 {
 	//カメラ生成時の初期位置
-	gameObject->transform->position = Vector3(0.0f, 0.0f, -100.0f);
+	gameObject->transform->position = Vector3(0.0f, 1.0f, -10.0f);
 
 	//ターゲット座標を原点へ
 	target = Vector3(0.0f, 0.0f, 0.0f);

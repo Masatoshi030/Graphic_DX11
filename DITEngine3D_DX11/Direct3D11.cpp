@@ -50,6 +50,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//レンダーターゲットビュー作成
+	//描画先の画像
 	ID3D11Texture2D* renderTarget{};
 	SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&renderTarget);
 	Device->CreateRenderTargetView(renderTarget, NULL, &RenderTargetView);
@@ -57,6 +58,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//デプスステンシルバッファ作成
+	//陰で見えない部分を省略するシステムの計算領域
 	ID3D11Texture2D* depthStencile{};
 	D3D11_TEXTURE2D_DESC textureDesc{};
 	textureDesc.Width = swapChainDesc.BufferDesc.Width;
@@ -73,6 +75,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//デプスステンシルビュー作成
+	//陰で見えない部分を省略するシステムの計算領域
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc{};
 	depthStencilViewDesc.Format = textureDesc.Format;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
@@ -84,6 +87,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//ビューポート設定
+	//表示領域
 	D3D11_VIEWPORT viewport;
 	viewport.Width = (FLOAT)App->Get_WindowWidth();
 	viewport.Height = (FLOAT)App->Get_WindowHeight();
@@ -95,6 +99,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//ラスタライザステート設定
+	//リアルタイム 3D グラフィックスを表示するために、(図形やプリミティブで構成された) ベクター情報を (ピクセルで構成された) ラスター画像に変換
 	D3D11_RASTERIZER_DESC rasterizerDesc{};
 	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 	rasterizerDesc.CullMode = D3D11_CULL_BACK;

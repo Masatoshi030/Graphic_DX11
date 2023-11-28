@@ -2,21 +2,21 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\DITEngine3D_DX11.exe</FullPath>
+      <FullPath>C:\Users\masat\Desktop\自作エンジン\DirectX11_GraphicLab\Graphic_DX11\x64\Debug\DITEngine3D_DX11.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\unlitTexturePS.cso</FullPath>
+      <FullPath>C:\Users\masat\Desktop\自作エンジン\DirectX11_GraphicLab\Graphic_DX11\x64\Debug\unlitTexturePS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\unlitTextureVS.cso</FullPath>
+      <FullPath>C:\Users\masat\Desktop\自作エンジン\DirectX11_GraphicLab\Graphic_DX11\x64\Debug\unlitTextureVS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\vertexLightingPS.cso</FullPath>
+      <FullPath>C:\Users\masat\Desktop\自作エンジン\DirectX11_GraphicLab\Graphic_DX11\x64\Debug\vertexLightingPS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\Masatoshi\Desktop\自作エンジン\DITEngine3D_DX11\x64\Debug\vertexLightingVS.cso</FullPath>
+      <FullPath>C:\Users\masat\Desktop\自作エンジン\DirectX11_GraphicLab\Graphic_DX11\x64\Debug\vertexLightingVS.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
