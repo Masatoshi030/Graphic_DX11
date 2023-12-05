@@ -1,3 +1,5 @@
 /.vs
 
-/DITEngine3D_DX11/x64
+/DITEngine3D_DX11/x64/Debug
+
+/x64
