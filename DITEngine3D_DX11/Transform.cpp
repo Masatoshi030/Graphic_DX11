@@ -1,5 +1,7 @@
 #include "DITEngine3D.h"
 
+using namespace DirectX;
+
 void Transform::Init()
 {
 	//座標・角度・スケール　初期化
@@ -15,9 +17,21 @@ void Transform::Translate(Vector3 value)
 
 void Transform::Translate(float _x, float _y, float _z)
 {
-	position.x += _x;
-	position.y += _y;
-	position.z += _z;
+	// 前向きベクトルを計算する
+	Vector3 forwardVector;
+	forwardVector.x = sinf(rotation.y);
+	forwardVector.z = cosf(rotation.y);
+
+	Vector3 rightVector;
+	rightVector.x = sinf(rotation.y + XMConvertToRadians(90.0f));
+	rightVector.z = cosf(rotation.y + XMConvertToRadians(90.0f));
+
+	// 移動処理
+	position.x += rightVector.x * _x;
+	position.z += rightVector.z * _x;
+
+	position.x += forwardVector.x * _z;
+	position.z += forwardVector.z * _z;
 }
 
 void Transform::Rotate(Vector3 value)

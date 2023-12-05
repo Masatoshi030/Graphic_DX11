@@ -26,15 +26,6 @@ void Camera::Update()
 
 void Camera::Draw()
 {
-	//ビュー変換行列作成
-	//Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
-	//viewMatrix = DirectX::XMMatrixLookAtLH
-	//(
-	//	gameObject->transform->position.simpleMath_vector3, 
-	//	target.simpleMath_vector3, 
-	//	up.simpleMath_vector3
-	//);
-
 	//移動行列
 	XMMATRIX moveMat;
 	moveMat = XMMatrixTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);

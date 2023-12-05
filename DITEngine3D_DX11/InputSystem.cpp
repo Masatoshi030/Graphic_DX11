@@ -14,6 +14,9 @@ namespace Input
 	//マウスの座標
 	DirectX::SimpleMath::Vector2 MousePoint;
 
+	//マウスの移動量
+	DirectX::SimpleMath::Vector2 MouseMoveValue;
+
 
 	void Init()
 	{
@@ -89,10 +92,17 @@ namespace Input
 		return MousePoint;
 	}
 
+	DirectX::SimpleMath::Vector2 GetMouseMoveValue() 
+	{
+		return MouseMoveValue;
+	}
+
 	DirectX::SimpleMath::Vector2 SetMousePointer(unsigned int _MousePoint)
 	{
 		int x = _MousePoint & 0x0000ffff; //LOWORD(lParam); // マウスのX座標を入れる変数
 		int y = (_MousePoint & 0xffff0000) >> 16; //HIWORD(lParam); // マウスのY座標を入れる変数
+
+		MouseMoveValue = DirectX::SimpleMath::Vector2(x - MousePoint.x, y - MousePoint.y);
 
 		MousePoint = DirectX::SimpleMath::Vector2(x, y);
 

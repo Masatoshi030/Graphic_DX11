@@ -25,7 +25,7 @@ void MeshRenderer::Draw()
 	// ワールドマトリクス設定
 	XMMATRIX world, scale, rot, trans;
 	scale = XMMatrixScaling(gameObject->transform->scale.x, gameObject->transform->scale.y, gameObject->transform->scale.z);
-	rot = XMMatrixRotationRollPitchYaw(gameObject->transform->rotation.y, gameObject->transform->rotation.x, gameObject->transform->rotation.z);
+	rot = XMMatrixRotationRollPitchYaw(gameObject->transform->rotation.x, gameObject->transform->rotation.y, gameObject->transform->rotation.z);
 	trans = XMMatrixTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
 	world = scale * rot * trans;
 	D3D->SetWorldMatrix(&world);
