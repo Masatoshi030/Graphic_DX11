@@ -12,7 +12,7 @@ void Transform::Init()
 
 void Transform::Translate(Vector3 value)
 {
-	position += value;
+	Translate(value.x, value.y, value.z);
 }
 
 void Transform::Translate(float _x, float _y, float _z)
