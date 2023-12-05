@@ -6,6 +6,7 @@ class Scene_Game : public Scene
 {
 private:
 	GameObject* MainCamera;
+	GameObject* LightCamera;
 	GameObject* SkyBox;
 	GameObject* Cube;
 	GameObject* Ground;

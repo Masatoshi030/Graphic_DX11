@@ -18,12 +18,22 @@ void Scene_Game::Start()
 	Hierarchy.push_back(MainCamera);
 
 
+	//== ライトカメラ ==//
+	LightCamera = new GameObject();
+
+	LightCamera->AddComponent<Camera>();
+
+	Hierarchy.push_back(LightCamera);
+
+	LightCamera->transform->position = Vector3(0.0f, 3.0f, -3.0f);
+
+
 	//== テストBOX ==//
 	SkyBox = new GameObject();
 
 	SkyBox->AddComponent<MeshRenderer>()->Load("Asset\\model\\SkyBox_Town.obj", "Unlit");
 
-	SkyBox->transform->scale.x = 30.0f;
+	SkyBox->transform->scale = Vector3(30.0f, 30.0f, 30.0f);
 
 	Hierarchy.push_back(SkyBox);
 
@@ -65,22 +75,22 @@ void Scene_Game::Update()
 		return;
 	}
 
-	if (Input::GetKeyState(KEY_INPUT_UP) == Input::KEY_WHILE_DOWN)
+	if (Input::GetKeyState(KEY_INPUT_W) == Input::KEY_WHILE_DOWN)
 	{
 		MainCamera->transform->Translate(0.0f, 0.0f, 0.1f);
 	}	
 	
-	if (Input::GetKeyState(KEY_INPUT_DOWN) == Input::KEY_WHILE_DOWN)
+	if (Input::GetKeyState(KEY_INPUT_S) == Input::KEY_WHILE_DOWN)
 	{
 		MainCamera->transform->Translate(0.0f, 0.00f, -0.1f);
 	}
 
-	if (Input::GetKeyState(KEY_INPUT_RIGHT) == Input::KEY_WHILE_DOWN)
+	if (Input::GetKeyState(KEY_INPUT_D) == Input::KEY_WHILE_DOWN)
 	{
 		MainCamera->transform->Translate(0.1f, 0.0f, 0.0f);
 	}
 
-	if (Input::GetKeyState(KEY_INPUT_LEFT) == Input::KEY_WHILE_DOWN)
+	if (Input::GetKeyState(KEY_INPUT_A) == Input::KEY_WHILE_DOWN)
 	{
 		MainCamera->transform->Translate(-0.1f, 0.0f, 0.0f);
 	}
@@ -93,6 +103,27 @@ void Scene_Game::Update()
 	if (Input::GetKeyState(KEY_INPUT_SPACE) == Input::KEY_WHILE_DOWN)
 	{
 		MainCamera->transform->Translate(0.0f, 0.1f, 0.0f);
+	}
+
+	if (Input::GetKeyState(KEY_INPUT_RETURN) == Input::KEY_WHILE_DOWN)
+	{
+		LightCamera->GetComponent<Camera>()->Enable = true;
+		MainCamera->GetComponent<Camera>()->Enable = false;
+	}
+	else
+	{
+		LightCamera->GetComponent<Camera>()->Enable = false;
+		MainCamera->GetComponent<Camera>()->Enable = true;
+	}
+
+	if (Input::GetKeyState(KEY_INPUT_RIGHT) == Input::KEY_WHILE_DOWN) 
+	{
+		MainCamera->transform->Rotate(0.0f, 0.005f, 0.0f);
+	}
+
+	if (Input::GetKeyState(KEY_INPUT_LEFT) == Input::KEY_WHILE_DOWN)
+	{
+		MainCamera->transform->Rotate(0.0f, -0.005f, 0.0f);
 	}
 
 	//オブジェクトの描画処理

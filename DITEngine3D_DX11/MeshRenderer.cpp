@@ -8,7 +8,7 @@
 
 #include "WinMain.h"
 
-//using namespace DirectX::SimpleMath;
+using namespace DirectX;
 
 std::unordered_map<std::string, MODEL*> MeshRenderer::ModelPool;
 
@@ -23,10 +23,10 @@ void MeshRenderer::Draw()
 	D3D->Get_ID3D11DeviceContext()->PSSetShader(ShaderType->PixelShader, NULL, 0);
 
 	// ワールドマトリクス設定
-	DirectX::SimpleMath::Matrix world, scale, rot, trans;
-	scale = DirectX::SimpleMath::Matrix::CreateScale(gameObject->transform->scale.x);
-	rot = DirectX::SimpleMath::Matrix::CreateFromYawPitchRoll(gameObject->transform->rotation.y, gameObject->transform->rotation.x, gameObject->transform->rotation.z);
-	trans = DirectX::SimpleMath::Matrix::CreateTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
+	XMMATRIX world, scale, rot, trans;
+	scale = XMMatrixScaling(gameObject->transform->scale.x, gameObject->transform->scale.y, gameObject->transform->scale.z);
+	rot = XMMatrixRotationRollPitchYaw(gameObject->transform->rotation.y, gameObject->transform->rotation.x, gameObject->transform->rotation.z);
+	trans = XMMatrixTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
 	world = scale * rot * trans;
 	D3D->SetWorldMatrix(&world);
 

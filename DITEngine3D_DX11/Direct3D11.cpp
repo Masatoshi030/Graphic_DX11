@@ -1,10 +1,11 @@
 #include "Direct3D11.h"
 
 #include <io.h>
+#include <DirectXMath.h>
 
 
 using namespace DirectX::SimpleMath;
-
+using namespace DirectX;
 
 
 //シングルトン　インスタンス
@@ -169,7 +170,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 	//定数バッファ
 	D3D11_BUFFER_DESC bufferDesc{};
-	bufferDesc.ByteWidth = sizeof(Matrix);
+	bufferDesc.ByteWidth = sizeof(XMMATRIX);
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bufferDesc.CPUAccessFlags = 0;
@@ -321,27 +322,27 @@ void DIRECT3D11::SetWorldViewProjection2D()
 	DeviceContext->UpdateSubresource(ProjectionBuffer, 0, NULL, &projection, 0, 0);
 }
 
-void DIRECT3D11::SetWorldMatrix(Matrix* WorldMatrix)
+void DIRECT3D11::SetWorldMatrix(XMMATRIX* WorldMatrix)
 {
-	Matrix world;
-	world = WorldMatrix->Transpose();					// 転置
+	XMMATRIX world;
+	world = XMMatrixTranspose(*WorldMatrix);					// 転置
 
 	DeviceContext->UpdateSubresource(WorldBuffer, 0, NULL, &world, 0, 0);
 }
 
 
-void DIRECT3D11::SetViewMatrix(Matrix* ViewMatrix)
+void DIRECT3D11::SetViewMatrix(XMMATRIX* ViewMatrix)
 {
-	Matrix view;
-	view = ViewMatrix->Transpose();						// 転置
+	XMMATRIX view;
+	view = XMMatrixTranspose(*ViewMatrix);						// 転置
 
 	DeviceContext->UpdateSubresource(ViewBuffer, 0, NULL, &view, 0, 0);
 }
 
-void DIRECT3D11::SetProjectionMatrix(Matrix* ProjectionMatrix)
+void DIRECT3D11::SetProjectionMatrix(XMMATRIX* ProjectionMatrix)
 {
-	Matrix projection;
-	projection = ProjectionMatrix->Transpose();
+	XMMATRIX projection;
+	projection = XMMatrixTranspose(*ProjectionMatrix);
 
 	DeviceContext->UpdateSubresource(ProjectionBuffer, 0, NULL, &projection, 0, 0);
 }

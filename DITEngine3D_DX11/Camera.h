@@ -8,8 +8,9 @@ class Camera : public Component
 
 private:
 
-	Vector3 target;
-	DirectX::SimpleMath::Matrix viewMatrix;
+	DirectX::XMMATRIX viewMatrix;
+
+	bool lookAt = false;
 
 public:
 
@@ -27,5 +28,17 @@ public:
 
 	//ï`âÊèàóù
 	void Draw();
+
+
+	//lookAt
+	void Set_lookAt(bool _value)
+	{
+		lookAt = _value;
+	}
+
+	bool Get_lookAt()
+	{
+		return lookAt;
+	}
 
 };
