@@ -88,6 +88,10 @@ void MeshRenderer::UnloadAll()
 
 void MeshRenderer::Load(const char* _FileName, const char* _ShaderName)
 {
+
+	//使用するシェーダーを取得
+	ShaderType = Shader::GetShader(_ShaderName);
+
 	if (ModelPool.count(_FileName) > 0)
 	{
 		Model = ModelPool[_FileName];
@@ -99,9 +103,6 @@ void MeshRenderer::Load(const char* _FileName, const char* _ShaderName)
 	LoadModel(_FileName, Model);
 
 	ModelPool[_FileName] = Model;
-
-	//使用するシェーダーを取得
-	ShaderType = Shader::GetShader(_ShaderName);
 }
 
 void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)

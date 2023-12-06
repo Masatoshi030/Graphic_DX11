@@ -48,14 +48,18 @@ void Transform::Translate(float _x, float _y, float _z)
 	forwardVector.x = sinf(rotation.y);
 	forwardVector.z = cosf(rotation.y);
 
+	// 右向きベクトルを計算
 	Vector3 rightVector;
 	rightVector.x = sinf(rotation.y + XMConvertToRadians(90.0f));
 	rightVector.z = cosf(rotation.y + XMConvertToRadians(90.0f));
 
 	// 移動処理
+
+	// X軸
 	position.x += rightVector.x * _x;
 	position.z += rightVector.z * _x;
 
+	// Z軸
 	position.x += forwardVector.x * _z;
 	position.z += forwardVector.z * _z;
 }

@@ -52,7 +52,7 @@ void Scene_Game::Start()
 	//== キューブ_子オブジェクト ==//
 	Cube_Child = new GameObject();
 
-	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube2.obj", "Light");
+	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "Light");
 
 	Hierarchy.push_back(Cube_Child);
 
@@ -87,6 +87,7 @@ void Scene_Game::Update()
 		SCENE_MANAGER->LoadScene(EXIT_NUM_SCENE);
 		SkyBox->GetComponent<MeshRenderer>()->UnloadAll();
 		Cube->GetComponent<MeshRenderer>()->UnloadAll();
+		Cube_Child->GetComponent<MeshRenderer>()->UnloadAll();
 		Ground->GetComponent<MeshRenderer>()->UnloadAll();
 		return;
 	}
