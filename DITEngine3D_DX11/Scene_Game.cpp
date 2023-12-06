@@ -25,7 +25,8 @@ void Scene_Game::Start()
 
 	Hierarchy.push_back(LightCamera);
 
-	LightCamera->transform->position = Vector3(0.0f, 3.0f, -3.0f);
+	LightCamera->transform->position = Vector3(-13.0f, 5.0f, -13.0f);
+	LightCamera->transform->Rotate(0.0f, 45.0f, 0.0f);
 
 
 	//== テストBOX ==//
@@ -46,6 +47,21 @@ void Scene_Game::Start()
 	Hierarchy.push_back(Cube);
 
 	Cube->transform->position.y = 1.0f;
+
+
+	//== キューブ_子オブジェクト ==//
+	Cube_Child = new GameObject();
+
+	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube2.obj", "Light");
+
+	Hierarchy.push_back(Cube_Child);
+
+	Cube_Child->transform->position.y = -0.2f;
+	Cube_Child->transform->position.z = 0.5f;
+	Cube_Child->transform->position.x = 0.2f;
+	Cube_Child->transform->scale = Vector3(0.02f, 0.02f, 1.0f);
+
+	Cube_Child->Set_Parent(MainCamera);
 
 
 	//== 地面 ==//
@@ -97,12 +113,12 @@ void Scene_Game::Update()
 
 	if (Input::GetKeyState(KEY_INPUT_SHIFT) == Input::KEY_WHILE_DOWN)
 	{
-		MainCamera->transform->Translate(0.0f, -0.1f, 0.0f);
+		Cube->transform->Translate(0.0f, -0.1f, 0.0f);
 	}
 
 	if (Input::GetKeyState(KEY_INPUT_SPACE) == Input::KEY_WHILE_DOWN)
 	{
-		MainCamera->transform->Translate(0.0f, 0.1f, 0.0f);
+		Cube->transform->Translate(0.0f, 0.1f, 0.0f);
 	}
 
 	if (Input::GetKeyState(KEY_INPUT_RETURN) == Input::KEY_WHILE_DOWN)
@@ -135,7 +151,6 @@ void Scene_Game::Update()
 
 void Scene_Game::Draw()
 {
-
 	//画面を塗りつぶす
 	float color[4] = { COLOR_NORMALIZATION_255(44, 70, 112, 1.0f) };
 	D3D->Get_ID3D11DeviceContext()->ClearRenderTargetView(D3D->Get_RenderTargetView(), color);

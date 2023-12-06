@@ -9,6 +9,7 @@ private:
 	GameObject* LightCamera;
 	GameObject* SkyBox;
 	GameObject* Cube;
+	GameObject* Cube_Child;
 	GameObject* Ground;
 
 public:

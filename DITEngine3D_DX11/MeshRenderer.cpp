@@ -22,14 +22,7 @@ void MeshRenderer::Draw()
 	D3D->Get_ID3D11DeviceContext()->VSSetShader(ShaderType->VertexShader, NULL, 0);
 	D3D->Get_ID3D11DeviceContext()->PSSetShader(ShaderType->PixelShader, NULL, 0);
 
-	// ワールドマトリクス設定
-	XMMATRIX world, scale, rot, trans;
-	scale = XMMatrixScaling(gameObject->transform->scale.x, gameObject->transform->scale.y, gameObject->transform->scale.z);
-	rot = XMMatrixRotationRollPitchYaw(gameObject->transform->rotation.x, gameObject->transform->rotation.y, gameObject->transform->rotation.z);
-	trans = XMMatrixTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
-	world = scale * rot * trans;
-	D3D->SetWorldMatrix(&world);
-
+	D3D->SetWorldMatrix(&gameObject->transform->worldMatrix);
 
 	//頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);

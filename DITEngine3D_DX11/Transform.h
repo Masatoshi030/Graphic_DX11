@@ -15,7 +15,12 @@ public:
 	//３次元スケール
 	Vector3 scale;
 
+	//ワールド変換行列
+	DirectX::XMMATRIX worldMatrix;
+
 	void Init();
+
+	void Update();
 
 	void Translate(Vector3 value);
 	void Translate(float _x, float _y, float _z);

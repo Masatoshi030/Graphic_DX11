@@ -18,6 +18,8 @@ public:
 
 	Transform* transform;
 
+	GameObject* parent;
+
 	//名前
 	char name[20] = "NoName";
 
@@ -80,6 +82,9 @@ public:
 
 	//タグの設定
 	void Set_Tag(const char* _tag);
+
+	//親の登録
+	void Set_Parent(GameObject* _parent);
 
 private:
 

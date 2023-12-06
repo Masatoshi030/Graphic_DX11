@@ -4,6 +4,9 @@ GameObject::GameObject()
 {
 	//Transformは必須なので生成時に付ける
 	transform = AddComponent<Transform>();
+
+	//親を初期化
+	parent = nullptr;
 }
 
 void GameObject::Start()
@@ -60,6 +63,15 @@ void GameObject::Draw()
 void GameObject::Set_Tag(const char* _tag)
 {
 
+}
+
+void GameObject::Set_Parent(GameObject* _parent)
+{
+	//親のオブジェクトに子登録
+	_parent->ChildGameObject_List.push_back(this);
+
+	//自分の親を設定
+	parent = _parent;
 }
 
 Component* GameObject::GetComponent(const type_info& t)
