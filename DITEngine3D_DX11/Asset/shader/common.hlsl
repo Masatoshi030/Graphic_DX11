@@ -35,8 +35,8 @@ cbuffer MaterialBuffer : register(b3)
 
 
 
-
-struct LIGHT
+// 平行光源（Directional Light）
+struct LIGHT_SUN
 {
 	bool Enable;
 	bool3 Dummy;
@@ -45,9 +45,22 @@ struct LIGHT
 	float4 Ambient;
 };
 
-cbuffer LightBuffer : register(b4)
+cbuffer SunLightBuffer : register(b4)
 {
-	LIGHT Light;
+	LIGHT_SUN Light_Sun;
+}
+
+
+// 点光源（Point Light）
+struct LIGHT_POINT
+{
+    float4 Position;		//光源の座標
+    float4 Attenuation;		//減衰
+};
+
+cbuffer PointLightBuffer : register(b5)
+{
+    LIGHT_POINT Light_Point;
 }
 
 
@@ -68,4 +81,6 @@ struct PS_IN
 	float4 Position		: SV_POSITION;
 	float4 Diffuse		: COLOR0;
 	float2 TexCoord		: TEXCOORD0;
+    float4 posw			: POSITION0;
+    float4 norw			: NORMAL0;
 };

@@ -201,6 +201,13 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->PSSetConstantBuffers(4, 1, &LightBuffer);
 
 
+	bufferDesc.ByteWidth = sizeof(LIGHT_POINT);
+
+	Device->CreateBuffer(&bufferDesc, NULL, &PointLightBuffer);
+	DeviceContext->VSSetConstantBuffers(5, 1, &PointLightBuffer);
+	DeviceContext->PSSetConstantBuffers(5, 1, &PointLightBuffer);
+
+
 	// ƒ‰ƒCƒg‰Šú‰»
 	LIGHT light{};
 	light.Enable = true;
@@ -236,6 +243,7 @@ void DIRECT3D11::Release()
 	ViewBuffer->Release();
 	ProjectionBuffer->Release();
 	LightBuffer->Release();
+	PointLightBuffer->Release();
 	MaterialBuffer->Release();
 
 
@@ -357,6 +365,11 @@ void DIRECT3D11::SetMaterial(MATERIAL Material)
 void DIRECT3D11::SetLight(LIGHT Light)
 {
 	DeviceContext->UpdateSubresource(LightBuffer, 0, NULL, &Light, 0, 0);
+}
+
+void DIRECT3D11::SetPointLight(LIGHT_POINT Light_Point)
+{
+	DeviceContext->UpdateSubresource(PointLightBuffer, 0, NULL, &Light_Point, 0, 0);
 }
 
 void DIRECT3D11::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)

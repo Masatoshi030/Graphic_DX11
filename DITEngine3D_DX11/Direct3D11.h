@@ -56,6 +56,14 @@ struct LIGHT
 };
 
 
+//“_ŒõŒ¹
+struct LIGHT_POINT
+{
+	DirectX::SimpleMath::Vector4 Position;
+	DirectX::SimpleMath::Vector4 Attenuation;
+};
+
+
 
 
 class DIRECT3D11
@@ -78,6 +86,7 @@ private:
 	ID3D11Buffer*				ProjectionBuffer;
 	ID3D11Buffer*				MaterialBuffer;
 	ID3D11Buffer*				LightBuffer;
+	ID3D11Buffer*				PointLightBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -151,6 +160,10 @@ public:
 	//=================================================
 	//
 	void SetLight(LIGHT Light);
+
+	//=================================================
+	//
+	void SetPointLight(LIGHT_POINT Light_Point);
 
 	//=================================================
 	//

@@ -6,9 +6,18 @@ void Scene_Game::Start()
 	//シェーダー設定
 	Shader::AddShader("Asset/shader/unlitTextureVS.cso", "Asset/shader/unlitTexturePS.cso", "Unlit");
 	Shader::AddShader("Asset/shader/vertexLightingVS.cso", "Asset/shader/vertexLightingPS.cso", "Light");
-
+	Shader::AddShader("Asset/shader/PointLight_VS.cso", "Asset/shader/PointLight_PS.cso", "PointLight");
 
 	//オブジェクト設定
+
+	//== ポイントライト ==//
+	PointLight_Obj = new GameObject();
+
+	PointLight_Obj->AddComponent<PointLight>()->SetAttenuation(1.0f, 0.0f, 0.0f);
+
+	Hierarchy.push_back(PointLight_Obj);
+
+	PointLight_Obj->transform->position = Vector3(-2.0f, 3.0f, 1.0f);
 
 	//== メインカメラ ==//
 	MainCamera = new GameObject();
@@ -42,7 +51,7 @@ void Scene_Game::Start()
 	//== キューブ ==//
 	Cube = new GameObject();
 
-	Cube->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "Light");
+	Cube->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "PointLight");
 
 	Hierarchy.push_back(Cube);
 
@@ -52,7 +61,7 @@ void Scene_Game::Start()
 	//== キューブ_子オブジェクト ==//
 	Cube_Child = new GameObject();
 
-	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "Light");
+	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "PointLight");
 
 	Hierarchy.push_back(Cube_Child);
 
@@ -67,7 +76,7 @@ void Scene_Game::Start()
 	//== 地面 ==//
 	Ground = new GameObject();
 
-	Ground->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Ground.obj", "Light");
+	Ground->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Ground.obj", "PointLight");
 
 	Hierarchy.push_back(Ground);
 
@@ -81,6 +90,10 @@ void Scene_Game::Start()
 
 void Scene_Game::Update()
 {
+	LIGHT_POINT pointlight;
+	pointlight.Position = DirectX::SimpleMath::Vector4(-2.0f, 3.0f, 1.0f, 0.0f);
+	pointlight.Attenuation = DirectX::SimpleMath::Vector4(1.0f, 0.0f, 0.2f, 0.0f);
+	D3D->SetPointLight(pointlight);
 
 	if (Input::GetKeyState(KEY_INPUT_ESCAPE) == Input::KEY_DOWN)
 	{
@@ -92,35 +105,71 @@ void Scene_Game::Update()
 		return;
 	}
 
-	if (Input::GetKeyState(KEY_INPUT_W) == Input::KEY_WHILE_DOWN)
+	if (Input::GetKeyState(KEY_INPUT_L) == Input::KEY_WHILE_DOWN)
 	{
-		MainCamera->transform->Translate(0.0f, 0.0f, 0.03f);
-	}	
-	
-	if (Input::GetKeyState(KEY_INPUT_S) == Input::KEY_WHILE_DOWN)
+		if (Input::GetKeyState(KEY_INPUT_W) == Input::KEY_WHILE_DOWN)
+		{
+			PointLight_Obj->transform->Translate(0.0f, 0.0f, 0.03f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_S) == Input::KEY_WHILE_DOWN)
+		{
+			PointLight_Obj->transform->Translate(0.0f, 0.00f, -0.03f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_D) == Input::KEY_WHILE_DOWN)
+		{
+			PointLight_Obj->transform->Translate(0.03f, 0.0f, 0.0f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_A) == Input::KEY_WHILE_DOWN)
+		{
+			PointLight_Obj->transform->Translate(-0.03f, 0.0f, 0.0f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_SHIFT) == Input::KEY_WHILE_DOWN)
+		{
+			Cube->transform->Translate(0.0f, -0.1f, 0.0f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_SPACE) == Input::KEY_WHILE_DOWN)
+		{
+			Cube->transform->Translate(0.0f, 0.1f, 0.0f);
+		}
+	}
+	else
 	{
-		MainCamera->transform->Translate(0.0f, 0.00f, -0.03f);
+		if (Input::GetKeyState(KEY_INPUT_W) == Input::KEY_WHILE_DOWN)
+		{
+			MainCamera->transform->Translate(0.0f, 0.0f, 0.03f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_S) == Input::KEY_WHILE_DOWN)
+		{
+			MainCamera->transform->Translate(0.0f, 0.00f, -0.03f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_D) == Input::KEY_WHILE_DOWN)
+		{
+			MainCamera->transform->Translate(0.03f, 0.0f, 0.0f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_A) == Input::KEY_WHILE_DOWN)
+		{
+			MainCamera->transform->Translate(-0.03f, 0.0f, 0.0f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_SHIFT) == Input::KEY_WHILE_DOWN)
+		{
+			Cube->transform->Translate(0.0f, -0.1f, 0.0f);
+		}
+
+		if (Input::GetKeyState(KEY_INPUT_SPACE) == Input::KEY_WHILE_DOWN)
+		{
+			Cube->transform->Translate(0.0f, 0.1f, 0.0f);
+		}
 	}
 
-	if (Input::GetKeyState(KEY_INPUT_D) == Input::KEY_WHILE_DOWN)
-	{
-		MainCamera->transform->Translate(0.03f, 0.0f, 0.0f);
-	}
-
-	if (Input::GetKeyState(KEY_INPUT_A) == Input::KEY_WHILE_DOWN)
-	{
-		MainCamera->transform->Translate(-0.03f, 0.0f, 0.0f);
-	}
-
-	if (Input::GetKeyState(KEY_INPUT_SHIFT) == Input::KEY_WHILE_DOWN)
-	{
-		Cube->transform->Translate(0.0f, -0.1f, 0.0f);
-	}
-
-	if (Input::GetKeyState(KEY_INPUT_SPACE) == Input::KEY_WHILE_DOWN)
-	{
-		Cube->transform->Translate(0.0f, 0.1f, 0.0f);
-	}
 
 	if (Input::GetKeyState(KEY_INPUT_RETURN) == Input::KEY_WHILE_DOWN)
 	{
