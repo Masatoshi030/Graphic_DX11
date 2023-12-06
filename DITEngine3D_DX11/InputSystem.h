@@ -52,4 +52,8 @@ namespace Input
 	//==============================================
 	//ウィンドウ上のマウスのポインター座標を取得する関数
 	DirectX::SimpleMath::Vector2 GetMousePointer_OnScreen();
+
+	//==============================================
+	//マウスポインターの座標を前フレームの座標と比較して移動量を計算
+	DirectX::SimpleMath::Vector2 GetMouseMoveValue();
 }

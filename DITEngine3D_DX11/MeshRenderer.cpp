@@ -8,7 +8,7 @@
 
 #include "WinMain.h"
 
-//using namespace DirectX::SimpleMath;
+using namespace DirectX;
 
 std::unordered_map<std::string, MODEL*> MeshRenderer::ModelPool;
 
@@ -22,14 +22,7 @@ void MeshRenderer::Draw()
 	D3D->Get_ID3D11DeviceContext()->VSSetShader(ShaderType->VertexShader, NULL, 0);
 	D3D->Get_ID3D11DeviceContext()->PSSetShader(ShaderType->PixelShader, NULL, 0);
 
-	// ワールドマトリクス設定
-	DirectX::SimpleMath::Matrix world, scale, rot, trans;
-	scale = DirectX::SimpleMath::Matrix::CreateScale(gameObject->transform->scale.x);
-	rot = DirectX::SimpleMath::Matrix::CreateFromYawPitchRoll(gameObject->transform->rotation.y, gameObject->transform->rotation.x, gameObject->transform->rotation.z);
-	trans = DirectX::SimpleMath::Matrix::CreateTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
-	world = scale * rot * trans;
-	D3D->SetWorldMatrix(&world);
-
+	D3D->SetWorldMatrix(&gameObject->transform->worldMatrix);
 
 	//頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);
@@ -95,6 +88,10 @@ void MeshRenderer::UnloadAll()
 
 void MeshRenderer::Load(const char* _FileName, const char* _ShaderName)
 {
+
+	//使用するシェーダーを取得
+	ShaderType = Shader::GetShader(_ShaderName);
+
 	if (ModelPool.count(_FileName) > 0)
 	{
 		Model = ModelPool[_FileName];
@@ -106,9 +103,6 @@ void MeshRenderer::Load(const char* _FileName, const char* _ShaderName)
 	LoadModel(_FileName, Model);
 
 	ModelPool[_FileName] = Model;
-
-	//使用するシェーダーを取得
-	ShaderType = Shader::GetShader(_ShaderName);
 }
 
 void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)

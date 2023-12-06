@@ -1,10 +1,11 @@
 #include "Direct3D11.h"
 
 #include <io.h>
+#include <DirectXMath.h>
 
 
 using namespace DirectX::SimpleMath;
-
+using namespace DirectX;
 
 
 //シングルトン　インスタンス
@@ -50,6 +51,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//レンダーターゲットビュー作成
+	//描画先の画像
 	ID3D11Texture2D* renderTarget{};
 	SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&renderTarget);
 	Device->CreateRenderTargetView(renderTarget, NULL, &RenderTargetView);
@@ -57,6 +59,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//デプスステンシルバッファ作成
+	//陰で見えない部分を省略するシステムの計算領域
 	ID3D11Texture2D* depthStencile{};
 	D3D11_TEXTURE2D_DESC textureDesc{};
 	textureDesc.Width = swapChainDesc.BufferDesc.Width;
@@ -73,6 +76,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//デプスステンシルビュー作成
+	//陰で見えない部分を省略するシステムの計算領域
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc{};
 	depthStencilViewDesc.Format = textureDesc.Format;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
@@ -84,6 +88,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//ビューポート設定
+	//表示領域
 	D3D11_VIEWPORT viewport;
 	viewport.Width = (FLOAT)App->Get_WindowWidth();
 	viewport.Height = (FLOAT)App->Get_WindowHeight();
@@ -95,6 +100,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 
 	//ラスタライザステート設定
+	//リアルタイム 3D グラフィックスを表示するために、(図形やプリミティブで構成された) ベクター情報を (ピクセルで構成された) ラスター画像に変換
 	D3D11_RASTERIZER_DESC rasterizerDesc{};
 	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 	rasterizerDesc.CullMode = D3D11_CULL_BACK;
@@ -164,7 +170,7 @@ void DIRECT3D11::Init(Application* _APP)
 
 	//定数バッファ
 	D3D11_BUFFER_DESC bufferDesc{};
-	bufferDesc.ByteWidth = sizeof(Matrix);
+	bufferDesc.ByteWidth = sizeof(XMMATRIX);
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bufferDesc.CPUAccessFlags = 0;
@@ -316,27 +322,27 @@ void DIRECT3D11::SetWorldViewProjection2D()
 	DeviceContext->UpdateSubresource(ProjectionBuffer, 0, NULL, &projection, 0, 0);
 }
 
-void DIRECT3D11::SetWorldMatrix(Matrix* WorldMatrix)
+void DIRECT3D11::SetWorldMatrix(XMMATRIX* WorldMatrix)
 {
-	Matrix world;
-	world = WorldMatrix->Transpose();					// 転置
+	XMMATRIX world;
+	world = XMMatrixTranspose(*WorldMatrix);					// 転置
 
 	DeviceContext->UpdateSubresource(WorldBuffer, 0, NULL, &world, 0, 0);
 }
 
 
-void DIRECT3D11::SetViewMatrix(Matrix* ViewMatrix)
+void DIRECT3D11::SetViewMatrix(XMMATRIX* ViewMatrix)
 {
-	Matrix view;
-	view = ViewMatrix->Transpose();						// 転置
+	XMMATRIX view;
+	view = XMMatrixTranspose(*ViewMatrix);						// 転置
 
 	DeviceContext->UpdateSubresource(ViewBuffer, 0, NULL, &view, 0, 0);
 }
 
-void DIRECT3D11::SetProjectionMatrix(Matrix* ProjectionMatrix)
+void DIRECT3D11::SetProjectionMatrix(XMMATRIX* ProjectionMatrix)
 {
-	Matrix projection;
-	projection = ProjectionMatrix->Transpose();
+	XMMATRIX projection;
+	projection = XMMatrixTranspose(*ProjectionMatrix);
 
 	DeviceContext->UpdateSubresource(ProjectionBuffer, 0, NULL, &projection, 0, 0);
 }

@@ -7,6 +7,7 @@
 //Direct3D11
 #include <d3d11.h>
 #include <SimpleMath.h>
+#include <DirectXMath.h>
 #include "Application.h"
 
 #pragma comment(lib, "directxtk.lib")
@@ -133,15 +134,15 @@ public:
 
 	//=================================================
 	//
-	void SetWorldMatrix(DirectX::SimpleMath::Matrix* WorldMatrix);
+	void SetWorldMatrix(DirectX::XMMATRIX* WorldMatrix);
 
 	//=================================================
 	//
-	void SetViewMatrix(DirectX::SimpleMath::Matrix* ViewMatrix);
+	void SetViewMatrix(DirectX::XMMATRIX* ViewMatrix);
 
 	//=================================================
 	//
-	void SetProjectionMatrix(DirectX::SimpleMath::Matrix* ProjectionMatrix);
+	void SetProjectionMatrix(DirectX::XMMATRIX* ProjectionMatrix);
 
 	//=================================================
 	//

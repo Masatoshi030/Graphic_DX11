@@ -2,6 +2,7 @@
 
 #include <d3d11.h>
 #include <SimpleMath.h>
+#include <DirectXMath.h>
 
 //‘¼‚ÌŒ^‚É‘Î‰ž‚µ‚½Vecotr3ƒNƒ‰ƒX
 class Vector3
