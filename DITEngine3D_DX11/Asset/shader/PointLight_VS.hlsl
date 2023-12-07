@@ -12,5 +12,8 @@ PS_IN vs_main(VS_IN input)
     
     output.norw = mul(input.Normal, World);
     
+    output.TexCoord = input.TexCoord;
+    output.Diffuse = input.Diffuse * Material.Diffuse;
+    
     return output;
 }

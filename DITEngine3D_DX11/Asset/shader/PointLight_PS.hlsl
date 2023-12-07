@@ -5,6 +5,8 @@ SamplerState g_SamplerState : register(s0);
 
 float4 ps_main(PS_IN input) : SV_Target
 {
+    float4 Color;
+    
     float3 dir;
     float len;
     float colD;
@@ -28,6 +30,14 @@ float4 ps_main(PS_IN input) : SV_Target
 
     col = colD * colA;
     
-    return float4(col, col, col, 1.0f);
+    Color = float4(col, col, col, 1.0f);
+    
+    if (Material.TextureEnable)
+    {
+        Color *= g_Texture.Sample(g_SamplerState, input.TexCoord);
+        Color *= input.Diffuse;
+    }
+    
+    return Color;
 
 }
