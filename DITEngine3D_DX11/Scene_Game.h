@@ -11,6 +11,7 @@ private:
 	GameObject* SkyBox;
 	GameObject* Cube;
 	GameObject* Cube_Child;
+	GameObject* Sphere;
 	GameObject* Ground;
 
 public:

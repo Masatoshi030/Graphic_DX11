@@ -6,7 +6,9 @@ PS_IN vs_main(VS_IN input)
     float3 nor;
     float col;
     
-    output.posw = mul(input.Position, World);
+    output.ViewVector = normalize(input.Position - Specular_Reflection.EyePosition);
+    
+    output.posw = mul(input.Position, World);    
     output.Position = mul(output.posw, View);
     output.Position = mul(output.Position, Projection);
     

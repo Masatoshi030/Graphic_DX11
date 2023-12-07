@@ -61,6 +61,15 @@ struct LIGHT_POINT
 {
 	DirectX::SimpleMath::Vector4 Position;
 	DirectX::SimpleMath::Vector4 Attenuation;
+	DirectX::SimpleMath::Vector4 LightColor;
+};
+
+
+//鏡面反射
+struct SPECULAR_REFLECTION
+{
+	DirectX::SimpleMath::Vector4 EyePosition;	//視点の座標
+	DirectX::SimpleMath::Color	 Specular;		//物体の色(r, g, b, 光沢度係数)
 };
 
 
@@ -87,6 +96,7 @@ private:
 	ID3D11Buffer*				MaterialBuffer;
 	ID3D11Buffer*				LightBuffer;
 	ID3D11Buffer*				PointLightBuffer;
+	ID3D11Buffer*				SpecularReflectionBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -164,6 +174,10 @@ public:
 	//=================================================
 	//
 	void SetPointLight(LIGHT_POINT Light_Point);
+
+	//=================================================
+	//
+	void SetSpecularReflection(SPECULAR_REFLECTION Specular_Reflection);
 
 	//=================================================
 	//

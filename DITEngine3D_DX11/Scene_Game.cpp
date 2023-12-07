@@ -7,13 +7,17 @@ void Scene_Game::Start()
 	Shader::AddShader("Asset/shader/unlitTextureVS.cso", "Asset/shader/unlitTexturePS.cso", "Unlit");
 	Shader::AddShader("Asset/shader/vertexLightingVS.cso", "Asset/shader/vertexLightingPS.cso", "Light");
 	Shader::AddShader("Asset/shader/PointLight_VS.cso", "Asset/shader/PointLight_PS.cso", "PointLight");
+	Shader::AddShader("Asset/shader/PointLight_VS.cso", "Asset/shader/SpecularReflection_PS.cso", "SpecularReflection");
 
 	//オブジェクト設定
 
 	//== ポイントライト ==//
 	PointLight_Obj = new GameObject();
 
-	PointLight_Obj->AddComponent<PointLight>()->SetAttenuation(1.0f, 0.0f, 0.0f);
+	PointLight* pointLightBuf = PointLight_Obj->AddComponent<PointLight>();
+
+	pointLightBuf->SetAttenuation(1.0f, 0.0f, 0.0f);
+	pointLightBuf->SetLightColor(1.0f, 1.0f, 1.0f, 10.0f);
 
 	Hierarchy.push_back(PointLight_Obj);
 
@@ -51,17 +55,20 @@ void Scene_Game::Start()
 	//== キューブ ==//
 	Cube = new GameObject();
 
-	Cube->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "PointLight");
+	Cube->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF_Muffler.obj", "SpecularReflection");
 
 	Hierarchy.push_back(Cube);
 
-	Cube->transform->position.y = 1.0f;
+	Cube->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
+
+	//Cube->transform->position.y = 1.0f;
+	Cube->transform->position.x += 2.0f;
 
 
 	//== キューブ_子オブジェクト ==//
 	Cube_Child = new GameObject();
 
-	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "PointLight");
+	Cube_Child->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj", "SpecularReflection");
 
 	Hierarchy.push_back(Cube_Child);
 
@@ -72,6 +79,17 @@ void Scene_Game::Start()
 
 	Cube_Child->Set_Parent(MainCamera);
 
+
+	//== スフィア ==//
+
+	Sphere = new GameObject();
+
+	Sphere->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Sphere.obj", "SpecularReflection");
+
+	Hierarchy.push_back(Sphere);
+
+	Sphere->transform->position.y += 1.0f;
+	Sphere->transform->position.x -= 2.0f;
 
 	//== 地面 ==//
 	Ground = new GameObject();
@@ -90,10 +108,24 @@ void Scene_Game::Start()
 
 void Scene_Game::Update()
 {
-	LIGHT_POINT pointlight;
-	pointlight.Position = DirectX::SimpleMath::Vector4(-2.0f, 3.0f, 1.0f, 0.0f);
-	pointlight.Attenuation = DirectX::SimpleMath::Vector4(1.0f, 0.0f, 0.2f, 0.0f);
-	D3D->SetPointLight(pointlight);
+
+	//スペキュラー設定
+	SPECULAR_REFLECTION specular_buf;
+	specular_buf.EyePosition = DirectX::SimpleMath::Vector4
+	(
+		MainCamera->transform->position.x,
+		MainCamera->transform->position.y,
+		MainCamera->transform->position.z,
+		0.0f
+	);
+	specular_buf.Specular = DirectX::SimpleMath::Color(0.6f, 0.7f, 0.92f, 300.0f);
+
+	D3D->SetSpecularReflection(specular_buf);
+
+
+	//キューブを自動回転
+	//Cube->transform->Rotate(0.005f, 0.005f, 0.0f);
+
 
 	if (Input::GetKeyState(KEY_INPUT_ESCAPE) == Input::KEY_DOWN)
 	{

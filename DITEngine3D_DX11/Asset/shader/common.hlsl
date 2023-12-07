@@ -56,6 +56,7 @@ struct LIGHT_POINT
 {
     float4 Position;		//光源の座標
     float4 Attenuation;		//減衰
+    float4 LightColor;		//点光源の色
 };
 
 cbuffer PointLightBuffer : register(b5)
@@ -63,6 +64,17 @@ cbuffer PointLightBuffer : register(b5)
     LIGHT_POINT Light_Point;
 }
 
+
+struct SPECULAR_REFLECTION
+{
+    float4 EyePosition; //視点の座標
+    float4 Specular; //物体の色(r, g, b, 光沢度係数)
+};
+
+cbuffer SpecularReflection : register(b6)
+{
+    SPECULAR_REFLECTION Specular_Reflection;
+}
 
 
 
@@ -83,4 +95,5 @@ struct PS_IN
 	float2 TexCoord		: TEXCOORD0;
     float4 posw			: POSITION0;
     float4 norw			: NORMAL0;
+    float3 ViewVector	: TEXCOORD1;
 };

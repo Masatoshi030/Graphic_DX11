@@ -10,6 +10,8 @@ private:
 
 	Vector3 attenuation;
 
+	DirectX::SimpleMath::Color lightColor;
+
 public:
 
 	//‰Šú‰»ˆ—
@@ -33,4 +35,6 @@ public:
 	{
 		return attenuation;
 	}
+
+	void SetLightColor(float _r, float _g, float _b, float _a);
 };

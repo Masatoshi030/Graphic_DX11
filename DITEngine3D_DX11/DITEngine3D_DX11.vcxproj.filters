@@ -141,5 +141,6 @@
     <FxCompile Include="Asset\shader\vertexLightingVS.hlsl" />
     <FxCompile Include="Asset\shader\PointLight_VS.hlsl" />
     <FxCompile Include="Asset\shader\PointLight_PS.hlsl" />
+    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl" />
   </ItemGroup>
 </Project>
