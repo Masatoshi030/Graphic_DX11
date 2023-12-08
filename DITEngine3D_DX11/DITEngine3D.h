@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "InputSystem.h"
 #include "ShaderManager.h"
+#include "Texture.h"
 
 //コンポーネント
 #include "Transform.h"

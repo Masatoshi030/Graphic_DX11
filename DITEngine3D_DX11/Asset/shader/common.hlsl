@@ -19,11 +19,11 @@ cbuffer ProjectionBuffer : register(b2)
 
 struct MATERIAL
 {
-	float4 Ambient;
-	float4 Diffuse;
-	float4 Specular;
-	float4 Emission;
-	float Shininess;
+	float4 Ambient;			//環境光
+	float4 Diffuse;			//拡散　全体の明るさ
+	float4 Specular;		//鏡面反射光
+	float4 Emission;		//発光
+	float Shininess;		//
 	bool TextureEnable;
 	float2 Dummy;
 };
@@ -65,15 +65,14 @@ cbuffer PointLightBuffer : register(b5)
 }
 
 
-struct SPECULAR_REFLECTION
+struct EYE_INFO
 {
     float4 EyePosition; //視点の座標
-    float4 Specular; //物体の色(r, g, b, 光沢度係数)
 };
 
-cbuffer SpecularReflection : register(b6)
+cbuffer EyeInfo : register(b6)
 {
-    SPECULAR_REFLECTION Specular_Reflection;
+    EYE_INFO Eye_Info;
 }
 
 

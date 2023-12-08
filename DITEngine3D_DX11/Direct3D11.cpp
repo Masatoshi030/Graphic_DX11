@@ -208,11 +208,11 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->PSSetConstantBuffers(5, 1, &PointLightBuffer);
 
 
-	bufferDesc.ByteWidth = sizeof(SPECULAR_REFLECTION);
+	bufferDesc.ByteWidth = sizeof(EYE_INFO);
 
-	Device->CreateBuffer(&bufferDesc, NULL, &SpecularReflectionBuffer);
-	DeviceContext->VSSetConstantBuffers(6, 1, &SpecularReflectionBuffer);
-	DeviceContext->PSSetConstantBuffers(6, 1, &SpecularReflectionBuffer);
+	Device->CreateBuffer(&bufferDesc, NULL, &EyeInfoBuffer);
+	DeviceContext->VSSetConstantBuffers(6, 1, &EyeInfoBuffer);
+	DeviceContext->PSSetConstantBuffers(6, 1, &EyeInfoBuffer);
 
 
 	// ƒ‰ƒCƒg‰Šú‰»
@@ -379,9 +379,9 @@ void DIRECT3D11::SetPointLight(LIGHT_POINT Light_Point)
 	DeviceContext->UpdateSubresource(PointLightBuffer, 0, NULL, &Light_Point, 0, 0);
 }
 
-void DIRECT3D11::SetSpecularReflection(SPECULAR_REFLECTION Specular_Reflection)
+void DIRECT3D11::SetEyeInfo(EYE_INFO Eye_Info)
 {
-	DeviceContext->UpdateSubresource(SpecularReflectionBuffer, 0, NULL, &Specular_Reflection, 0, 0);
+	DeviceContext->UpdateSubresource(EyeInfoBuffer, 0, NULL, &Eye_Info, 0, 0);
 }
 
 void DIRECT3D11::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)

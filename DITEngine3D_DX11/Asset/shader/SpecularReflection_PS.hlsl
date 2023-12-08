@@ -1,5 +1,6 @@
 #include "common.hlsl"
 
+//環境画像
 TextureCube g_Texture : register(t0);
 SamplerState g_SamplerState : register(s0);
 
@@ -29,7 +30,7 @@ float4 ps_main(PS_IN input) : SV_Target
     float4 Color;
     
     //環境テクスチャ適用
-    Color = float4(ReflectionFrensel(input.posw, input.norw, Specular_Reflection.EyePosition, 1.0f), 1.0f);
+    Color = float4(ReflectionFrensel(input.posw, input.norw, Eye_Info.EyePosition, 1.0f), 1.0f);
     
     float3 l;
     float3 n;
@@ -40,10 +41,10 @@ float4 ps_main(PS_IN input) : SV_Target
     l = normalize(Light_Point.Position.xyz - input.posw.xyz);
     n = normalize(input.norw.xyz);
     r = 2.0 * n * dot(n, l) - l;
-    v = normalize(Specular_Reflection.EyePosition.xyz - input.posw.xyz);
-    i = pow(saturate(dot(r, v)), Specular_Reflection.Specular.w);
+    v = normalize(Eye_Info.EyePosition.xyz - input.posw.xyz);
+    i = pow(saturate(dot(r, v)), Material.Shininess);
     
-    Color += float4(i * Specular_Reflection.Specular.xyz * Light_Point.LightColor.xyz, 1.0f);
+    Color += float4(i * Material.Specular.xyz * Light_Point.LightColor.xyz, 1.0f);
     
     
     return Color;
