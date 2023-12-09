@@ -58,6 +58,22 @@ void SCENE_MANAGERSYSTEM::Game_Main(MSG* msg)
 				}
 				else
 				{
+
+					//時間更新処理
+					Time::UpdateTime();
+
+					//バーに情報を表示
+					char fps[100];
+
+					sprintf_s(fps, "Time[%d:%d:%d:%d] FPS[%d]",
+						Time::GetWorldTime().Hour,
+						Time::GetWorldTime().Minutes,
+						Time::GetWorldTime().Second,
+						Time::GetWorldTime().MMSecond,
+						Time::Get_FPS());
+
+					SetWindowText(D3D->Get_ApplicationHandle()->GetWindowHandle(), fps);
+
 					//ゲームループ
 
 					//シーンの更新処理

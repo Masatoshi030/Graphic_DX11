@@ -1,36 +1,33 @@
 #include "common.hlsl"
 
 //環境画像
-TextureCube g_Texture : register(t0);
+Texture2D CubeMap : register(t0);
+Texture2D Albedo_Texture : register(t1);
 SamplerState g_SamplerState : register(s0);
-
-float FrenselEquations(float reflectionCoef, float3 H, float3 V)
-{
-    return (reflectionCoef + (1.0f - reflectionCoef) * pow(1.0 - saturate(dot(V, H)), 5.0));
-}
-
-float3 ReflectionFrensel(float4 posw, float4 norw, float4 eye, float eta)
-{
-    float3 N = norw;
-    float3 I = normalize(posw.xyz - eye.xyz);
-    float3 R = reflect(I, N);
-    float3 T = refract(I, N, eta);
-    float fresnel = FrenselEquations(pow(eta - 1 / eta + 1, 2), N, I);
-
-    float3 reflecColor = g_Texture.Sample(g_SamplerState, R);
-    float3 refracColor = g_Texture.Sample(g_SamplerState, T);
-
-    float3 col = lerp(refracColor, reflecColor, fresnel);
-
-    return col;
-}
 
 float4 ps_main(PS_IN input) : SV_Target
 {
     float4 Color;
     
-    //環境テクスチャ適用
-    Color = float4(ReflectionFrensel(input.posw, input.norw, Eye_Info.EyePosition, 1.0f), 1.0f);
+    //== 環境テクスチャ適用 ==//
+    
+    // 視点からピクセルまでのベクトルと法線ベクトルから反射ベクトルを計算
+    float3 dir = reflect(input.ViewVector, input.norw.xyz);
+    
+    //反射ベクトルから球状に強制
+    float coordX = atan2(dir.x, dir.z) / PIE;
+    float coordY = asin(dir.y) / (PIE / 2.0f);
+    
+    Color = Material.Diffuse * CubeMap.Sample(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f);
+    
+    //float coloroffset = Material.Diffuse;
+    //coloroffset -= Material.Diffuse * CubeMap.Sample(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f);
+    //coloroffset *= Material.Metallic.x;
+    //Color = Material.Diffuse - coloroffset;
+    
+    
+    
+    //物体のテクスチャを適用
     
     float3 l;
     float3 n;
@@ -45,7 +42,6 @@ float4 ps_main(PS_IN input) : SV_Target
     i = pow(saturate(dot(r, v)), Material.Shininess);
     
     Color += float4(i * Material.Specular.xyz * Light_Point.LightColor.xyz, 1.0f);
-    
     
     return Color;
 

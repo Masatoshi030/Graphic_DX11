@@ -6,13 +6,13 @@ PS_IN vs_main(VS_IN input)
     float3 nor;
     float col;
     
-    output.ViewVector = normalize(input.Position - Eye_Info.EyePosition);
-    
-    output.posw = mul(input.Position, World);    
+    output.posw = mul(input.Position, World);        
     output.Position = mul(output.posw, View);
     output.Position = mul(output.Position, Projection);
     
-    output.norw = mul(input.Normal, World);
+    output.ViewVector = normalize(output.posw - Eye_Info.EyePosition);
+    
+    output.norw = input.Normal;
     
     output.TexCoord = input.TexCoord;
     output.Diffuse = input.Diffuse * Material.Diffuse;

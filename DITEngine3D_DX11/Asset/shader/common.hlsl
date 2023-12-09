@@ -1,4 +1,5 @@
 
+#define PIE 3.1415926f
 
 
 cbuffer WorldBuffer : register(b0)
@@ -26,6 +27,7 @@ struct MATERIAL
 	float Shininess;		//
 	bool TextureEnable;
 	float2 Dummy;
+    float4 Metallic;
 };
 
 cbuffer MaterialBuffer : register(b3)
@@ -93,6 +95,6 @@ struct PS_IN
 	float4 Diffuse		: COLOR0;
 	float2 TexCoord		: TEXCOORD0;
     float4 posw			: POSITION0;
-    float4 norw			: NORMAL0;
+    float4 norw			: NORMAL;
     float3 ViewVector	: TEXCOORD1;
 };

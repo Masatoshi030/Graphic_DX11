@@ -220,7 +220,7 @@ void DIRECT3D11::Init(Application* _APP)
 	light.Enable = true;
 	light.Direction = Vector4(0.5f, -1.0f, 0.8f, 0.0f);
 	light.Direction.Normalize();
-	light.Ambient = Color(0.2f, 0.2f, 0.2f, 1.0f);
+	light.Ambient = Color(0.1f, 0.1f, 0.1f, 1.0f);
 	light.Diffuse = Color(1.5f, 1.5f, 1.5f, 1.0f);
 	SetLight(light);
 

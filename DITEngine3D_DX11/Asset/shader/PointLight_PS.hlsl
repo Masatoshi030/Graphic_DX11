@@ -35,8 +35,11 @@ float4 ps_main(PS_IN input) : SV_Target
     if (Material.TextureEnable)
     {
         Color *= g_Texture.Sample(g_SamplerState, input.TexCoord);
-        Color *= input.Diffuse;
     }
+    
+    Color *= input.Diffuse;
+    
+    Color += Light_Sun.Ambient;
     
     return Color;
 

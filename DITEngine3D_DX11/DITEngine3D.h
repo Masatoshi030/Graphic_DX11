@@ -7,6 +7,7 @@
 #include "InputSystem.h"
 #include "ShaderManager.h"
 #include "Texture.h"
+#include "Time.h"
 
 //コンポーネント
 #include "Transform.h"

@@ -74,5 +74,15 @@ public:
 
 	void Load(const char* _FileName, const char* _ShaderName);
 
+	MODEL* GetModel()
+	{
+		return Model;
+	}
+
+	SUBSET* GetSubset(int _idx)
+	{
+		return &Model->SubsetArray[_idx];
+	}
+
 	void Draw();
 };

@@ -42,6 +42,7 @@ struct MATERIAL
 	float Shininess;
 	BOOL TextureEnable;
 	float Dummy[2];
+	DirectX::SimpleMath::Vector4 Metalic_;
 };
 
 
