@@ -44,7 +44,7 @@ void MeshRenderer::Draw()
 		//テクスチャ設定
 		if (Model->SubsetArray[i].Material.Texture)
 		{
-			D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(0, 1, &Model->SubsetArray[i].Material.Texture);
+			D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(1, 1, &Model->SubsetArray[i].Material.Texture);
 		}
 
 		//ポリゴン描画

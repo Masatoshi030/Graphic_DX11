@@ -56,6 +56,9 @@ bool Application::InitApp()
 	//DIRECT3D11を初期化
 	D3D->Init(this);
 
+	//時間計測初期化
+	Time::Init();
+
 	//DITEngineシステム関連の初期化
 	Input::Init();
 

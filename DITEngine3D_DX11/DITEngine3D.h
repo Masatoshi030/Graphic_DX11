@@ -6,11 +6,14 @@
 #include "GameObject.h"
 #include "InputSystem.h"
 #include "ShaderManager.h"
+#include "Texture.h"
+#include "Time.h"
 
 //コンポーネント
 #include "Transform.h"
 #include "Camera.h"
 #include "MeshRenderer.h"
+#include "Light.h"
 
 //便利な定義
 

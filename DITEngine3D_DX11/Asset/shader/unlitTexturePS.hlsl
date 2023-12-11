@@ -2,7 +2,7 @@
 #include "common.hlsl"
 
 
-Texture2D		g_Texture : register(t0);
+Texture2D		g_Texture : register(t1);
 SamplerState	g_SamplerState : register(s0);
 
 

@@ -42,6 +42,7 @@ struct MATERIAL
 	float Shininess;
 	BOOL TextureEnable;
 	float Dummy[2];
+	DirectX::SimpleMath::Vector4 Metalic_;
 };
 
 
@@ -53,6 +54,22 @@ struct LIGHT
 	DirectX::SimpleMath::Vector4 Direction;
 	DirectX::SimpleMath::Color Diffuse;
 	DirectX::SimpleMath::Color Ambient;
+};
+
+
+//点光源
+struct LIGHT_POINT
+{
+	DirectX::SimpleMath::Vector4 Position;
+	DirectX::SimpleMath::Vector4 Attenuation;
+	DirectX::SimpleMath::Vector4 LightColor;
+};
+
+
+//視点情報
+struct EYE_INFO
+{
+	DirectX::SimpleMath::Vector4 EyePosition;	//視点の座標
 };
 
 
@@ -78,6 +95,8 @@ private:
 	ID3D11Buffer*				ProjectionBuffer;
 	ID3D11Buffer*				MaterialBuffer;
 	ID3D11Buffer*				LightBuffer;
+	ID3D11Buffer*				PointLightBuffer;
+	ID3D11Buffer*				EyeInfoBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -151,6 +170,14 @@ public:
 	//=================================================
 	//
 	void SetLight(LIGHT Light);
+
+	//=================================================
+	//
+	void SetPointLight(LIGHT_POINT Light_Point);
+
+	//=================================================
+	//
+	void SetEyeInfo(EYE_INFO Eye_Info);
 
 	//=================================================
 	//

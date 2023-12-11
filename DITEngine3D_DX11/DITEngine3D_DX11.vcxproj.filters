@@ -66,6 +66,15 @@
     <ClInclude Include="ShaderManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Direct3D11.cpp">
@@ -113,6 +122,15 @@
     <ClCompile Include="ShaderManager.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SceneManager.h">
@@ -123,9 +141,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
@@ -135,5 +150,9 @@
     <FxCompile Include="Asset\shader\vertexLightingPS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
+    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl" />
+    <FxCompile Include="Asset\shader\PointLight_VS.hlsl" />
+    <FxCompile Include="Asset\shader\PointLight_PS.hlsl" />
+    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl" />
   </ItemGroup>
 </Project>
