@@ -18,16 +18,8 @@ float4 ps_main(PS_IN input) : SV_Target
     float coordX = atan2(dir.x, dir.z) / PIE;
     float coordY = asin(dir.y) / (PIE / 2.0f);
     
-    Color = Material.Diffuse * CubeMap.Sample(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f);
-    
-    //float coloroffset = Material.Diffuse;
-    //coloroffset -= Material.Diffuse * CubeMap.Sample(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f);
-    //coloroffset *= Material.Metallic.x;
-    //Color = Material.Diffuse - coloroffset;
-    
-    
-    
     //物体のテクスチャを適用
+    Color = Material.Diffuse * CubeMap.Sample(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f);
     
     float3 l;
     float3 n;
