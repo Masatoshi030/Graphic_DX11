@@ -23,3 +23,21 @@ protected:
 	ID3D11ShaderResourceView* pSRV;
 	ID3D11Texture2D* pTex;
 };
+
+class RenderTarget : public Texture
+{
+public:
+	RenderTarget();
+	~RenderTarget();
+	void Clear();
+	void Clear(const float* color);
+	HRESULT Create(DXGI_FORMAT format, UINT width, UINT height);
+	HRESULT CreateFromScreen();
+	ID3D11RenderTargetView* GetRenderTargetView() const;
+
+protected:
+	virtual HRESULT CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData = nullptr);
+
+private:
+	ID3D11RenderTargetView* pRTV;
+};

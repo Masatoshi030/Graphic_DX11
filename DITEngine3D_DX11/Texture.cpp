@@ -118,3 +118,81 @@ HRESULT Texture::CreateResource(D3D11_TEXTURE2D_DESC& _desc, const void* _pData)
 	}
 	return hr;
 }
+
+
+RenderTarget::RenderTarget() : pRTV(nullptr)
+{
+
+}
+
+RenderTarget::~RenderTarget()
+{
+	SAFE_RELEASE(pRTV);
+}
+
+void RenderTarget::Clear()
+{
+	static float color[4] = { 0.0f,0.0f,0.0f,0.0f };
+	Clear(color);
+}
+
+void RenderTarget::Clear(const float* color)
+{
+	D3D->Get_ID3D11DeviceContext()->ClearRenderTargetView(pRTV, color);
+}
+
+HRESULT RenderTarget::Create(DXGI_FORMAT format, UINT width, UINT height)
+{
+	D3D11_TEXTURE2D_DESC desc = MakeTextureDesc(format, width, height);
+	desc.BindFlags |= D3D11_BIND_RENDER_TARGET;
+	return CreateResource(desc);
+}
+
+HRESULT RenderTarget::CreateFromScreen()
+{
+	HRESULT hr;
+
+	//バックバッファのポインタを取得
+	ID3D11Texture2D* pBackBuffer = NULL;
+	hr = D3D->Get_IDXGISwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pTex);
+	if (FAILED(hr))
+	{
+		return hr;
+	}
+
+	//バックバッファへのポインタを指定してレンダーターゲットビューを作成
+	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtvDesc.Texture2D.MipSlice = 0;
+	hr = D3D->Get_ID3D11Device()->CreateRenderTargetView(pTex, &rtvDesc, &pRTV);
+	if (SUCCEEDED(hr))
+	{
+		D3D11_TEXTURE2D_DESC desc;
+		pTex->GetDesc(&desc);
+		width = desc.Width;
+		height = desc.Height;
+	}
+
+	return hr;
+}
+
+ID3D11RenderTargetView* RenderTarget::GetRenderTargetView() const
+{
+	return pRTV;
+}
+
+HRESULT RenderTarget::CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData)
+{
+	// テクスチャリソース作成
+	HRESULT hr = Texture::CreateResource(desc, nullptr);
+	if (FAILED(hr)) { return hr; }
+
+	// 設定
+	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+	rtvDesc.Format = desc.Format;
+	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+
+	// 生成
+	return D3D->Get_ID3D11Device()->CreateRenderTargetView(pTex, &rtvDesc, &pRTV);
+}
