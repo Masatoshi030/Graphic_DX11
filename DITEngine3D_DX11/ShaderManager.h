@@ -7,21 +7,14 @@
 namespace Shader
 {
 
-	//シェーダー管理用構造体
-	struct SHADER_ELEMENT
-	{
-		ID3D11VertexShader* VertexShader{};
-		ID3D11PixelShader* PixelShader{};
-		ID3D11InputLayout* VertexLayout{};
-	};
+	//==================================================
+	//頂点シェーダーを作成してロード
+	void AddVertexShader(const char* _filePath, const char* _ElementName);
+
 
 	//==================================================
-	//シェーダーを作成してロード
-	void AddShader(const char* _VertexShader_FileName, const char* _PixelShader_FileName, const char* _ElementName);
-
-	//==================================================
-	//シェーダーをまとめて取得
-	SHADER_ELEMENT* GetShader(const char* _ElementName);
+	//ピクセルシェーダーを作成してロード
+	void AddPixelShader(const char* _filePath, const char* _ElementName);
 
 	//==================================================
 	//頂点シェーダーを取得
@@ -33,5 +26,5 @@ namespace Shader
 
 	//==================================================
 	//頂点レイアウトを取得
-	ID3D11InputLayout* GetVertexLayout(const char* _ElementName);
+	ID3D11InputLayout* GetInputLayout(const char* _ElementName);
 }

@@ -13,12 +13,15 @@ void Scene_Game::Start()
 	D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(0, 1, &CubeMap_buf);
 	
 	
-	//シェーダー設定
-	Shader::AddShader("Asset/shader/unlitTextureVS.cso", "Asset/shader/unlitTexturePS.cso", "Unlit");
-	Shader::AddShader("Asset/shader/vertexLightingVS.cso", "Asset/shader/vertexLightingPS.cso", "Light");
-	Shader::AddShader("Asset/shader/PointLight_VS.cso", "Asset/shader/PointLight_PS.cso", "PointLight");
-	Shader::AddShader("Asset/shader/PointLight_VS.cso", "Asset/shader/SpecularReflection_PS.cso", "SpecularReflection");
-	
+	//== シェーダー設定 ==//
+
+	//頂点シェーダー
+	Shader::AddVertexShader("Asset/shader/PointLight_VS.cso", "PointLight");
+
+	//ピクセルシェーダー
+	Shader::AddPixelShader("Asset/shader/PointLight_PS.cso", "PointLight");
+	Shader::AddPixelShader("Asset/shader/SpecularReflection_PS.cso", "Specular");
+
 	
 	//オブジェクト設定
 	
@@ -56,7 +59,9 @@ void Scene_Game::Start()
 	//== スカイボックス ==//
 	SkyBox = new GameObject();
 	
-	SkyBox->AddComponent<MeshRenderer>()->Load("Asset\\model\\SkyBox_Town.obj", "Unlit");
+	MeshRenderer*  meshRenderer_buf = SkyBox->AddComponent<MeshRenderer>();
+
+	meshRenderer_buf->Load("Asset\\model\\SkyBox_Town.obj");
 	
 	SkyBox->transform->scale = Vector3(30.0f, 30.0f, 30.0f);
 	
@@ -68,14 +73,9 @@ void Scene_Game::Start()
 	//== マフラー ==//
 	Muffler = new GameObject();
 	
-	MeshRenderer* meshRenderer_buf = Muffler->AddComponent<MeshRenderer>();
+	meshRenderer_buf = Muffler->AddComponent<MeshRenderer>();
 	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 1.0f;
-	}
+	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
 	
 	Hierarchy.push_back(Muffler);
 	
@@ -85,14 +85,7 @@ void Scene_Game::Start()
 	//== エンジン・トランスミッション ==//
 	Engine_Transmission = new GameObject();
 	
-	meshRenderer_buf = Engine_Transmission->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.8f;
-	}
+	Engine_Transmission->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj");
 	
 	Hierarchy.push_back(Engine_Transmission);
 	
@@ -102,14 +95,7 @@ void Scene_Game::Start()
 	//== タンク ==//
 	Tank = new GameObject();
 	
-	meshRenderer_buf = Tank->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.8f;
-	}
+	Tank->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
 	
 	Hierarchy.push_back(Tank);
 	
@@ -119,14 +105,7 @@ void Scene_Game::Start()
 	//== フレーム ==//
 	Frame = new GameObject();
 	
-	meshRenderer_buf = Frame->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Frame.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.3f;
-	}
+	Frame->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Frame.obj");
 	
 	Hierarchy.push_back(Frame);
 	
@@ -136,82 +115,49 @@ void Scene_Game::Start()
 	//== リアフェンダー・カバー類 ==//
 	RearFender_Cover = new GameObject();
 	
-	meshRenderer_buf = RearFender_Cover->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_RearFender_Cover.obj", "PointLight");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
+	RearFender_Cover->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearFender_Cover.obj");
 	
 	Hierarchy.push_back(RearFender_Cover);
 	
 	RearFender_Cover->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== サスペンション周り ==//
 	Suspension = new GameObject();
-
-	meshRenderer_buf = Suspension->AddComponent<MeshRenderer>();
-
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Suspension.obj", "SpecularReflection");
-
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-
+	
+	Suspension->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Suspension.obj");
+	
 	Hierarchy.push_back(Suspension);
-
+	
 	Suspension->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== キャブレーター ==//
 	Carburetor = new GameObject();
-
-	meshRenderer_buf = Carburetor->AddComponent<MeshRenderer>();
-
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Carburetor.obj", "SpecularReflection");
-
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-
+	
+	Carburetor->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Carburetor.obj");
+	
 	Hierarchy.push_back(Carburetor);
-
+	
 	Carburetor->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== ラジエーター ==//
 	Radiator = new GameObject();
-
-	meshRenderer_buf = Radiator->AddComponent<MeshRenderer>();
-
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Radiator.obj", "SpecularReflection");
-
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-
+	
+	Radiator->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Radiator.obj");
+	
 	Hierarchy.push_back(Radiator);
 
+	Radiator->GetComponent<MeshRenderer>()->GetSubset(2)->Material.PixelShader = Shader::GetPixelShader("Specular");
+	
 	Radiator->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== アクスル周り ==//
 	RearAxle = new GameObject();
 	
-	meshRenderer_buf = RearAxle->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_RearAxle.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
+	RearAxle->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearAxle.obj");
 	
 	Hierarchy.push_back(RearAxle);
 	
@@ -221,15 +167,8 @@ void Scene_Game::Start()
 	//== リアサスペンション ==//
 	RearSuspension = new GameObject();
 	
-	meshRenderer_buf = RearSuspension->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_RearSuspension.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-	
+	RearSuspension->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearSuspension.obj");
+
 	Hierarchy.push_back(RearSuspension);
 	
 	RearSuspension->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
@@ -238,110 +177,68 @@ void Scene_Game::Start()
 	//== タイヤ ==//
 	Tire = new GameObject();
 	
-	meshRenderer_buf = Tire->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Tire.obj", "PointLight");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-	
+	Tire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Tire.obj");
+
 	Hierarchy.push_back(Tire);
 	
 	Tire->transform->scale = Vector3(0.03f, 0.03f, 0.03f);	
-
-
+	
+	
 	//== ホイール ==//
 	Wheel = new GameObject();
 	
-	meshRenderer_buf = Wheel->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Wheel.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-	
+	Wheel->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Wheel.obj");
+
 	Hierarchy.push_back(Wheel);
 	
 	Wheel->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
-
+	
+	
+	
 	//== シート ==//
 	Seat = new GameObject();
-
-	meshRenderer_buf = Seat->AddComponent<MeshRenderer>();
-
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Seat.obj", "PointLight");
-
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-
+	
+	Seat->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Seat.obj");
+	
 	Hierarchy.push_back(Seat);
-
+	
 	Seat->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== メーター ==//
 	Metor = new GameObject();
-
-	meshRenderer_buf = Metor->AddComponent<MeshRenderer>();
-
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Metor.obj", "SpecularReflection");
-
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-
+	
+	Metor->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Metor.obj");
+	
 	Hierarchy.push_back(Metor);
-
+	
 	Metor->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== メーター背景 ==//
 	Metor_BackGround = new GameObject();
-
-	meshRenderer_buf = Metor_BackGround->AddComponent<MeshRenderer>();
-
-	meshRenderer_buf->Load("Asset\\model\\CB400SF\\CB400SF_Metor_BackGround.obj", "PointLight");
-
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.5f;
-	}
-
+	
+	Metor_BackGround->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Metor_BackGround.obj");
+	
 	Hierarchy.push_back(Metor_BackGround);
-
+	
 	Metor_BackGround->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
-
+	
+	
 	//== Sphere ==//
 	Sphere = new GameObject();
 	
-	meshRenderer_buf = Sphere->AddComponent<MeshRenderer>();
-	
-	meshRenderer_buf->Load("Asset\\model\\BaseModel\\Sphere.obj", "SpecularReflection");
-	
-	for (int i = 0; i < meshRenderer_buf->GetModel()->SubsetNum; i++)
-	{
-		meshRenderer_buf->GetSubset(i)->Material.Material.Metalic_.x = 0.9f;
-	}
+    Sphere->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Sphere.obj");
 	
 	Hierarchy.push_back(Sphere);
 	
 	Sphere->transform->position.x -= 5.0f;
 	Sphere->transform->position.y += 1.0f;
-
+	
 	//== 地面 ==//
 	Ground = new GameObject();
 	
-	Ground->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Ground.obj", "PointLight");
+	Ground->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Ground.obj");
 	
 	Hierarchy.push_back(Ground);
 

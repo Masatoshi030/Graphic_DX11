@@ -15,8 +15,12 @@
 struct MODEL_MATERIAL
 {
 	char						Name[256];
+	
 	MATERIAL					Material;
 	char						TextureName[256];
+	ID3D11VertexShader*			VertexShader;
+	ID3D11InputLayout*			InputLayout;
+	ID3D11PixelShader*			PixelShader;
 	ID3D11ShaderResourceView*	Texture;
 };
 
@@ -65,14 +69,12 @@ private:
 
 	MODEL* Model{};
 
-	Shader::SHADER_ELEMENT* ShaderType;
-
 public:
 
 	static void Preload(const char* _FileName);
 	static void UnloadAll();
 
-	void Load(const char* _FileName, const char* _ShaderName);
+	void Load(const char* _FileName);
 
 	MODEL* GetModel()
 	{

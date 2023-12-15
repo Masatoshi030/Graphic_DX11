@@ -15,13 +15,6 @@ std::unordered_map<std::string, MODEL*> MeshRenderer::ModelPool;
 void MeshRenderer::Draw()
 {
 
-	// 入力レイアウト設定
-	D3D->Get_ID3D11DeviceContext()->IASetInputLayout(ShaderType->VertexLayout);
-
-	// シェーダ設定
-	D3D->Get_ID3D11DeviceContext()->VSSetShader(ShaderType->VertexShader, NULL, 0);
-	D3D->Get_ID3D11DeviceContext()->PSSetShader(ShaderType->PixelShader, NULL, 0);
-
 	D3D->SetWorldMatrix(&gameObject->transform->worldMatrix);
 
 	//頂点バッファ設定
@@ -40,6 +33,15 @@ void MeshRenderer::Draw()
 	{
 		//マテリアル設定
 		D3D->SetMaterial(Model->SubsetArray[i].Material.Material);
+
+		//== マテリアルごとにシェーダーを設定 ==//
+
+		// 入力レイアウト設定
+		D3D->Get_ID3D11DeviceContext()->IASetInputLayout(Model->SubsetArray[i].Material.InputLayout);
+
+		// シェーダ設定
+		D3D->Get_ID3D11DeviceContext()->VSSetShader(Model->SubsetArray[i].Material.VertexShader, NULL, 0);
+		D3D->Get_ID3D11DeviceContext()->PSSetShader(Model->SubsetArray[i].Material.PixelShader, NULL, 0);
 
 		//テクスチャ設定
 		if (Model->SubsetArray[i].Material.Texture)
@@ -86,11 +88,8 @@ void MeshRenderer::UnloadAll()
 	ModelPool.clear();
 }
 
-void MeshRenderer::Load(const char* _FileName, const char* _ShaderName)
+void MeshRenderer::Load(const char* _FileName)
 {
-
-	//使用するシェーダーを取得
-	ShaderType = Shader::GetShader(_ShaderName);
 
 	if (ModelPool.count(_FileName) > 0)
 	{
@@ -103,6 +102,14 @@ void MeshRenderer::Load(const char* _FileName, const char* _ShaderName)
 	LoadModel(_FileName, Model);
 
 	ModelPool[_FileName] = Model;
+
+	//ベースのシェーダーを設定
+	for (int i = 0; i < Model->SubsetNum; i++)
+	{
+		Model->SubsetArray[i].Material.InputLayout = Shader::GetInputLayout("Base");
+		Model->SubsetArray[i].Material.VertexShader = Shader::GetVertexShader("Base");
+		Model->SubsetArray[i].Material.PixelShader = Shader::GetPixelShader("Base");
+	}
 }
 
 void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)

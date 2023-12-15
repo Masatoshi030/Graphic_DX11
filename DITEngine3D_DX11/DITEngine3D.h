@@ -8,6 +8,7 @@
 #include "ShaderManager.h"
 #include "Texture.h"
 #include "Time.h"
+#include "ShaderManager.h"
 
 //コンポーネント
 #include "Transform.h"

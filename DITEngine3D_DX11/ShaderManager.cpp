@@ -5,38 +5,63 @@
 namespace Shader
 {
 
-	//シェーダーリスト
-	std::unordered_map<std::string, SHADER_ELEMENT*> ShaderList;
+	//頂点シェーダーシェーダーリスト
+	std::unordered_map<std::string, ID3D11VertexShader*> VertexShaderList;
 
+	//入力レイアウトリスト
+	std::unordered_map<std::string, ID3D11InputLayout*> InputLayoutList;
 
-	void AddShader(const char* _VertexShader_FileName, const char* _PixelShader_FileName, const char* _ElementName)
+	//ピクセルシェーダーリスト
+	std::unordered_map<std::string, ID3D11PixelShader*> PixelShaderList;
+
+	void AddVertexShader(const char* _filePath, const char* _ElementName)
 	{
-		SHADER_ELEMENT* shader_buf = new SHADER_ELEMENT;
+		ID3D11VertexShader* vertexShader_buf;
+		ID3D11InputLayout* inputLayout_buf;
 
-		D3D->CreateVertexShader(&shader_buf->VertexShader, &shader_buf->VertexLayout, _VertexShader_FileName);
+		D3D->CreateVertexShader(&vertexShader_buf, &inputLayout_buf, _filePath);
 
-		D3D->CreatePixelShader(&shader_buf->PixelShader, _PixelShader_FileName);
+		//一番最初に読み込まれたシェーダーはベースのシェーダーとする
+		//初期化時に自動で設定されるシェーダー
+		if(VertexShaderList.size() == 0)
+		{
+			VertexShaderList["Base"] = vertexShader_buf;
+			InputLayoutList["Base"] = inputLayout_buf;
+		}
 
-		ShaderList[_ElementName] = shader_buf;
+		VertexShaderList[_ElementName] = vertexShader_buf;
+		InputLayoutList[_ElementName] = inputLayout_buf;
 	}
 
-	SHADER_ELEMENT* GetShader(const char* _ElementName)
+	void AddPixelShader(const char* _filePath, const char* _ElementName)
 	{
-		return ShaderList[_ElementName];
+		ID3D11PixelShader* pixelShader_buf;
+
+		D3D->CreatePixelShader(&pixelShader_buf, _filePath);
+
+
+		//一番最初に読み込まれたシェーダーはベースのシェーダーとする
+		//初期化時に自動で設定されるシェーダー
+		if (PixelShaderList.size() == 0)
+		{
+			PixelShaderList["Base"] = pixelShader_buf;
+		}
+
+		PixelShaderList[_ElementName] = pixelShader_buf;
 	}
 
 	ID3D11VertexShader* GetVertexShader(const char* _ElementName)
 	{
-		return ShaderList[_ElementName]->VertexShader;
+		return VertexShaderList[_ElementName];
 	}
 
 	ID3D11PixelShader* GetPixelShader(const char* _ElementName)
 	{
-		return ShaderList[_ElementName]->PixelShader;
+		return PixelShaderList[_ElementName];
 	}
 
-	ID3D11InputLayout* GetVertexLayout(const char* _ElementName)
+	ID3D11InputLayout* GetInputLayout(const char* _ElementName)
 	{
-		return ShaderList[_ElementName]->VertexLayout;
+		return InputLayoutList[_ElementName];
 	}
 }
