@@ -60,7 +60,7 @@ bool Application::InitApp()
 	Time::Init();
 
 	//DITEngineシステム関連の初期化
-	Input::Init();
+	Input::Init(hWnd);
 
 	//正常終了
 	return true;
@@ -212,11 +212,17 @@ LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 
 		break;
 
-	case WM_MOUSEMOVE: // マウスカーソルが動いたとき
-	{
-		Input::SetMousePointer(lp);
-	}
+	case WM_MOUSEMOVE: // マウスカーソルが動いたとき（スクリーン上）
+	
+		Input::SetMousePointer_OnScreen(lp);
+	
 	break;
+
+	case WM_INPUT:
+
+		Input::SetMousePointer_HighResolution(lp);
+
+		break;
 
 	case WM_KEYDOWN:
 

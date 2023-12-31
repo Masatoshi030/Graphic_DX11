@@ -92,6 +92,10 @@ void SCENE_MANAGERSYSTEM::Game_Main(MSG* msg)
 						D3D->Render_DrawEnd();
 					}
 				}
+
+				LPARAM lp = 0;
+
+				Input::SetMousePointer_HighResolution(lp);
 			}
 		}
 
