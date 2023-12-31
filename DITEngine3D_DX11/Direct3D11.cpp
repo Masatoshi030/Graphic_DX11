@@ -215,6 +215,13 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->PSSetConstantBuffers(6, 1, &EyeInfoBuffer);
 
 
+	bufferDesc.ByteWidth = sizeof(ENVIRONMENTMAP_INFO);
+
+	Device->CreateBuffer(&bufferDesc, NULL, &EnvironmentMapInfoBuffer);
+	DeviceContext->VSSetConstantBuffers(7, 1, &EnvironmentMapInfoBuffer);
+	DeviceContext->PSSetConstantBuffers(7, 1, &EnvironmentMapInfoBuffer);
+
+
 	// ƒ‰ƒCƒg‰Šú‰»
 	LIGHT light{};
 	light.Enable = true;
@@ -382,6 +389,11 @@ void DIRECT3D11::SetPointLight(LIGHT_POINT Light_Point)
 void DIRECT3D11::SetEyeInfo(EYE_INFO Eye_Info)
 {
 	DeviceContext->UpdateSubresource(EyeInfoBuffer, 0, NULL, &Eye_Info, 0, 0);
+}
+
+void DIRECT3D11::SetEnvironmentMapInfo(ENVIRONMENTMAP_INFO EnvironmentMap_Info)
+{
+	DeviceContext->UpdateSubresource(EnvironmentMapInfoBuffer, 0, NULL, &EnvironmentMap_Info, 0, 0);
 }
 
 void DIRECT3D11::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)

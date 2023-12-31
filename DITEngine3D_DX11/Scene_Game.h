@@ -9,22 +9,17 @@ private:
 	GameObject* MainCamera;
 	GameObject* LightCamera;
 	GameObject* SkyBox;
+
+	GameObject* Body;
 	GameObject* Muffler;
-	GameObject* Engine_Transmission;
-	GameObject* Tank;
-	GameObject* Frame;
+	GameObject* Engine;
+	GameObject* Handle;
+	GameObject* FrontFender;
+	GameObject* FrontTire;
+	GameObject* RearTire;
+
 	GameObject* Sphere;
-	GameObject* RearFender_Cover;
-	GameObject* Suspension;
-	GameObject* Carburetor;
-	GameObject* Radiator;
-	GameObject* RearAxle;
-	GameObject* RearSuspension;
-	GameObject* Wheel;
-	GameObject* Tire;
-	GameObject* Metor;
-	GameObject* Metor_BackGround;
-	GameObject* Seat;
+
 	GameObject* Ground;
 
 public:

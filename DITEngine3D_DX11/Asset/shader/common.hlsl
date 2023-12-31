@@ -78,6 +78,17 @@ cbuffer EyeInfo : register(b6)
 }
 
 
+struct ENVIRONMENTMAP_INFO
+{
+    float4 ImageSize; //環境マップの解像度
+};
+
+cbuffer EnvironmentMapInfo : register(b7)
+{
+    ENVIRONMENTMAP_INFO EnvironmentMap_Info;
+};
+
+
 
 
 struct VS_IN

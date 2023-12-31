@@ -73,6 +73,12 @@ struct EYE_INFO
 };
 
 
+//ä¬ã´É}ÉbÉvèÓïÒ
+struct ENVIRONMENTMAP_INFO
+{
+	DirectX::SimpleMath::Vector4 ImageSize;
+};
+
 
 
 class DIRECT3D11
@@ -97,6 +103,7 @@ private:
 	ID3D11Buffer*				LightBuffer;
 	ID3D11Buffer*				PointLightBuffer;
 	ID3D11Buffer*				EyeInfoBuffer;
+	ID3D11Buffer*				EnvironmentMapInfoBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -178,6 +185,10 @@ public:
 	//=================================================
 	//
 	void SetEyeInfo(EYE_INFO Eye_Info);
+
+	//=================================================
+	//
+	void SetEnvironmentMapInfo(ENVIRONMENTMAP_INFO EnvironmentMap_Info);
 
 	//=================================================
 	//

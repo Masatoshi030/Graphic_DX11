@@ -81,10 +81,16 @@ public:
 		return Model;
 	}
 
-	SUBSET* GetSubset(int _idx)
+	//=====================================================
+	//マテリアル格納番号からサブセットを取得
+	SUBSET* GetSubset_Index(int _idx)
 	{
 		return &Model->SubsetArray[_idx];
 	}
+
+	//=====================================================
+	//マテリアル名からサブセットを取得
+	SUBSET* GetSubset_MaterialName(const char* _name);
 
 	void Draw();
 };
