@@ -163,6 +163,9 @@ void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)
 			Model->SubsetArray[i].StartIndex = modelObj.SubsetArray[i].StartIndex;
 			Model->SubsetArray[i].IndexNum = modelObj.SubsetArray[i].IndexNum;
 
+			//名前のコピー
+			strcpy(Model->SubsetArray[i].Material.Name, modelObj.SubsetArray[i].Material.Name);
+
 			Model->SubsetArray[i].Material.Material = modelObj.SubsetArray[i].Material.Material;
 
 			Model->SubsetArray[i].Material.Texture = nullptr;
@@ -552,4 +555,17 @@ void MeshRenderer::LoadMaterial(const char* _FileName, MODEL_MATERIAL** _Materia
 
 	*_MaterialArray = materialArray;
 	*_MaterialNum = materialNum;
+}
+
+SUBSET* MeshRenderer::GetSubset_MaterialName(const char* _name)
+{
+	for (int i = 0; i < Model->SubsetNum; i++)
+	{
+		if (std::strcmp(Model->SubsetArray[i].Material.Name, _name) == 0)
+		{
+			return &Model->SubsetArray[i];
+		}
+	}
+
+	return nullptr;
 }

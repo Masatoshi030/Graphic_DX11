@@ -27,4 +27,13 @@ public:
 
 	void Rotate(Vector3 value);
 	void Rotate(float _x, float _y, float _z);
+
+
+	//==============================================
+	//四元数で回転情報を取得
+	Vector4 GetRotation_Quaternion();
+
+	//==============================================
+	//四元数のrotationを３次元ベクトルで回転
+	Vector3 QuaternionRotation_Vector3(Vector3 _Value);
 };
