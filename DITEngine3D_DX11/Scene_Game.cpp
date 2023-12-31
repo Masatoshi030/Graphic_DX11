@@ -114,8 +114,7 @@ void Scene_Game::Start()
 
 	Muffler->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Muffler")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	
-	Muffler->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-	
+	Muffler->Set_Parent(Body);
 	
 	//== エンジン ==//
 	Engine = new GameObject();
@@ -126,8 +125,7 @@ void Scene_Game::Start()
 
 	Engine->GetComponent<MeshRenderer>()->GetSubset_MaterialName("CrankCase")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	
-	Engine->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-	
+	Engine->Set_Parent(Body);
 	
 	//== ハンドル ==//
 	Handle = new GameObject();
@@ -144,9 +142,7 @@ void Scene_Game::Start()
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Winker")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("HeadLightFrame")->Material.PixelShader = Shader::GetPixelShader("Specular");
 
-
-	Handle->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
+	Handle->Set_Parent(Body);
 
 	//== フロントフェンダー ==//
 	FrontFender = new GameObject();
@@ -158,9 +154,8 @@ void Scene_Game::Start()
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Tank")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Brake")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("BrakeDisc")->Material.PixelShader = Shader::GetPixelShader("Specular");
-
-	FrontFender->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
 	
+	FrontFender->Set_Parent(Body);
 	
 	//== フロントタイヤ ==//
 	FrontTire = new GameObject();
@@ -168,9 +163,8 @@ void Scene_Game::Start()
 	FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
 
 	Hierarchy.push_back(FrontTire);
-	
-	FrontTire->transform->scale = Vector3(0.03f, 0.03f, 0.03f);	
 
+	FrontTire->Set_Parent(Body);
 
 	//== リアタイヤ ==//
 	RearTire = new GameObject();
@@ -179,8 +173,7 @@ void Scene_Game::Start()
 
 	Hierarchy.push_back(RearTire);
 
-	RearTire->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
+	RearTire->Set_Parent(Body);
 	
 	//== 地面 ==//
 	Ground = new GameObject();
@@ -211,7 +204,7 @@ void Scene_Game::Start()
 
 void Scene_Game::Update()
 {
-
+	//終了処理
 	if (Input::GetKeyState(KEY_INPUT_ESCAPE) == Input::KEY_DOWN)
 	{
 		SCENE_MANAGER->LoadScene(EXIT_NUM_SCENE);
@@ -229,13 +222,17 @@ void Scene_Game::Update()
 		return;
 	}
 
+	//カメラかバイクの操作
 	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_X) == Input::KEY_WHILE_DOWN)
 	{
+		Body->transform->Translate(
+			Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
+			0.0f,
+			Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
+		);
 
-		PointLight_Obj->transform->Translate(Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(), 0.0f, Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime());
+		Body->transform->Rotate(0.0f, Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(), 0.0f);
 
-		PointLight_Obj->transform->position.y -= Input::GetGamePad_LeftTrigger() * 0.005f * Time::GetDeltaTime();
-		PointLight_Obj->transform->position.y += Input::GetGamePad_RightTrigger() * 0.005f * Time::GetDeltaTime();
 	}
 	else
 	{
@@ -245,10 +242,14 @@ void Scene_Game::Update()
 			Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
 		);
 
-		//MainCamera->transform->position.y -= Input::GetGamePad_LeftTrigger() * 0.005f * Time::GetDeltaTime();
-		//MainCamera->transform->position.y += Input::GetGamePad_RightTrigger() * 0.005f * Time::GetDeltaTime();
+		MainCamera->transform->Rotate(
+			-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(), 
+			Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(), 
+			0.0f
+		);
 	}
 
+	//別視点カメラ切り替え
 	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_BACK) == Input::KEY_WHILE_DOWN)
 	{
 		LightCamera->GetComponent<Camera>()->Enable = true;
@@ -260,8 +261,7 @@ void Scene_Game::Update()
 		MainCamera->GetComponent<Camera>()->Enable = true;
 	}
 
-	MainCamera->transform->Rotate(-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(), Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(), 0.0f);
-
+	//バイブレーションテスト
 	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_B) == Input::KEY_DOWN)
 	{
 		Input::SetGamePadVibration(1.0f, 0.25f);
