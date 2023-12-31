@@ -6,7 +6,7 @@ void Scene_Game::Start()
 	//== 環境画像の設定 ==//
 	Texture* CubeMap;
 	CubeMap = new Texture();
-	CubeMap->Create("Asset/texture/parking_garage_2000_1000.jpg");
+	CubeMap->Create("Asset/texture/parking_garage_2000x1000.jpg");
 	
 	ID3D11ShaderResourceView* CubeMap_buf = CubeMap->GetResource();
 	
@@ -26,10 +26,12 @@ void Scene_Game::Start()
 
 	//頂点シェーダー
 	Shader::AddVertexShader("Asset/shader/PointLight_VS.cso", "PointLight");
+	Shader::AddVertexShader("Asset/shader/unlitTextureVS.cso", "Unlit");
 
 	//ピクセルシェーダー
 	Shader::AddPixelShader("Asset/shader/PointLight_PS.cso", "PointLight");
 	Shader::AddPixelShader("Asset/shader/SpecularReflection_PS.cso", "Specular");
+	Shader::AddPixelShader("Asset/shader/unlitTexturePS.cso", "Unlit");
 
 	
 	//オブジェクト設定
@@ -193,6 +195,22 @@ void Scene_Game::Start()
 	Sphere->transform->position.y = 1.0f;
 
 	Hierarchy.push_back(Sphere);
+
+	//== テストUI ==//
+	TestUI = new GameObject();
+
+	UISpriteRenderer* uis_buf = TestUI->AddComponent<UISpriteRenderer>();
+
+	Texture* TestUITexture;
+	TestUITexture = new Texture();
+	TestUITexture->Create("Asset/texture/Scope.png");
+	ID3D11ShaderResourceView* TestUI_buf = TestUITexture->GetResource();
+
+	uis_buf->SetTexture(TestUI_buf);
+	uis_buf->SetVertexShader(Shader::GetVertexShader("Unlit"), Shader::GetInputLayout("Unlit"));
+	uis_buf->SetPixelShader(Shader::GetPixelShader("Unlit"));
+
+	Hierarchy.push_back(TestUI);
 
 
 	//オブジェクトの描画処理

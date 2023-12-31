@@ -15,6 +15,7 @@
 #include "Camera.h"
 #include "MeshRenderer.h"
 #include "Light.h"
+#include "UISpriteRenderer.h"
 
 //•Ö—˜‚È’è‹`
 

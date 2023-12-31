@@ -20,6 +20,8 @@ private:
 
 	GameObject* Sphere;
 
+	GameObject* TestUI;
+
 	GameObject* Ground;
 
 public:

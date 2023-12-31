@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="UISpriteRenderer.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UISpriteRenderer.cpp" />
     <ClCompile Include="utftosjisconv.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>

@@ -17,6 +17,7 @@ void MeshRenderer::Draw()
 
 	D3D->SetWorldMatrix(&gameObject->transform->worldMatrix);
 
+
 	//頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
