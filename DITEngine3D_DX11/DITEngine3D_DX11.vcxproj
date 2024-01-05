@@ -138,55 +138,55 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="UISpriteRenderer.h" />
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Direct3D11.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="MeshRenderer.h">
+    <ClInclude Include="Sources\UISpriteRenderer.h" />
+    <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\Camera.h" />
+    <ClInclude Include="Sources\Component.h" />
+    <ClInclude Include="Sources\Direct3D11.h" />
+    <ClInclude Include="Sources\GameObject.h" />
+    <ClInclude Include="Sources\InputSystem.h" />
+    <ClInclude Include="Sources\Light.h" />
+    <ClInclude Include="Sources\MeshRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Scene_Game.h" />
-    <ClInclude Include="ShaderManager.h" />
-    <ClInclude Include="SystemFormat.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Time.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="utftosjisconv.h" />
-    <ClInclude Include="WinMain.h" />
+    <ClInclude Include="Sources\Scene.h" />
+    <ClInclude Include="Sources\Scene_Game.h" />
+    <ClInclude Include="Sources\ShaderManager.h" />
+    <ClInclude Include="Sources\SystemFormat.h" />
+    <ClInclude Include="Sources\Texture.h" />
+    <ClInclude Include="Sources\Time.h" />
+    <ClInclude Include="Sources\Transform.h" />
+    <ClInclude Include="Sources\utftosjisconv.h" />
+    <ClInclude Include="Sources\WinMain.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Direct3D11.cpp" />
-    <ClCompile Include="DITEngine3D.h" />
-    <ClCompile Include="DITEngine3D.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="MeshRenderer.cpp">
+    <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\Camera.cpp" />
+    <ClCompile Include="Sources\Direct3D11.cpp" />
+    <ClCompile Include="Sources\DITEngine3D.h" />
+    <ClCompile Include="Sources\DITEngine3D.cpp" />
+    <ClCompile Include="Sources\GameObject.cpp" />
+    <ClCompile Include="Sources\InputSystem.cpp" />
+    <ClCompile Include="Sources\Light.cpp" />
+    <ClCompile Include="Sources\MeshRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Scene_Game.cpp" />
-    <ClCompile Include="ShaderManager.cpp" />
-    <ClCompile Include="SystemFormat.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="UISpriteRenderer.cpp" />
-    <ClCompile Include="utftosjisconv.cpp" />
-    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Sources\SceneManager.cpp" />
+    <ClCompile Include="Sources\Scene_Game.cpp" />
+    <ClCompile Include="Sources\ShaderManager.cpp" />
+    <ClCompile Include="Sources\SystemFormat.cpp" />
+    <ClCompile Include="Sources\Texture.cpp" />
+    <ClCompile Include="Sources\Time.cpp" />
+    <ClCompile Include="Sources\Transform.cpp" />
+    <ClCompile Include="Sources\UISpriteRenderer.cpp" />
+    <ClCompile Include="Sources\utftosjisconv.cpp" />
+    <ClCompile Include="Sources\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="KeyInputDifinitionList.h" />
-    <None Include="SceneManager.h" />
+    <None Include="Sources\KeyInputDifinitionList.h" />
+    <None Include="Sources\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
@@ -211,6 +211,18 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_3</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.1</ShaderModel>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

@@ -89,6 +89,10 @@ cbuffer EnvironmentMapInfo : register(b7)
 };
 
 
+cbuffer UI_Info : register(b8)
+{
+    matrix AffineMatrix;	//UIのトランスフォームを決めるアフィン変換行列
+};
 
 
 struct VS_IN
