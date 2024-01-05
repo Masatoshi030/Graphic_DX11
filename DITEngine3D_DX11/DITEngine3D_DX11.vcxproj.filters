@@ -22,6 +22,12 @@
     <Filter Include="ソース ファイル\シーン">
       <UniqueIdentifier>{8f8c4a20-b9be-4560-8756-43907802dac6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\頂点シェーダー">
+      <UniqueIdentifier>{031b44fb-0cda-42e8-8136-5853547ee2cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ピクセルシェーダー">
+      <UniqueIdentifier>{217f7044-a2b0-4ee7-80da-db52f96ffdae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Direct3D11.h">
@@ -126,16 +132,16 @@
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Light.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\コンポーネント</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Texture.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Time.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
     <ClCompile Include="Sources\UISpriteRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\コンポーネント</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,20 +153,32 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTextureVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\PointLight_VS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Asset\shader\vertexLightingPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl" />
-    <FxCompile Include="Asset\shader\PointLight_VS.hlsl" />
-    <FxCompile Include="Asset\shader\PointLight_PS.hlsl" />
-    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl" />
-    <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl" />
-    <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl" />
   </ItemGroup>
 </Project>
