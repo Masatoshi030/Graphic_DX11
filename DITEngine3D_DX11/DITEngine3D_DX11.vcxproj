@@ -138,6 +138,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\ImGUI_DebugWindow.h" />
+    <ClInclude Include="Sources\ImGUIManager.h" />
+    <ClInclude Include="Sources\ImGUIWindowBase.h" />
+    <ClInclude Include="Sources\ImGui\imconfig.h" />
+    <ClInclude Include="Sources\ImGui\imgui.h" />
+    <ClInclude Include="Sources\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="Sources\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="Sources\ImGui\imgui_internal.h" />
+    <ClInclude Include="Sources\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Sources\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Sources\ImGui\imstb_truetype.h" />
     <ClInclude Include="Sources\UISpriteRenderer.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Camera.h" />
@@ -161,12 +172,22 @@
     <ClInclude Include="Sources\WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\ImGUI_DebugWindow.cpp" />
+    <ClCompile Include="Sources\ImGUIManager.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\Direct3D11.cpp" />
     <ClCompile Include="Sources\DITEngine3D.h" />
     <ClCompile Include="Sources\DITEngine3D.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
+    <ClCompile Include="Sources\ImGUIWindowBase.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Sources\InputSystem.cpp" />
     <ClCompile Include="Sources\Light.cpp" />
     <ClCompile Include="Sources\MeshRenderer.cpp">

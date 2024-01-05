@@ -10,6 +10,10 @@
 #include "Time.h"
 #include "ShaderManager.h"
 
+//ImGUI
+#include "ImGUIManager.h"
+#include "ImGUIWindowBase.h"
+
 //コンポーネント
 #include "Transform.h"
 #include "Camera.h"

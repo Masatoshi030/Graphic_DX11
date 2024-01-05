@@ -28,6 +28,15 @@
     <Filter Include="リソース ファイル\ピクセルシェーダー">
       <UniqueIdentifier>{217f7044-a2b0-4ee7-80da-db52f96ffdae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ImGUI">
+      <UniqueIdentifier>{6ddd9d00-3021-43f3-b054-ebe73854d763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGUI\Window">
+      <UniqueIdentifier>{4f6c8fb0-20e5-47e0-927a-f4519c8b7b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGUI\ライブラリ">
+      <UniqueIdentifier>{ed45a68a-dd3a-4318-9210-471b5eb96a88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Direct3D11.h">
@@ -83,6 +92,39 @@
     </ClInclude>
     <ClInclude Include="Sources\UISpriteRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUIManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imconfig.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUIWindowBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imstb_truetype.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui_impl_dx11.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui_impl_win32.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui_internal.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imstb_rectpack.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imstb_textedit.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUI_DebugWindow.h">
+      <Filter>ソース ファイル\ImGUI\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +184,36 @@
     </ClCompile>
     <ClCompile Include="Sources\UISpriteRenderer.cpp">
       <Filter>ソース ファイル\コンポーネント</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUIManager.cpp">
+      <Filter>ソース ファイル\システム</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_demo.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_draw.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_tables.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_widgets.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUIWindowBase.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUI_DebugWindow.cpp">
+      <Filter>ソース ファイル\ImGUI\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

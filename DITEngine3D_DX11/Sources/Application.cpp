@@ -62,6 +62,9 @@ bool Application::InitApp()
 	//DITEngineシステム関連の初期化
 	Input::Init(hWnd);
 
+	//ImGUI初期化
+	ImGUIManager::Init(hWnd, D3D->Get_ID3D11Device(), D3D->Get_ID3D11DeviceContext());
+
 	//正常終了
 	return true;
 }
@@ -71,6 +74,12 @@ void Application::CloseApp()
 {
 	//ウィンドウの終了処理
 	CloseWnd();
+
+	//ImGUIの終了処理
+	ImGUIManager::Shutdown();
+
+	//DirectX11の終了処理
+	D3D->Release();
 }
 
 bool Application::InitWnd()
@@ -161,9 +170,19 @@ void Application::CloseWnd()
 	hWnd = nullptr;
 }
 
+//ImGUIに入力メッセージを転送する関数のプロトタイプ宣言
+LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 //ウィンドウプロシージャ
 LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
+
+	//ImGuiに入力メッセージ情報を送る
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wp, lp))
+	{
+		return true;
+	}
+
 	switch (msg)
 	{
 	case WM_DESTROY:// ウィンドウ破棄のメッセージ

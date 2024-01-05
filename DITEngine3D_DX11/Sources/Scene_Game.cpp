@@ -35,8 +35,14 @@ void Scene_Game::Start()
 	Shader::AddPixelShader("Asset/shader/unlitTexturePS.cso", "Unlit");
 	Shader::AddPixelShader("Asset/shader/UI_BaseShader_PS.cso", "UI_Base");
 
+
+	//== ImGUI設定 ==//
+	ig_DebugWindow = new ImGUI_DebugWindow();
+	ig_DebugWindow->SetWindowName("DebugWindow");
+	ImGUIManager::AddWindow(ig_DebugWindow);
+
 	
-	//オブジェクト設定
+	//== オブジェクト設定 ==//
 	
 	//== ポイントライト ==//
 	PointLight_Obj = new GameObject();
@@ -218,6 +224,11 @@ void Scene_Game::Update()
 		SCENE_MANAGER->LoadScene(EXIT_NUM_SCENE);
 		return;
 	}
+
+	//FPS表示
+	ig_DebugWindow->FPS = Time::Get_FPS();
+	//時間表示
+	ig_DebugWindow->GameTime = Time::GetWorldTime();
 
 	//カメラかバイクの操作
 	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_X) == Input::KEY_WHILE_DOWN)

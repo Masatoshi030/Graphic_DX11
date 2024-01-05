@@ -2,6 +2,7 @@
 
 #include <list>
 #include "GameObject.h"
+#include "ImGUIManager.h"
 
 class Scene
 {

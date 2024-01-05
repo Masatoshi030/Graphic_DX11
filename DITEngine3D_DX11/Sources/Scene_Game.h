@@ -1,6 +1,8 @@
 #pragma once
-#include "GameObject.h"
+
 #include "Scene.h"
+
+#include "ImGUI_DebugWindow.h"
 
 class Scene_Game : public Scene
 {
@@ -23,6 +25,9 @@ private:
 	GameObject* TestUI;
 
 	GameObject* Ground;
+
+	//ImGUIWindow
+	ImGUI_DebugWindow* ig_DebugWindow;
 
 public:
 
