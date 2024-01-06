@@ -273,6 +273,11 @@ Vector2::Vector2(float _x, float _y)
 	y = _y;
 }
 
+DirectX::XMVECTOR Vector2::GetXMVECTOR()
+{
+	return DirectX::XMLoadFloat2(&xmfloat2);
+}
+
 void Vector2::Zero()
 {
 	x = 0.0f;
