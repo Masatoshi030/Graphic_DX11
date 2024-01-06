@@ -13,4 +13,12 @@ public:
 	//=== •\¦€–Ú ===//
 	int FPS;
 	TIME GameTime;
+
+	float UI_Position_X_Slider;
+	float UI_Position_Y_Slider;
+
+	float UI_Rotation_Slider;
+
+	float UI_Scale_X_Slider;
+	float UI_Scale_Y_Slider;
 };

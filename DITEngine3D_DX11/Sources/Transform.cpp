@@ -21,10 +21,10 @@ void Transform::Update()
 {
 	// ワールド変換行列の計算
 
-	XMMATRIX scale, rot, trans;
+	XMMATRIX scal, rot, trans;
 
 	// スケール
-	scale = XMMatrixScaling(gameObject->transform->scale.x, gameObject->transform->scale.y, gameObject->transform->scale.z);
+	scal = XMMatrixScaling(gameObject->transform->scale.x, gameObject->transform->scale.y, gameObject->transform->scale.z);
 
 	// 回転
 	rot = XMMatrixRotationRollPitchYaw(gameObject->transform->rotation.x, gameObject->transform->rotation.y, gameObject->transform->rotation.z);
@@ -33,7 +33,7 @@ void Transform::Update()
 	trans = XMMatrixTranslation(gameObject->transform->position.x, gameObject->transform->position.y, gameObject->transform->position.z);
 
 	// 合成
-	worldMatrix = scale * rot * trans;
+	worldMatrix = scal * rot * trans;
 
 	//もし親がいたら
 	if (gameObject->parent != nullptr)

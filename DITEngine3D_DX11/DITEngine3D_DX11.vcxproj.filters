@@ -209,10 +209,10 @@
     <ClCompile Include="Sources\ImGui\imgui_widgets.cpp">
       <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ImGUIWindowBase.cpp">
-      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\ImGUI_DebugWindow.cpp">
+      <Filter>ソース ファイル\ImGUI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUIWindowBase.cpp">
       <Filter>ソース ファイル\ImGUI\Window</Filter>
     </ClCompile>
   </ItemGroup>

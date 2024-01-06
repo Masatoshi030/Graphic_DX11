@@ -8,6 +8,21 @@ SCENE_MANAGERSYSTEM* SCENE_MANAGERSYSTEM::Instance = nullptr;
 void SCENE_MANAGERSYSTEM::Game_Main(MSG* msg)
 {
 
+	//== シェーダで必要なシステム情報を送信 ==//
+
+	GPU_SYSTEM_INFO system_info_buf;
+
+	//Windowサイズ
+	system_info_buf.ScreenSize.x = D3D->Get_ApplicationHandle()->Get_WindowWidth();
+	system_info_buf.ScreenSize.y = D3D->Get_ApplicationHandle()->Get_WindowHeight();
+	
+	//アスペクト比
+	system_info_buf.ScreenAspect.x = system_info_buf.ScreenSize.x / system_info_buf.ScreenSize.y;
+
+	//GPUに送信
+	D3D->SetGPUSystemInfo(system_info_buf);
+
+	//== シーン管理開始 ==//
 	do
 	{
 		//シーン遷移フラグ　リセット

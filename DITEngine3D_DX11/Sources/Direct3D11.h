@@ -80,6 +80,13 @@ struct ENVIRONMENTMAP_INFO
 };
 
 
+//シェーダーに必要なシステム情報
+struct GPU_SYSTEM_INFO
+{
+	DirectX::SimpleMath::Vector4 ScreenSize;	//xy
+	DirectX::SimpleMath::Vector4 ScreenAspect;	//x
+};
+
 
 class DIRECT3D11
 {
@@ -105,6 +112,7 @@ private:
 	ID3D11Buffer*				EyeInfoBuffer;
 	ID3D11Buffer*				EnvironmentMapInfoBuffer;
 	ID3D11Buffer*				UIInfoBuffer;
+	ID3D11Buffer*				SystemInfoBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -193,7 +201,11 @@ public:
 
 	//=================================================
 	//
-	void SetUIInfoBuffer(DirectX::XMMATRIX* _UI_AffineMatrix);
+	void SetUIInfoBuffer(DirectX::XMMATRIX* _UI_Info);
+
+	//=================================================
+	//
+	void SetGPUSystemInfo(GPU_SYSTEM_INFO _System_Info);
 
 	//=================================================
 	//

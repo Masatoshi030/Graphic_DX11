@@ -1,26 +1,28 @@
 #include "UISpriteRenderer.h"
 #include "DITEngine3D.h"
 
+using namespace DirectX;
+
 UISpriteRenderer::UISpriteRenderer()
 {
 	VERTEX_3D vertex[4];
 
-	vertex[0].Position = Vector3(0.0f, 0.0f, 0.0f).simpleMath_vector3;
+	vertex[0].Position = Vector3(-50.0f, -50.0f, 0.0f).simpleMath_vector3;
 	vertex[0].Normal = Vector3(0.0f, 0.0f, 0.0f).simpleMath_vector3;
 	vertex[0].Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = Vector2(0.0f, 0.0f).simpleMath_vector2;
 
-	vertex[1].Position = Vector3(200.0f, 0.0f, 0.0f).simpleMath_vector3;
+	vertex[1].Position = Vector3(50.0f, -50.0f, 0.0f).simpleMath_vector3;
 	vertex[1].Normal = Vector3(0.0f, 0.0f, 0.0f).simpleMath_vector3;
 	vertex[1].Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = Vector2(1.0f, 0.0f).simpleMath_vector2;
 
-	vertex[2].Position = Vector3(0.0f, 200.0f, 0.0f).simpleMath_vector3;
+	vertex[2].Position = Vector3(-50.0f, 50.0f, 0.0f).simpleMath_vector3;
 	vertex[2].Normal = Vector3(0.0f, 0.0f, 0.0f).simpleMath_vector3;
 	vertex[2].Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = Vector2(0.0f, 1.0f).simpleMath_vector2;
 
-	vertex[3].Position = Vector3(200.0f, 200.0f, 0.0f).simpleMath_vector3;
+	vertex[3].Position = Vector3(50.0f, 50.0f, 0.0f).simpleMath_vector3;
 	vertex[3].Normal = Vector3(0.0f, 0.0f, 0.0f).simpleMath_vector3;
 	vertex[3].Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = Vector2(1.0f, 1.0f).simpleMath_vector2;
@@ -61,7 +63,18 @@ void UISpriteRenderer::Start()
 //更新処理
 void UISpriteRenderer::Update()
 {
+	XMMATRIX affine_matrix;
 
+	//2Dのアフィン変換行列を作成
+	affine_matrix = XMMatrixAffineTransformation2D(
+		Vector2(gameObject->transform->scale.x, gameObject->transform->scale.y).GetXMVECTOR(),			//スケール
+		Vector2(0.0f, 0.0f).GetXMVECTOR(),																//回転の中心点
+		gameObject->transform->rotation.z,																//回転量（ラジアン）
+		Vector2(gameObject->transform->position.x, gameObject->transform->position.y).GetXMVECTOR()		//位置
+	);
+
+	//GPUに転送
+	D3D->SetUIInfoBuffer(&affine_matrix);
 }
 
 //描画処理

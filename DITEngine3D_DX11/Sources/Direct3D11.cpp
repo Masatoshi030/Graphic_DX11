@@ -229,6 +229,13 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->PSSetConstantBuffers(8, 1, &UIInfoBuffer);
 
 
+	bufferDesc.ByteWidth = sizeof(GPU_SYSTEM_INFO);
+
+	Device->CreateBuffer(&bufferDesc, NULL, &SystemInfoBuffer);
+	DeviceContext->VSSetConstantBuffers(9, 1, &SystemInfoBuffer);
+	DeviceContext->PSSetConstantBuffers(9, 1, &SystemInfoBuffer);
+
+
 	// ƒ‰ƒCƒg‰Šú‰»
 	LIGHT light{};
 	light.Enable = true;
@@ -403,9 +410,19 @@ void DIRECT3D11::SetEnvironmentMapInfo(ENVIRONMENTMAP_INFO EnvironmentMap_Info)
 	DeviceContext->UpdateSubresource(EnvironmentMapInfoBuffer, 0, NULL, &EnvironmentMap_Info, 0, 0);
 }
 
-void DIRECT3D11::SetUIInfoBuffer(DirectX::XMMATRIX* _UI_AffineMatrix)
+void DIRECT3D11::SetUIInfoBuffer(DirectX::XMMATRIX* _UI_Info)
 {
-	DeviceContext->UpdateSubresource(UIInfoBuffer, 0, NULL, &_UI_AffineMatrix, 0, 0);
+	DirectX::XMMATRIX UI_Info_buf = *_UI_Info;
+
+	//“]’u
+	UI_Info_buf = DirectX::XMMatrixTranspose(UI_Info_buf);
+
+	DeviceContext->UpdateSubresource(UIInfoBuffer, 0, NULL, &UI_Info_buf, 0, 0);
+}
+
+void DIRECT3D11::SetGPUSystemInfo(GPU_SYSTEM_INFO _System_Info)
+{
+	DeviceContext->UpdateSubresource(SystemInfoBuffer, 0, NULL, &_System_Info, 0, 0);
 }
 
 void DIRECT3D11::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)

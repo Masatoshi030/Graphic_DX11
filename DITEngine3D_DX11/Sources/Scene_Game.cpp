@@ -87,13 +87,13 @@ void Scene_Game::Start()
 
 	//== 車体 ==//
 	Body = new GameObject();
-
+	
 	Body->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
-
+	
 	Hierarchy.push_back(Body);
-
+	
 	MeshRenderer* meshRenderer_buf = Body->GetComponent<MeshRenderer>();
-
+	
 	meshRenderer_buf->GetSubset_MaterialName("BlackLuster")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("Brake")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("BrakeDisc")->Material.PixelShader = Shader::GetPixelShader("Specular");
@@ -110,16 +110,16 @@ void Scene_Game::Start()
 	meshRenderer_buf->GetSubset_MaterialName("Suspension")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("Tank")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("Winker")->Material.PixelShader = Shader::GetPixelShader("Specular");
-
-
+	
+	
 	Body->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
-
+	
 	
 	//== マフラー ==//
 	Muffler = new GameObject();
 	
 	Muffler->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
-
+	
 	Muffler->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Muffler")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	
 	Muffler->Set_Parent(Body);
@@ -128,7 +128,7 @@ void Scene_Game::Start()
 	Engine = new GameObject();
 	
 	Engine->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj");
-
+	
 	Engine->GetComponent<MeshRenderer>()->GetSubset_MaterialName("CrankCase")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	
 	Engine->Set_Parent(Body);
@@ -137,40 +137,40 @@ void Scene_Game::Start()
 	Handle = new GameObject();
 	
 	Handle->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Handle.obj");
-
+	
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Handle")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Suspension")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("MeterFrame")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("MaterSilver")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Winker")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("HeadLightFrame")->Material.PixelShader = Shader::GetPixelShader("Specular");
-
+	
 	Handle->Set_Parent(Body);
-
+	
 	//== フロントフェンダー ==//
 	FrontFender = new GameObject();
 	
 	FrontFender->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontFender.obj");
-
+	
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Tank")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Brake")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("BrakeDisc")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	FrontFender->GetComponent<MeshRenderer>()->GetSubset_MaterialName("SuspensionCover")->Material.PixelShader = Shader::GetPixelShader("Specular");
-
+	
 	FrontFender->Set_Parent(Body);
 	
 	//== フロントタイヤ ==//
 	FrontTire = new GameObject();
 	
 	FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
-
+	
 	FrontTire->Set_Parent(Body);
-
+	
 	//== リアタイヤ ==//
 	RearTire = new GameObject();
-
+	
 	RearTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearTire.obj");
-
+	
 	RearTire->Set_Parent(Body);
 	
 	//== 地面 ==//
@@ -203,8 +203,17 @@ void Scene_Game::Start()
 	ID3D11ShaderResourceView* TestUI_buf = TestUITexture->GetResource();
 
 	uis_buf->SetTexture(TestUI_buf);
-	uis_buf->SetVertexShader(Shader::GetVertexShader("Unlit"), Shader::GetInputLayout("Unlit"));
-	uis_buf->SetPixelShader(Shader::GetPixelShader("Unlit"));
+	uis_buf->SetVertexShader(Shader::GetVertexShader("UI_Base"), Shader::GetInputLayout("UI_Base"));
+	uis_buf->SetPixelShader(Shader::GetPixelShader("UI_Base"));
+
+	//デバッグウィンドウの初期
+	ig_DebugWindow->UI_Position_X_Slider = TestUI->transform->position.x;
+	ig_DebugWindow->UI_Position_Y_Slider = TestUI->transform->position.y;
+
+	ig_DebugWindow->UI_Rotation_Slider = TestUI->transform->rotation.z;
+
+	ig_DebugWindow->UI_Scale_X_Slider = TestUI->transform->scale.x;
+	ig_DebugWindow->UI_Scale_Y_Slider = TestUI->transform->scale.y;
 
 	Hierarchy.push_back(TestUI);
 
@@ -238,7 +247,7 @@ void Scene_Game::Update()
 			0.0f,
 			Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
 		);
-
+		
 		Body->transform->Rotate(0.0f, Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(), 0.0f);
 
 	}
@@ -257,7 +266,20 @@ void Scene_Game::Update()
 		);
 	}
 
-	TestUI->transform->position.x += 0.0001f;
+
+	//スライダの値を設定
+
+	//座標
+	TestUI->transform->position.x = ig_DebugWindow->UI_Position_X_Slider;
+	TestUI->transform->position.y = ig_DebugWindow->UI_Position_Y_Slider;
+
+	//回転
+	TestUI->transform->rotation.z = DirectX::XMConvertToRadians(ig_DebugWindow->UI_Rotation_Slider);
+
+	//スケール
+	TestUI->transform->scale.x = ig_DebugWindow->UI_Scale_X_Slider;
+	TestUI->transform->scale.y = ig_DebugWindow->UI_Scale_Y_Slider;
+
 
 	//別視点カメラ切り替え
 	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_BACK) == Input::KEY_WHILE_DOWN)
