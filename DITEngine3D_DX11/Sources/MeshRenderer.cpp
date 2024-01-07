@@ -339,6 +339,7 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 			fscanf(file, "%f", &position->x);
 			fscanf(file, "%f", &position->y);
 			fscanf(file, "%f", &position->z);
+
 			position++;
 		}
 		else if (strcmp(str, "vn") == 0)
@@ -347,6 +348,7 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 			fscanf(file, "%f", &normal->x);
 			fscanf(file, "%f", &normal->y);
 			fscanf(file, "%f", &normal->z);
+
 			normal++;
 		}
 		else if (strcmp(str, "vt") == 0)
@@ -395,6 +397,7 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 
 				s = strtok(str, "/");
 				_ModelObj->VertexArray[vc].Position = positionArray[atoi(s) - 1].simpleMath_vector3;
+				
 				if (s[strlen(s) + 1] != '/')
 				{
 					//テクスチャ座標が存在しない場合もある
@@ -407,6 +410,7 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 				_ModelObj->VertexArray[vc].Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
 
 				_ModelObj->IndexArray[ic] = vc;
+
 				ic++;
 				vc++;
 

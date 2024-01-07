@@ -21,4 +21,8 @@ public:
 
 	float UI_Scale_X_Slider;
 	float UI_Scale_Y_Slider;
+
+	Vector4 Light_Diffuse;
+	Vector4 Light_Ambient;
+	Vector3 Light_Direction;
 };

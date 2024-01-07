@@ -25,11 +25,13 @@ void Scene_Game::Start()
 	//== シェーダー設定 ==//
 
 	//頂点シェーダー
+	Shader::AddVertexShader("Asset/shader/DirectionalLight_VS.cso", "Directional");
 	Shader::AddVertexShader("Asset/shader/PointLight_VS.cso", "PointLight");
 	Shader::AddVertexShader("Asset/shader/unlitTextureVS.cso", "Unlit");
 	Shader::AddVertexShader("Asset/shader/UI_BaseShader_VS.cso", "UI_Base");
 
 	//ピクセルシェーダー
+	Shader::AddPixelShader("Asset/shader/DirectionalLight_PS.cso", "Directional");
 	Shader::AddPixelShader("Asset/shader/PointLight_PS.cso", "PointLight");
 	Shader::AddPixelShader("Asset/shader/SpecularReflection_PS.cso", "Specular");
 	Shader::AddPixelShader("Asset/shader/unlitTexturePS.cso", "Unlit");
@@ -44,35 +46,22 @@ void Scene_Game::Start()
 	
 	//== オブジェクト設定 ==//
 	
-	//== ポイントライト ==//
-	PointLight_Obj = new GameObject();
-	
-	PointLight* pointLightBuf = PointLight_Obj->AddComponent<PointLight>();
-	
-	pointLightBuf->SetAttenuation(1.0f, 0.0f, 0.0f);
-	pointLightBuf->SetLightColor(1.0f, 0.976431f, 0.8f, 10.0f);
-	
-	Hierarchy.push_back(PointLight_Obj);
-	
-	PointLight_Obj->transform->position = Vector3(4.0f, 4.0f, 1.0f);
+	//== サンライト ==//
+	DirectionalLight_Obj = new GameObject();
+
+	DirectionalLight* DirLight_buf = DirectionalLight_Obj->AddComponent<DirectionalLight>();
+
+	Hierarchy.push_back(DirectionalLight_Obj);
 	
 	//== メインカメラ ==//
 	MainCamera = new GameObject();
 	
 	MainCamera->AddComponent<Camera>();
+
+	MainCamera->transform->position = Vector3(-9.0f, 2.0f, 4.0f);
+	MainCamera->transform->rotation = Vector3(0.0f, DirectX::XMConvertToRadians(160.0f), 0.0f);
 	
 	Hierarchy.push_back(MainCamera);
-	
-	
-	//== ライトカメラ ==//
-	LightCamera = new GameObject();
-	
-	LightCamera->AddComponent<Camera>();
-	
-	Hierarchy.push_back(LightCamera);
-	
-	LightCamera->transform->position = Vector3(-13.0f, 5.0f, -13.0f);
-	LightCamera->transform->Rotate(0.0f, 45.0f, 0.0f);
 	
 	
 	//== スカイボックス ==//
@@ -81,6 +70,9 @@ void Scene_Game::Start()
 	SkyBox->AddComponent<MeshRenderer>()->Load("Asset\\model\\SkyBox_Town.obj");
 	
 	SkyBox->transform->scale = Vector3(30.0f, 30.0f, 30.0f);
+
+	SkyBox->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.VertexShader = Shader::GetVertexShader("Unlit");
+	SkyBox->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.PixelShader = Shader::GetPixelShader("Unlit");
 	
 	Hierarchy.push_back(SkyBox);
 	
@@ -112,7 +104,11 @@ void Scene_Game::Start()
 	meshRenderer_buf->GetSubset_MaterialName("Winker")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	
 	
-	Body->transform->scale = Vector3(0.03f, 0.03f, 0.03f);
+	Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
+
+	Body->transform->position.x = -5.0f;
+
+	Body->transform->Rotate(0.0f, DirectX::XMConvertToRadians(-90.0f), 0.0f);
 	
 	
 	//== マフラー ==//
@@ -140,10 +136,12 @@ void Scene_Game::Start()
 	
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Handle")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Suspension")->Material.PixelShader = Shader::GetPixelShader("Specular");
+	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("SuspensionCover")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("MeterFrame")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("MaterSilver")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Winker")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("HeadLightFrame")->Material.PixelShader = Shader::GetPixelShader("Specular");
+	Handle->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Carburetor")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	
 	Handle->Set_Parent(Body);
 	
@@ -172,13 +170,7 @@ void Scene_Game::Start()
 	RearTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearTire.obj");
 	
 	RearTire->Set_Parent(Body);
-	
-	//== 地面 ==//
-	Ground = new GameObject();
-	
-	Ground->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Ground.obj");
-	
-	Hierarchy.push_back(Ground);
+
 
 	//== テストスフィア ==//
 	Sphere = new GameObject();
@@ -191,6 +183,13 @@ void Scene_Game::Start()
 	Sphere->transform->position.y = 1.0f;
 
 	Hierarchy.push_back(Sphere);
+
+	//== スタジオ（Bypass） ==//
+	Studio_Bypass = new GameObject();
+
+	Studio_Bypass->AddComponent<MeshRenderer>()->Load("Asset\\model\\Studio_Bypass.obj");
+
+	Hierarchy.push_back(Studio_Bypass);
 
 	//== テストUI ==//
 	TestUI = new GameObject();
@@ -227,47 +226,35 @@ void Scene_Game::Start()
 
 void Scene_Game::Update()
 {
-	//終了処理
+	//== 終了処理 ==//
 	if (Input::GetKeyState(KEY_INPUT_ESCAPE) == Input::KEY_DOWN)
 	{
 		SCENE_MANAGER->LoadScene(EXIT_NUM_SCENE);
 		return;
 	}
 
+
+	//== バイクの操作 ==//
+	MainCamera->transform->Translate(
+		Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
+		0.0f,
+		Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
+	);
+
+	MainCamera->transform->Rotate(
+		-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(),
+		Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
+		0.0f
+	);
+
+
+	//== スライダの値を設定 ==//
+
 	//FPS表示
 	ig_DebugWindow->FPS = Time::Get_FPS();
 	//時間表示
 	ig_DebugWindow->GameTime = Time::GetWorldTime();
 
-	//カメラかバイクの操作
-	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_X) == Input::KEY_WHILE_DOWN)
-	{
-		Body->transform->Translate(
-			Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
-			0.0f,
-			Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
-		);
-		
-		Body->transform->Rotate(0.0f, Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(), 0.0f);
-
-	}
-	else
-	{
-		MainCamera->transform->Translate(
-			Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(), 
-			0.0f,
-			Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
-		);
-
-		MainCamera->transform->Rotate(
-			-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(), 
-			Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(), 
-			0.0f
-		);
-	}
-
-
-	//スライダの値を設定
 
 	//座標
 	TestUI->transform->position.x = ig_DebugWindow->UI_Position_X_Slider;
@@ -281,23 +268,22 @@ void Scene_Game::Update()
 	TestUI->transform->scale.y = ig_DebugWindow->UI_Scale_Y_Slider;
 
 
-	//別視点カメラ切り替え
-	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_BACK) == Input::KEY_WHILE_DOWN)
-	{
-		LightCamera->GetComponent<Camera>()->Enable = true;
-		MainCamera->GetComponent<Camera>()->Enable = false;
-	}
-	else
-	{
-		LightCamera->GetComponent<Camera>()->Enable = false;
-		MainCamera->GetComponent<Camera>()->Enable = true;
-	}
+	//DirectionalLight
+	DirectionalLight* DirLight_buf = DirectionalLight_Obj->GetComponent<DirectionalLight>();
+
+	DirLight_buf->SetLightColor(ig_DebugWindow->Light_Diffuse);
+	DirLight_buf->SetAmbient(ig_DebugWindow->Light_Ambient);
+	DirLight_buf->SetDirection(ig_DebugWindow->Light_Direction);
+
+
+	//== バイブレーションテスト ==//
 
 	//バイブレーションテスト
 	if (Input::GetGamePadButtonState(GAMEPAD_INPUT_B) == Input::KEY_DOWN)
 	{
 		Input::SetGamePadVibration(1.0f, 0.25f);
 	}
+
 
 	//オブジェクトの描画処理
 	for (const auto& e : Hierarchy)
@@ -309,12 +295,12 @@ void Scene_Game::Update()
 void Scene_Game::Draw()
 {
 
-	//画面を塗りつぶす
+	//== 画面を塗りつぶす ==//
 	float color[4] = { COLOR_NORMALIZATION_255(44, 70, 112, 1.0f) };
 	D3D->Get_ID3D11DeviceContext()->ClearRenderTargetView(D3D->Get_RenderTargetView(), color);
 
 
-	//視点の情報をシェーダーに送る
+	//== 視点の情報をシェーダーに送る ==//
 	EYE_INFO eye_info;
 	
 	//メインカメラの座標

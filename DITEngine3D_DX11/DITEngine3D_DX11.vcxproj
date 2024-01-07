@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\DirectionalLight.h" />
     <ClInclude Include="Sources\ImGUI_DebugWindow.h" />
     <ClInclude Include="Sources\ImGUIManager.h" />
     <ClInclude Include="Sources\ImGUIWindowBase.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Sources\WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\DirectionalLight.cpp" />
     <ClCompile Include="Sources\ImGUI_DebugWindow.cpp" />
     <ClCompile Include="Sources\ImGUIManager.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
@@ -210,6 +212,14 @@
     <None Include="Sources\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Asset\shader\DirectionalLight_PS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\DirectionalLight_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
