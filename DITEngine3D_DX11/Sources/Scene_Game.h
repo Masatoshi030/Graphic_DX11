@@ -3,6 +3,7 @@
 #include "Scene.h"
 
 #include "ImGUI_DebugWindow.h"
+#include "ImGUI_MaterialWindow.h"
 
 class Scene_Game : public Scene
 {
@@ -28,6 +29,7 @@ private:
 
 	//ImGUIWindow
 	ImGUI_DebugWindow* ig_DebugWindow;
+	ImGUI_MaterialWindow* ig_MaterialWindow;
 
 public:
 

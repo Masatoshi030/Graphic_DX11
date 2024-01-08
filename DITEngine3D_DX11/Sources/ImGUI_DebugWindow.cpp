@@ -35,8 +35,8 @@ void ImGUI_DebugWindow::Draw_ItemSetting()
 	ImGui::SliderFloat("r_Z", &UI_Rotation_Slider, 0.0f, 90.0f);
 
 	ImGui::Text("Scale");
-	ImGui::SliderFloat("s_X", &UI_Scale_X_Slider, 0.0f, 2.0f);
-	ImGui::SliderFloat("s_Y", &UI_Scale_Y_Slider, 0.0f, 2.0f);
+	ImGui::SliderFloat("s_X", &UI_Scale_X_Slider, 0.0f, 10.0f);
+	ImGui::SliderFloat("s_Y", &UI_Scale_Y_Slider, 0.0f, 10.0f);
 
 
 	//== DirectionalLight ==//

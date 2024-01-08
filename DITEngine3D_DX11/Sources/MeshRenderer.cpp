@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "DITEngine3D.h"
+#include "DITEngineSystem.h"
 #include <stdio.h>
 #include <shlwapi.h>
 #include <WICTextureLoader.h>
@@ -32,7 +33,19 @@ void MeshRenderer::Draw()
 
 	for (unsigned int i = 0; i < Model->SubsetNum; i++)
 	{
-		//マテリアル設定
+		//== マテリアルを設定 ==//
+
+		//メタリックが0.00fにならないようにする
+		if (Model->SubsetArray[i].Material.Material.Metalic.x < 0.1f)
+		{
+			Model->SubsetArray[i].Material.Material.Metalic.x = 0.1f;
+		}
+
+		if (Model->SubsetArray[i].Material.Material.Shininess < 0.1f)
+		{
+			Model->SubsetArray[i].Material.Material.Shininess = 0.1f;
+		}
+
 		D3D->SetMaterial(Model->SubsetArray[i].Material.Material);
 
 		//== マテリアルごとにシェーダーを設定 ==//
@@ -44,13 +57,40 @@ void MeshRenderer::Draw()
 		D3D->Get_ID3D11DeviceContext()->VSSetShader(Model->SubsetArray[i].Material.VertexShader, NULL, 0);
 		D3D->Get_ID3D11DeviceContext()->PSSetShader(Model->SubsetArray[i].Material.PixelShader, NULL, 0);
 
-		//テクスチャ設定
+
+		//== テクスチャ設定 ==//
 		if (Model->SubsetArray[i].Material.Texture)
 		{
 			D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(1, 1, &Model->SubsetArray[i].Material.Texture);
 		}
 
-		//ポリゴン描画
+
+		//== スペキュラー強度に応じたミップレベルの環境テクスチャを設定 ==//
+		
+		MipMap* environmentTexture_MipMap = DITEngine::GetEnvironmentMipMap();
+
+		//スペキュラー強度を最大で割ってテクスチャ総数を掛けることで一番近いミップレベルを計算する
+		int mipLevel = (1.00f - Model->SubsetArray[i].Material.Material.Shininess) * (environmentTexture_MipMap->GetTextureCount() - 1);
+
+		//テクスチャを取得
+		Texture* environmentTexture_Texture = environmentTexture_MipMap->GetTexture_MipLevel(mipLevel);
+
+		//SRVを取得
+		ID3D11ShaderResourceView* environmentTexture_srv = environmentTexture_Texture->GetResource();
+
+		//画像をピクセルシェーダーにセット
+		D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(0, 1, &environmentTexture_srv);
+
+		//画像の情報を設定
+		ENVIRONMENTMAP_INFO em_buf;
+		em_buf.ImageSize.x = environmentTexture_Texture->GetWidth();	//画像の解像度
+		em_buf.ImageSize.y = environmentTexture_Texture->GetHeight();
+
+		//画像の情報をセット
+		D3D->SetEnvironmentMapInfo(em_buf);
+
+
+		//== ポリゴン描画 ==//
 		D3D->Get_ID3D11DeviceContext()->DrawIndexed(Model->SubsetArray[i].IndexNum, Model->SubsetArray[i].StartIndex, 0);
 	}
 }
@@ -536,6 +576,8 @@ void MeshRenderer::LoadMaterial(const char* _FileName, MODEL_MATERIAL** _Materia
 		{
 			//スペキュラ強度
 			fscanf(file, "%f", &materialArray[mc].Material.Shininess);
+
+			materialArray[mc].Material.Shininess = (materialArray[mc].Material.Shininess / 1000.0f);
 		}
 		else if (strcmp(str, "d") == 0)
 		{
@@ -554,6 +596,8 @@ void MeshRenderer::LoadMaterial(const char* _FileName, MODEL_MATERIAL** _Materia
 
 			strcat(materialArray[mc].TextureName, path);
 		}
+
+		materialArray[mc].Material.Metalic.x = 1.0f;
 	}
 
 	fclose(file);

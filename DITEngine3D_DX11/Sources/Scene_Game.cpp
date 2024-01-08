@@ -1,25 +1,21 @@
 #include "DITEngine3D.h"
 #include "Scene_Game.h"
+#include "DITEngineSystem.h"
 
 void Scene_Game::Start()
 {
-	//== 環境画像の設定 ==//
-	Texture* CubeMap;
-	CubeMap = new Texture();
-	CubeMap->Create("Asset/texture/parking_garage_2000x1000.jpg");
-	
-	ID3D11ShaderResourceView* CubeMap_buf = CubeMap->GetResource();
-	
-	//画像をセット
-	D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(0, 1, &CubeMap_buf);
+	//== 環境画像の設定（ミップレベルごとにロード） ==//
 
-	//画像の情報を設定
-	ENVIRONMENTMAP_INFO em_buf;
-	em_buf.ImageSize.x = CubeMap->GetWidth();	//画像の解像度
-	em_buf.ImageSize.y = CubeMap->GetHeight();
-	
-	//画像の情報をセット
-	D3D->SetEnvironmentMapInfo(em_buf);
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_1000x500.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_500x250.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_250x125.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_125x62.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_62x30.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_32x14.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_14x6.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_6x2.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_3x1.jpg");
 
 	
 	//== シェーダー設定 ==//
@@ -39,9 +35,16 @@ void Scene_Game::Start()
 
 
 	//== ImGUI設定 ==//
+
+	//デバッグウィンドウ
 	ig_DebugWindow = new ImGUI_DebugWindow();
 	ig_DebugWindow->SetWindowName("DebugWindow");
 	ImGUIManager::AddWindow(ig_DebugWindow);
+
+	//マテリアルウィンドウ
+	ig_MaterialWindow = new ImGUI_MaterialWindow();
+	ig_MaterialWindow->SetWindowName("MaterialWindow");
+	ImGUIManager::AddWindow(ig_MaterialWindow);
 
 	
 	//== オブジェクト設定 ==//
@@ -100,8 +103,10 @@ void Scene_Game::Start()
 	meshRenderer_buf->GetSubset_MaterialName("Showa")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("Sprocket")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("Suspension")->Material.PixelShader = Shader::GetPixelShader("Specular");
-	meshRenderer_buf->GetSubset_MaterialName("Tank")->Material.PixelShader = Shader::GetPixelShader("Specular");
 	meshRenderer_buf->GetSubset_MaterialName("Winker")->Material.PixelShader = Shader::GetPixelShader("Specular");
+	
+	meshRenderer_buf->GetSubset_MaterialName("Tank")->Material.PixelShader = Shader::GetPixelShader("Specular");
+	meshRenderer_buf->GetSubset_MaterialName("Tank")->Material.Material.Metalic.x = 0.1f;
 	
 	
 	Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
@@ -198,14 +203,14 @@ void Scene_Game::Start()
 	 
 	Texture* TestUITexture;
 	TestUITexture = new Texture();
-	TestUITexture->Create("Asset/texture/Scope.png");
+	TestUITexture->Create("Asset/texture/CB400SF_Logo.png");
 	ID3D11ShaderResourceView* TestUI_buf = TestUITexture->GetResource();
 
 	uis_buf->SetTexture(TestUI_buf);
 	uis_buf->SetVertexShader(Shader::GetVertexShader("UI_Base"), Shader::GetInputLayout("UI_Base"));
 	uis_buf->SetPixelShader(Shader::GetPixelShader("UI_Base"));
 
-	//デバッグウィンドウの初期
+	//デバッグウィンドウの初期化
 	ig_DebugWindow->UI_Position_X_Slider = TestUI->transform->position.x;
 	ig_DebugWindow->UI_Position_Y_Slider = TestUI->transform->position.y;
 
@@ -248,7 +253,7 @@ void Scene_Game::Update()
 	);
 
 
-	//== スライダの値を設定 ==//
+	//== デバッグウィンドウの値を設定 ==//
 
 	//FPS表示
 	ig_DebugWindow->FPS = Time::Get_FPS();
@@ -274,6 +279,10 @@ void Scene_Game::Update()
 	DirLight_buf->SetLightColor(ig_DebugWindow->Light_Diffuse);
 	DirLight_buf->SetAmbient(ig_DebugWindow->Light_Ambient);
 	DirLight_buf->SetDirection(ig_DebugWindow->Light_Direction);
+
+
+	//== マテリアルウィンドウの値を設定 ==//
+	Sphere->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.Material = ig_MaterialWindow->material;
 
 
 	//== バイブレーションテスト ==//

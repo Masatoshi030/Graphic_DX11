@@ -6,9 +6,10 @@
 #include "GameObject.h"
 #include "InputSystem.h"
 #include "ShaderManager.h"
-#include "Texture.h"
 #include "Time.h"
+#include "Texture.h"
 #include "ShaderManager.h"
+#include "MipMap.h"
 
 //ImGUI
 #include "ImGUIManager.h"
@@ -28,5 +29,3 @@
 // a‚Ì‚İ1.00f‚Ü‚Å‚Ì”š
 //(R G B A) = (255, 255, 255, 1.0f)
 #define COLOR_NORMALIZATION_255(_r, _g, _b, _a)	((float)_r / 255.0f),((float)_g / 255.0f),((float)_b / 255.0f),((float)_a)
-
-void DITEngine_Init();

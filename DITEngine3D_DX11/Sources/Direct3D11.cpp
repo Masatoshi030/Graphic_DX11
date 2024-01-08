@@ -267,6 +267,8 @@ void DIRECT3D11::Render_DrawEnd()
 
 void DIRECT3D11::Release()
 {
+
+	//定数バッファーを解放
 	WorldBuffer->Release();
 	ViewBuffer->Release();
 	ProjectionBuffer->Release();
@@ -274,7 +276,7 @@ void DIRECT3D11::Release()
 	PointLightBuffer->Release();
 	MaterialBuffer->Release();
 
-
+	//D3Dシステム
 	DeviceContext->ClearState();
 	RenderTargetView->Release();
 	SwapChain->Release();

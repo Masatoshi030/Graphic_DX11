@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "DITEngine3D.h"
+#include "DITEngineSystem.h"
 
 const auto ClassName = TEXT("DITエンジン3D");
 const auto WindowName = TEXT("DITエンジン3D");
@@ -56,11 +57,7 @@ bool Application::InitApp()
 	//DIRECT3D11を初期化
 	D3D->Init(this);
 
-	//時間計測初期化
-	Time::Init();
-
-	//DITEngineシステム関連の初期化
-	Input::Init(hWnd);
+	DITEngine::DITEngine_Init();
 
 	//ImGUI初期化
 	ImGUIManager::Init(hWnd, D3D->Get_ID3D11Device(), D3D->Get_ID3D11DeviceContext());

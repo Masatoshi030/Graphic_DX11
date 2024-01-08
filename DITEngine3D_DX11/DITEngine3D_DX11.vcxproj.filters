@@ -129,6 +129,15 @@
     <ClInclude Include="Sources\DirectionalLight.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\MipMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\DITEngineSystem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUI_MaterialWindow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Direct3D11.cpp">
@@ -167,7 +176,7 @@
     <ClCompile Include="Sources\Application.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\DITEngine3D.cpp">
+    <ClCompile Include="Sources\DITEngineSystem.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
     <ClCompile Include="Sources\MeshRenderer.cpp">
@@ -219,6 +228,12 @@
       <Filter>ソース ファイル\ImGUI\Window</Filter>
     </ClCompile>
     <ClCompile Include="Sources\DirectionalLight.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MipMap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUI_MaterialWindow.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
