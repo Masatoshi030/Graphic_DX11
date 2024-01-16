@@ -5,7 +5,7 @@ using namespace DirectX;
 void Camera::Init()
 {
 	//ƒJƒƒ‰¶¬Žž‚Ì‰ŠúˆÊ’u
-	gameObject->transform->position = Vector3(0.0f, 1.0f, -10.0f);
+	gameObject->transform->position = Vector3(0.0f, 1.0f, -5.0f);
 
 }
 

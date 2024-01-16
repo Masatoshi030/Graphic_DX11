@@ -10,18 +10,7 @@ class Scene_Game : public Scene
 private:
 	GameObject* DirectionalLight_Obj;
 	GameObject* MainCamera;
-	GameObject* LightCamera;
 	GameObject* SkyBox;
-
-	GameObject* Body;
-	GameObject* Muffler;
-	GameObject* Engine;
-	GameObject* Handle;
-	GameObject* FrontFender;
-	GameObject* FrontTire;
-	GameObject* RearTire;
-
-	GameObject* Studio_Bypass;
 
 	GameObject* Sphere;
 

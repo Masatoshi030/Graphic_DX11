@@ -61,9 +61,6 @@ void Scene_Game::Start()
 	
 	MainCamera->AddComponent<Camera>();
 
-	MainCamera->transform->position = Vector3(-9.0f, 2.0f, 4.0f);
-	MainCamera->transform->rotation = Vector3(0.0f, DirectX::XMConvertToRadians(160.0f), 0.0f);
-	
 	Hierarchy.push_back(MainCamera);
 	
 	
@@ -80,102 +77,16 @@ void Scene_Game::Start()
 	Hierarchy.push_back(SkyBox);
 	
 
-	//== 車体 ==//
-	Body = new GameObject();
-	
-	Body->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
-	
-	Hierarchy.push_back(Body);
-	
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Body->GetComponent<MeshRenderer>());
-	
-	Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
-
-	Body->transform->position.x = -5.0f;
-
-	Body->transform->Rotate(0.0f, DirectX::XMConvertToRadians(-90.0f), 0.0f);
-	
-	
-	//== マフラー ==//
-	Muffler = new GameObject();
-	
-	Muffler->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
-	
-	Muffler->Set_Parent(Body);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Muffler->GetComponent<MeshRenderer>());
-	
-	//== エンジン ==//
-	Engine = new GameObject();
-	
-	Engine->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj");
-	
-	Engine->Set_Parent(Body);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Engine->GetComponent<MeshRenderer>());
-	
-	//== ハンドル ==//
-	Handle = new GameObject();
-	
-	Handle->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Handle.obj");
-	
-	Handle->Set_Parent(Body);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Handle->GetComponent<MeshRenderer>());
-	
-	//== フロントフェンダー ==//
-	FrontFender = new GameObject();
-	
-	FrontFender->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontFender.obj");
-
-	FrontFender->Set_Parent(Body);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontFender->GetComponent<MeshRenderer>());
-
-	//== フロントタイヤ ==//
-	FrontTire = new GameObject();
-	
-	FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
-	
-	FrontTire->Set_Parent(Body);
-
-	FrontTire->transform->position = Vector3(0.0f, 40.0f, 102.0f);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontTire->GetComponent<MeshRenderer>());
-	
-	//== リアタイヤ ==//
-	RearTire = new GameObject();
-	
-	RearTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearTire.obj");
-	
-	RearTire->Set_Parent(Body);
-
-	RearTire->transform->position = Vector3(0.0f, 41.0f, -92.5f);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(RearTire->GetComponent<MeshRenderer>());
-
-
 	//== テストスフィア ==//
 	Sphere = new GameObject();
 
 	Sphere->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Sphere.obj");
 
-	Sphere->transform->position.x = 4.0f;
 	Sphere->transform->position.y = 1.0f;
 
 	Hierarchy.push_back(Sphere);
 
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Sphere->GetComponent<MeshRenderer>());
-
-	//== スタジオ（Bypass） ==//
-	Studio_Bypass = new GameObject();
-
-	Studio_Bypass->AddComponent<MeshRenderer>()->Load("Asset\\model\\Studio_Bypass.obj");
-
-	Hierarchy.push_back(Studio_Bypass);
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass->GetComponent<MeshRenderer>());
-
 
 	//== テストUI ==//
 	TestUI = new GameObject();
@@ -184,7 +95,7 @@ void Scene_Game::Start()
 	 
 	Texture* TestUITexture;
 	TestUITexture = new Texture();
-	TestUITexture->Create("Asset/texture/CB400SF_Logo.png");
+	TestUITexture->Create("Asset/texture/DITEngine_Logo.png");
 	ID3D11ShaderResourceView* TestUI_buf = TestUITexture->GetResource();
 
 	uis_buf->SetTexture(TestUI_buf);
@@ -226,26 +137,6 @@ void Scene_Game::Update()
 		return;
 	}
 
-
-	//タイヤの回転
-	FrontTire->transform->Rotate(0.1f, 0.0f, 0.0f);
-	RearTire->transform->Rotate(0.1f, 0.0f, 0.0f);
-
-
-	//== バイクの操作 ==//
-	//MainCamera->transform->Translate(
-	//	Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
-	//	0.0f,
-	//	Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
-	//);
-	//
-	//MainCamera->transform->Rotate(
-	//	-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(),
-	//	Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
-	//	0.0f
-	//);
-
-
 	//== デバッグウィンドウの値を設定 ==//
 
 	//FPS表示
@@ -253,14 +144,11 @@ void Scene_Game::Update()
 	//時間表示
 	ig_DebugWindow->GameTime = Time::GetWorldTime();
 
-
 	//座標
 	TestUI->transform->position.x = ig_DebugWindow->UI_Position_X_Slider;
 	TestUI->transform->position.y = ig_DebugWindow->UI_Position_Y_Slider;
-
 	//回転
 	TestUI->transform->rotation.z = DirectX::XMConvertToRadians(ig_DebugWindow->UI_Rotation_Slider);
-
 	//スケール
 	TestUI->transform->scale.x = ig_DebugWindow->UI_Scale_X_Slider;
 	TestUI->transform->scale.y = ig_DebugWindow->UI_Scale_Y_Slider;
