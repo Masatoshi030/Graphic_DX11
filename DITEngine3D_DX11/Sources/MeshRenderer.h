@@ -93,4 +93,6 @@ public:
 	SUBSET* GetSubset_MaterialName(const char* _name);
 
 	void Draw();
+
+	
 };

@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "ShaderManager.h"
 #include "MipMap.h"
+#include "IniFileManager.h"
 
 //ImGUI
 #include "ImGUIManager.h"

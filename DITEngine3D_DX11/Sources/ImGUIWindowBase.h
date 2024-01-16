@@ -14,6 +14,10 @@ public:
 
 	void SetWindowName(const char* _WindowName);
 
+	virtual void Init() {};
+
+	virtual ~ImGUIWindowBase() {};
+
 	virtual void Draw_WindowSetting() {};
 	virtual void Draw_ItemSetting() {};
 };

@@ -6,6 +6,9 @@ class ImGUI_DebugWindow : public ImGUIWindowBase
 {
 public:
 
+	void Init();
+	~ImGUI_DebugWindow();
+
 	void Draw_WindowSetting();
 	void Draw_ItemSetting();
 

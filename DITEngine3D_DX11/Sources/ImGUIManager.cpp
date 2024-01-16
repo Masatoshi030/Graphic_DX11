@@ -55,14 +55,15 @@ void ImGUIManager::Draw()
 
 void ImGUIManager::Shutdown()
 {
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-
+	//ImGUIâï˙Ç∆ÉfÅ[É^ÇÃï€ë∂
 	for (const auto& e : WindowList)
 	{
 		delete e;
 	}
+
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 }
 
 void ImGUIManager::AddWindow(ImGUIWindowBase* _Window)
