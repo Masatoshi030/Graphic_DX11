@@ -18,34 +18,16 @@ float4 ps_main(PS_IN input) : SV_Target
     float coordX = atan2(dir.x, dir.z) / PIE;
     float coordY = asin(dir.y) / (PIE / 2.0f);
     
-    Color = Material.Diffuse * CubeMap.SampleLevel(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f, -10.0);
+    //環境テクスチャを適用
+    Color = (CubeMap.SampleLevel(g_SamplerState, float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f, -10.0));
     
+    //メタリックの度合で0～1のコントラストを調節
+    Color = ((Color - 1.0) * max(Material.Metallic.x + 0.1, 0)) + 1.0;
     
-    //== 平均化フィルター適用 ==//
+    //ベースの色を入れる
+    Color *= Material.Diffuse;
     
-    ////１ピクセル当たりのUV値
-    //float2 PixelSize = float2(1.0 / EnvironmentMap_Info.ImageSize.x, 1.0 / EnvironmentMap_Info.ImageSize.y);
-    //
-    //float2 filter[9] =
-    //{
-    //    float2(-PixelSize.x, -PixelSize.y),
-    //    float2(0, -PixelSize.y),
-    //    float2(PixelSize.x, -PixelSize.y),
-    //    float2(-PixelSize.x, 0),
-    //    float2(0, 0),
-    //    float2(PixelSize.x, 0),
-    //    float2(-PixelSize.x, PixelSize.y),
-    //    float2(0, PixelSize.y),
-    //    float2(PixelSize.x, PixelSize.y)
-    //};
-    //
-    //for (int filter_i = 0; filter_i < 9; filter_i++)
-    //{
-    //    //物体のテクスチャを適用
-    //    Color += Material.Diffuse * CubeMap.Sample(g_SamplerState, float2(coordX + filter[filter_i].x, coordY + filter[filter_i].y) * float2(0.5f, -0.5f) + 0.5f);
-    //}
-    //
-    //Color = float4((Color / 9.0).rgb, 1.0);
+    Color *= saturate(input.Diffuse + Material.Metallic.x);
     
     
     //== スペキュラー適用 ==//
@@ -55,13 +37,13 @@ float4 ps_main(PS_IN input) : SV_Target
     float3 v;
     float i;
     
-    l = normalize(Light_Point.Position.xyz - input.posw.xyz);
+    l = normalize(-Light_Sun.Direction.xyz);
     n = normalize(input.norw.xyz);
     r = 2.0 * n * dot(n, l) - l;
     v = normalize(Eye_Info.EyePosition.xyz - input.posw.xyz);
-    i = pow(saturate(dot(r, v)), Material.Shininess);
+    i = pow(saturate(dot(r, v)), Material.Shininess.x * 50);
     
-    Color += float4(i * Material.Specular.xyz * Light_Point.LightColor.xyz, 1.0f);
+    Color += float4(i * Light_Sun.Diffuse.xyz * Material.Shininess, 1.0f);
     
     return Color;
 

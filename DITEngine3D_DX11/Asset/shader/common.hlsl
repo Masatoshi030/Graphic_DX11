@@ -89,6 +89,16 @@ cbuffer EnvironmentMapInfo : register(b7)
 };
 
 
+cbuffer UI_Info : register(b8)
+{
+    float4x4 AffineMatrix;
+};
+
+cbuffer SystemInfo : register(b9)
+{
+    float4 ScreenSize;
+    float4 ScreenAspect;
+}
 
 
 struct VS_IN

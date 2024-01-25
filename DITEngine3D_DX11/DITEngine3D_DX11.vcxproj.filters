@@ -22,137 +22,264 @@
     <Filter Include="ソース ファイル\シーン">
       <UniqueIdentifier>{8f8c4a20-b9be-4560-8756-43907802dac6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\頂点シェーダー">
+      <UniqueIdentifier>{031b44fb-0cda-42e8-8136-5853547ee2cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ピクセルシェーダー">
+      <UniqueIdentifier>{217f7044-a2b0-4ee7-80da-db52f96ffdae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGUI">
+      <UniqueIdentifier>{6ddd9d00-3021-43f3-b054-ebe73854d763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGUI\Window">
+      <UniqueIdentifier>{4f6c8fb0-20e5-47e0-927a-f4519c8b7b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGUI\ライブラリ">
+      <UniqueIdentifier>{ed45a68a-dd3a-4318-9210-471b5eb96a88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Direct3D11.h">
+    <ClInclude Include="Sources\Direct3D11.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="Sources\Component.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="Sources\GameObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="Sources\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Game.h">
+    <ClInclude Include="Sources\Scene_Game.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SystemFormat.h">
+    <ClInclude Include="Sources\SystemFormat.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
+    <ClInclude Include="Sources\Transform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InputSystem.h">
+    <ClInclude Include="Sources\InputSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="Sources\Camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="utftosjisconv.h">
+    <ClInclude Include="Sources\utftosjisconv.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="WinMain.h">
+    <ClInclude Include="Sources\WinMain.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
+    <ClInclude Include="Sources\Application.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
+    <ClInclude Include="Sources\MeshRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderManager.h">
+    <ClInclude Include="Sources\ShaderManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
+    <ClInclude Include="Sources\Light.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
+    <ClInclude Include="Sources\Texture.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="Sources\Time.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\UISpriteRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUIManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imconfig.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUIWindowBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imstb_truetype.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui_impl_dx11.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui_impl_win32.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imgui_internal.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imstb_rectpack.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGui\imstb_textedit.h">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUI_DebugWindow.h">
+      <Filter>ソース ファイル\ImGUI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\DirectionalLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MipMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\DITEngineSystem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGUI_MaterialWindow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\IniFileManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Direct3D11.cpp">
+    <ClCompile Include="Sources\Direct3D11.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="WinMain.cpp">
+    <ClCompile Include="Sources\WinMain.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Game.cpp">
+    <ClCompile Include="Sources\Scene_Game.cpp">
       <Filter>ソース ファイル\シーン</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="Sources\SceneManager.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="DITEngine3D.h">
+    <ClCompile Include="Sources\DITEngine3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
+    <ClCompile Include="Sources\Transform.cpp">
       <Filter>ソース ファイル\コンポーネント</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="Sources\GameObject.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="SystemFormat.cpp">
+    <ClCompile Include="Sources\SystemFormat.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
+    <ClCompile Include="Sources\InputSystem.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="Sources\Camera.cpp">
       <Filter>ソース ファイル\コンポーネント</Filter>
     </ClCompile>
-    <ClCompile Include="utftosjisconv.cpp">
+    <ClCompile Include="Sources\utftosjisconv.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="Sources\Application.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="DITEngine3D.cpp">
+    <ClCompile Include="Sources\DITEngineSystem.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
+    <ClCompile Include="Sources\MeshRenderer.cpp">
       <Filter>ソース ファイル\コンポーネント</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
+    <ClCompile Include="Sources\ShaderManager.cpp">
       <Filter>ソース ファイル\システム</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
+    <ClCompile Include="Sources\Light.cpp">
+      <Filter>ソース ファイル\コンポーネント</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Texture.cpp">
+      <Filter>ソース ファイル\システム</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Time.cpp">
+      <Filter>ソース ファイル\システム</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\UISpriteRenderer.cpp">
+      <Filter>ソース ファイル\コンポーネント</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUIManager.cpp">
+      <Filter>ソース ファイル\システム</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_demo.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_draw.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_tables.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGui\imgui_widgets.cpp">
+      <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUI_DebugWindow.cpp">
+      <Filter>ソース ファイル\ImGUI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGUIWindowBase.cpp">
+      <Filter>ソース ファイル\ImGUI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\DirectionalLight.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="Sources\MipMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="Sources\ImGUI_MaterialWindow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\IniFileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SceneManager.h">
+    <None Include="Sources\SceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </None>
-    <None Include="KeyInputDifinitionList.h">
+    <None Include="Sources\KeyInputDifinitionList.h">
       <Filter>ヘッダー ファイル</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTextureVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\PointLight_VS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Asset\shader\vertexLightingPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl" />
-    <FxCompile Include="Asset\shader\PointLight_VS.hlsl" />
-    <FxCompile Include="Asset\shader\PointLight_PS.hlsl" />
-    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl" />
+    <FxCompile Include="Asset\shader\DirectionalLight_VS.hlsl" />
+    <FxCompile Include="Asset\shader\DirectionalLight_PS.hlsl" />
   </ItemGroup>
 </Project>

@@ -125,7 +125,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -138,61 +138,106 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Direct3D11.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="MeshRenderer.h">
+    <ClInclude Include="Sources\IniFileManager.h" />
+    <ClInclude Include="Sources\DirectionalLight.h" />
+    <ClInclude Include="Sources\DITEngineSystem.h" />
+    <ClInclude Include="Sources\ImGUI_DebugWindow.h" />
+    <ClInclude Include="Sources\ImGUIManager.h" />
+    <ClInclude Include="Sources\ImGUIWindowBase.h" />
+    <ClInclude Include="Sources\ImGui\imconfig.h" />
+    <ClInclude Include="Sources\ImGui\imgui.h" />
+    <ClInclude Include="Sources\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="Sources\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="Sources\ImGui\imgui_internal.h" />
+    <ClInclude Include="Sources\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Sources\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Sources\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Sources\ImGUI_MaterialWindow.h" />
+    <ClInclude Include="Sources\MipMap.h" />
+    <ClInclude Include="Sources\UISpriteRenderer.h" />
+    <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\Camera.h" />
+    <ClInclude Include="Sources\Component.h" />
+    <ClInclude Include="Sources\Direct3D11.h" />
+    <ClInclude Include="Sources\GameObject.h" />
+    <ClInclude Include="Sources\InputSystem.h" />
+    <ClInclude Include="Sources\Light.h" />
+    <ClInclude Include="Sources\MeshRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Scene_Game.h" />
-    <ClInclude Include="ShaderManager.h" />
-    <ClInclude Include="SystemFormat.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Time.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="utftosjisconv.h" />
-    <ClInclude Include="WinMain.h" />
+    <ClInclude Include="Sources\Scene.h" />
+    <ClInclude Include="Sources\Scene_Game.h" />
+    <ClInclude Include="Sources\ShaderManager.h" />
+    <ClInclude Include="Sources\SystemFormat.h" />
+    <ClInclude Include="Sources\Texture.h" />
+    <ClInclude Include="Sources\Time.h" />
+    <ClInclude Include="Sources\Transform.h" />
+    <ClInclude Include="Sources\utftosjisconv.h" />
+    <ClInclude Include="Sources\WinMain.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Direct3D11.cpp" />
-    <ClCompile Include="DITEngine3D.h" />
-    <ClCompile Include="DITEngine3D.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="MeshRenderer.cpp">
+    <ClCompile Include="Sources\IniFileManager.cpp" />
+    <ClCompile Include="Sources\DirectionalLight.cpp" />
+    <ClCompile Include="Sources\ImGUI_DebugWindow.cpp" />
+    <ClCompile Include="Sources\ImGUIManager.cpp" />
+    <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\Camera.cpp" />
+    <ClCompile Include="Sources\Direct3D11.cpp" />
+    <ClCompile Include="Sources\DITEngine3D.h" />
+    <ClCompile Include="Sources\DITEngineSystem.cpp" />
+    <ClCompile Include="Sources\GameObject.cpp" />
+    <ClCompile Include="Sources\ImGUIWindowBase.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Sources\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Sources\ImGUI_MaterialWindow.cpp" />
+    <ClCompile Include="Sources\InputSystem.cpp" />
+    <ClCompile Include="Sources\Light.cpp" />
+    <ClCompile Include="Sources\MeshRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Scene_Game.cpp" />
-    <ClCompile Include="ShaderManager.cpp" />
-    <ClCompile Include="SystemFormat.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="utftosjisconv.cpp" />
-    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Sources\MipMap.cpp" />
+    <ClCompile Include="Sources\SceneManager.cpp" />
+    <ClCompile Include="Sources\Scene_Game.cpp" />
+    <ClCompile Include="Sources\ShaderManager.cpp" />
+    <ClCompile Include="Sources\SystemFormat.cpp" />
+    <ClCompile Include="Sources\Texture.cpp" />
+    <ClCompile Include="Sources\Time.cpp" />
+    <ClCompile Include="Sources\Transform.cpp" />
+    <ClCompile Include="Sources\UISpriteRenderer.cpp" />
+    <ClCompile Include="Sources\utftosjisconv.cpp" />
+    <ClCompile Include="Sources\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="KeyInputDifinitionList.h" />
-    <None Include="SceneManager.h" />
+    <None Include="Sources\KeyInputDifinitionList.h" />
+    <None Include="Sources\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Asset\shader\DirectionalLight_PS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\DirectionalLight_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Asset\shader\PointLight_VS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vs_main</EntryPointName>
@@ -200,6 +245,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vs_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
@@ -209,30 +255,50 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_3</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.1</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_3</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTextureVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Asset\shader\vertexLightingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Asset\shader\vertexLightingVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
