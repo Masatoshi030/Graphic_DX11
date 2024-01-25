@@ -377,6 +377,10 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 		{
 			//’¸“_À•W
 			fscanf(file, "%f", &position->x);
+
+			//’¸“_‚ª”½“]‚µ‚Ä‚¢‚é‚½‚ßAC³‚·‚é
+			//position->x = -position->xmfloat3.x;
+
 			fscanf(file, "%f", &position->y);
 			fscanf(file, "%f", &position->z);
 
@@ -388,6 +392,10 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 			fscanf(file, "%f", &normal->x);
 			fscanf(file, "%f", &normal->y);
 			fscanf(file, "%f", &normal->z);
+
+			//normal->xmfloat3.x = -normal->xmfloat3.x;
+			//normal->xmfloat3.y = -normal->xmfloat3.y;
+			//normal->xmfloat3.z = -normal->xmfloat3.z;
 
 			normal++;
 		}
@@ -445,6 +453,8 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 					_ModelObj->VertexArray[vc].TexCoord = texcoordArray[atoi(s) - 1].simpleMath_vector2;
 				}
 				s = strtok(nullptr, "/");
+
+				//’¸“_À•W‚ð”½“]‚·‚é‚Æ–@ü‚à”½“]‚·‚é‚½‚ßAC³
 				_ModelObj->VertexArray[vc].Normal = normalArray[atoi(s) - 1].simpleMath_vector3;
 
 				_ModelObj->VertexArray[vc].Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);

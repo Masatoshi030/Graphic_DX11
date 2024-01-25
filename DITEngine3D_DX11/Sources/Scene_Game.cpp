@@ -228,22 +228,22 @@ void Scene_Game::Update()
 
 
 	//タイヤの回転
-	FrontTire->transform->Rotate(0.1f, 0.0f, 0.0f);
-	RearTire->transform->Rotate(0.1f, 0.0f, 0.0f);
+	FrontTire->transform->Rotate(0.01f, 0.0f, 0.0f);
+	RearTire->transform->Rotate(0.01f, 0.0f, 0.0f);
 
 
 	//== バイクの操作 ==//
-	//MainCamera->transform->Translate(
-	//	Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
-	//	0.0f,
-	//	Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
-	//);
-	//
-	//MainCamera->transform->Rotate(
-	//	-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(),
-	//	Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
-	//	0.0f
-	//);
+	MainCamera->transform->Translate(
+		Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
+		0.0f,
+		Input::GetGamePad_LeftStick().y * 0.0000001f * Time::GetDeltaTime()
+	);
+	
+	MainCamera->transform->Rotate(
+		-Input::GetGamePad_RightStick().y * 0.0000001f * Time::GetDeltaTime(),
+		Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
+		0.0f
+	);
 
 
 	//== デバッグウィンドウの値を設定 ==//
