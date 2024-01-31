@@ -1,5 +1,5 @@
 
-#define PIE 3.1415926f
+#define PIE 3.14159265358979323846f
 
 
 cbuffer WorldBuffer : register(b0)
@@ -45,12 +45,15 @@ struct LIGHT_SUN
 	float4 Direction;
 	float4 Diffuse;
 	float4 Ambient;
+    float4 Intensity;
 };
 
 cbuffer SunLightBuffer : register(b4)
 {
 	LIGHT_SUN Light_Sun;
 }
+
+#define Sun
 
 
 // 点光源（Point Light）
@@ -86,18 +89,53 @@ struct ENVIRONMENTMAP_INFO
 cbuffer EnvironmentMapInfo : register(b7)
 {
     ENVIRONMENTMAP_INFO EnvironmentMap_Info;
-};
+}
 
 
 cbuffer UI_Info : register(b8)
 {
     float4x4 AffineMatrix;
-};
+}
 
 cbuffer SystemInfo : register(b9)
 {
     float4 ScreenSize;
     float4 ScreenAspect;
+}
+
+struct DISNEY_MATERIAL
+{
+    //ベースカラー
+    float4 BaseColor;
+    //メタリック
+    float4 Metallic;
+    //サブサーフェス
+    float4 SubSurface;
+    //スペキュラー強度
+    float4 Specular;
+    //スペキュラーチント
+    float4 SpecularTint;
+    //ラフネス
+    float4 Roughness;
+    //異方性反射
+    float4 Anisotropic;
+    //異方性反射　X
+    float4 Anisotropic_X;
+    //異方性反射Y
+    float4 Anisotropic_Y;
+    //シーン
+    float4 Sheen;
+    //シーンチ  ント
+    float4 SheenTint;
+    //クリアコート強度
+    float4 ClearCoat;
+    //クリアコート光沢強度
+    float4 ClearCoatGloss;
+};
+
+cbuffer CB_Disney_Material : register(b10)
+{
+    DISNEY_MATERIAL Disney_Material;
 }
 
 

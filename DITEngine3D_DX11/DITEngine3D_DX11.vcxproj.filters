@@ -141,6 +141,9 @@
     <ClInclude Include="Sources\IniFileManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\ImGUI_DisneyMaterialEditWindow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Direct3D11.cpp">
@@ -242,6 +245,9 @@
     <ClCompile Include="Sources\IniFileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ImGUI_DisneyMaterialEditWindow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Sources\SceneManager.h">
@@ -281,5 +287,6 @@
     </FxCompile>
     <FxCompile Include="Asset\shader\DirectionalLight_VS.hlsl" />
     <FxCompile Include="Asset\shader\DirectionalLight_PS.hlsl" />
+    <FxCompile Include="Asset\shader\DisneyBRDF_PS.hlsl" />
   </ItemGroup>
 </Project>

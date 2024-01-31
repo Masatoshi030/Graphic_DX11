@@ -30,6 +30,8 @@ void ImGUI_DebugWindow::Init()
 	Light_Direction.float3[0] = FileLoader::IniLoad_Float("DirectionalLight", "Direction_X", "DebugData");
 	Light_Direction.float3[1] = FileLoader::IniLoad_Float("DirectionalLight", "Direction_Y", "DebugData");
 	Light_Direction.float3[2] = FileLoader::IniLoad_Float("DirectionalLight", "Direction_Z", "DebugData");
+
+	Light_Intensity = FileLoader::IniLoad_Float("DirectionalLight", "Intensity", "DebugData");
 }
 
 ImGUI_DebugWindow::~ImGUI_DebugWindow()
@@ -57,6 +59,8 @@ ImGUI_DebugWindow::~ImGUI_DebugWindow()
 	FileLoader::IniWrite("DirectionalLight", "Direction_X", Light_Direction.float3[0], "DebugData");
 	FileLoader::IniWrite("DirectionalLight", "Direction_Y", Light_Direction.float3[1], "DebugData");
 	FileLoader::IniWrite("DirectionalLight", "Direction_Z", Light_Direction.float3[2], "DebugData");
+
+	FileLoader::IniWrite("DirectionalLight", "Intensity", Light_Intensity, "DebugData");
 }
 
 void ImGUI_DebugWindow::Draw_WindowSetting()
@@ -101,4 +105,5 @@ void ImGUI_DebugWindow::Draw_ItemSetting()
 	ImGui::ColorPicker4("Light_Diffuse", Light_Diffuse.float4, 0);
 	ImGui::ColorPicker4("Light_Ambient", Light_Ambient.float4, 0);
 	ImGui::SliderFloat3("Light_Direction", Light_Direction.float3, -1.0f, 1.0f, "%.3f");
+	ImGui::SliderFloat("Light_Intensity", &Light_Intensity, 0.0f, 10.0f, "%.3f");
 }

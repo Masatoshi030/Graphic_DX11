@@ -41,5 +41,13 @@ void DirectionalLight::SetAmbient(Vector4 _Color)
 
 void DirectionalLight::SetDirection(Vector3 _Dir)
 {
+	//Œõ‚Ì•ûŒü‚ğ³‹K‰»
+	_Dir.simpleMath_vector3.Normalize();
+	
 	light.Direction = Vector4(_Dir.x, _Dir.y, _Dir.z, 0.0f).simpleMath_vector4;
+}
+
+void DirectionalLight::SetIntensity(float _Intensity)
+{
+	light.Intensity.x = _Intensity;
 }

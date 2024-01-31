@@ -54,6 +54,7 @@ struct LIGHT
 	DirectX::SimpleMath::Vector4 Direction;
 	DirectX::SimpleMath::Color Diffuse;
 	DirectX::SimpleMath::Color Ambient;
+	DirectX::SimpleMath::Vector4 Intensity;
 };
 
 
@@ -87,6 +88,37 @@ struct GPU_SYSTEM_INFO
 	DirectX::SimpleMath::Vector4 ScreenAspect;	//x
 };
 
+//Disney BRDF マテリアル
+struct DISNEY_MATERIAL
+{
+	//ベースカラー
+	DirectX::SimpleMath::Color BaseColor;
+	//メタリック
+	DirectX::SimpleMath::Vector4 Metallic;
+	//サブサーフェス
+	DirectX::SimpleMath::Vector4 SubSurface;
+	//スペキュラー強度
+	DirectX::SimpleMath::Vector4 Specular;
+	//スペキュラーチント
+	DirectX::SimpleMath::Vector4 SpecularTint;
+	//ラフネス
+	DirectX::SimpleMath::Vector4 Roughness;
+	//異方性反射
+	DirectX::SimpleMath::Vector4 Anisotropic;
+	//異方性反射X
+	DirectX::SimpleMath::Vector4 Anisotropic_X;
+	// 異方性反射Y
+	DirectX::SimpleMath::Vector4 Anisotropic_Y;
+	//シーン
+	DirectX::SimpleMath::Vector4 Sheen;
+	//シーンチ  ント
+	DirectX::SimpleMath::Vector4 SheenTint;
+	//クリアコート強度
+	DirectX::SimpleMath::Vector4 ClearCoat;
+	//クリアコート光沢強度
+	DirectX::SimpleMath::Vector4 ClearCoatGloss;
+};
+
 
 class DIRECT3D11
 {
@@ -113,6 +145,7 @@ private:
 	ID3D11Buffer*				EnvironmentMapInfoBuffer;
 	ID3D11Buffer*				UIInfoBuffer;
 	ID3D11Buffer*				SystemInfoBuffer;
+	ID3D11Buffer*				Disney_MaterialBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -206,6 +239,10 @@ public:
 	//=================================================
 	//
 	void SetGPUSystemInfo(GPU_SYSTEM_INFO _System_Info);
+
+	//=================================================
+	//
+	void SetDisneyMaterial(DISNEY_MATERIAL _Disney_Material);
 
 	//=================================================
 	//

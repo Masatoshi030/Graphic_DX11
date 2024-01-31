@@ -27,7 +27,7 @@ void Scene_Game::Start()
 	Shader::AddVertexShader("Asset/shader/UI_BaseShader_VS.cso", "UI_Base");
 
 	//ピクセルシェーダー
-	Shader::AddPixelShader("Asset/shader/SpecularReflection_PS.cso", "Specular");
+	Shader::AddPixelShader("Asset/shader/DisneyBRDF_PS.cso", "Specular");
 	Shader::AddPixelShader("Asset/shader/DirectionalLight_PS.cso", "Directional");
 	Shader::AddPixelShader("Asset/shader/PointLight_PS.cso", "PointLight");
 	Shader::AddPixelShader("Asset/shader/unlitTexturePS.cso", "Unlit");
@@ -45,6 +45,11 @@ void Scene_Game::Start()
 	ig_MaterialWindow = new ImGUI_MaterialWindow();
 	ig_MaterialWindow->SetWindowName("MaterialWindow");
 	ImGUIManager::AddWindow(ig_MaterialWindow);
+
+	//Disneyマテリアル編集ウィンドウ
+	ig_DisneyMaterialEditWindow = new ImGUI_DisneyMaterialEditWindow();
+	ig_DisneyMaterialEditWindow->SetWindowName("DisneyMaterialWindow");
+	ImGUIManager::AddWindow(ig_DisneyMaterialEditWindow);
 
 	
 	//== オブジェクト設定 ==//
@@ -209,6 +214,9 @@ void Scene_Game::Start()
 	//デバッグデータ読み込み処理
 	ig_DebugWindow->Init();
 
+	//Disneyマテリアル編集ウィンドウの初期化
+	ig_DisneyMaterialEditWindow->Init();
+
 
 	//オブジェクトの描画処理
 	for (const auto& e : Hierarchy)
@@ -272,6 +280,11 @@ void Scene_Game::Update()
 	DirLight_buf->SetLightColor(ig_DebugWindow->Light_Diffuse);
 	DirLight_buf->SetAmbient(ig_DebugWindow->Light_Ambient);
 	DirLight_buf->SetDirection(ig_DebugWindow->Light_Direction);
+	DirLight_buf->SetIntensity(ig_DebugWindow->Light_Intensity);
+
+
+	//DisneyMaterial
+	D3D->SetDisneyMaterial(ig_DisneyMaterialEditWindow->Disney_Material);
 
 
 	//== バイブレーションテスト ==//

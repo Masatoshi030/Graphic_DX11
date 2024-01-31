@@ -28,4 +28,5 @@ public:
 	Vector4 Light_Diffuse;
 	Vector4 Light_Ambient;
 	Vector3 Light_Direction;
+	float Light_Intensity;
 };

@@ -236,6 +236,13 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->PSSetConstantBuffers(9, 1, &SystemInfoBuffer);
 
 
+	bufferDesc.ByteWidth = sizeof(DISNEY_MATERIAL);
+
+	Device->CreateBuffer(&bufferDesc, NULL, &Disney_MaterialBuffer);
+	DeviceContext->VSSetConstantBuffers(10, 1, &Disney_MaterialBuffer);
+	DeviceContext->PSSetConstantBuffers(10, 1, &Disney_MaterialBuffer);
+
+
 	// ƒ‰ƒCƒg‰Šú‰»
 	LIGHT light{};
 	light.Enable = true;
@@ -425,6 +432,11 @@ void DIRECT3D11::SetUIInfoBuffer(DirectX::XMMATRIX* _UI_Info)
 void DIRECT3D11::SetGPUSystemInfo(GPU_SYSTEM_INFO _System_Info)
 {
 	DeviceContext->UpdateSubresource(SystemInfoBuffer, 0, NULL, &_System_Info, 0, 0);
+}
+
+void DIRECT3D11::SetDisneyMaterial(DISNEY_MATERIAL _Disney_Material)
+{
+	DeviceContext->UpdateSubresource(Disney_MaterialBuffer, 0, NULL, &_Disney_Material, 0, 0);
 }
 
 void DIRECT3D11::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)

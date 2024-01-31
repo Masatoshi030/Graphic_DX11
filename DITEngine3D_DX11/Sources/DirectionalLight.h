@@ -33,4 +33,6 @@ public:
 	void SetAmbient(Vector4 _Color);
 
 	void SetDirection(Vector3 _Dir);
+
+	void SetIntensity(float _Intensity);
 };

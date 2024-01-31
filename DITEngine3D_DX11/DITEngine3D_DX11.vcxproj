@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\ImGUI_DisneyMaterialEditWindow.h" />
     <ClInclude Include="Sources\IniFileManager.h" />
     <ClInclude Include="Sources\DirectionalLight.h" />
     <ClInclude Include="Sources\DITEngineSystem.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Sources\WinMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\ImGUI_DisneyMaterialEditWindow.cpp" />
     <ClCompile Include="Sources\IniFileManager.cpp" />
     <ClCompile Include="Sources\DirectionalLight.cpp" />
     <ClCompile Include="Sources\ImGUI_DebugWindow.cpp" />
@@ -230,6 +232,14 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\DisneyBRDF_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Asset/shader/%(Filename).cso</ObjectFileOutput>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
