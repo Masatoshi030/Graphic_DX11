@@ -22,11 +22,14 @@ void Scene_Game::Start()
 
 	//頂点シェーダー
 	Shader::AddVertexShader("Asset/shader/DirectionalLight_VS.cso", "Directional");
+	Shader::AddVertexShader("Asset/shader/PointLight_VS.cso", "PointLight");
 	Shader::AddVertexShader("Asset/shader/unlitTextureVS.cso", "Unlit");
 	Shader::AddVertexShader("Asset/shader/UI_BaseShader_VS.cso", "UI_Base");
 
 	//ピクセルシェーダー
-	Shader::AddPixelShader("Asset/shader/DisneyBRDF_PS.cso", "Disney");
+	Shader::AddPixelShader("Asset/shader/DisneyBRDF_PS.cso", "Specular");
+	Shader::AddPixelShader("Asset/shader/DirectionalLight_PS.cso", "Directional");
+	Shader::AddPixelShader("Asset/shader/PointLight_PS.cso", "PointLight");
 	Shader::AddPixelShader("Asset/shader/unlitTexturePS.cso", "Unlit");
 	Shader::AddPixelShader("Asset/shader/UI_BaseShader_PS.cso", "UI_Base");
 
@@ -42,6 +45,11 @@ void Scene_Game::Start()
 	ig_MaterialWindow = new ImGUI_MaterialWindow();
 	ig_MaterialWindow->SetWindowName("MaterialWindow");
 	ImGUIManager::AddWindow(ig_MaterialWindow);
+
+	//Disneyマテリアル編集ウィンドウ
+	ig_DisneyMaterialEditWindow = new ImGUI_DisneyMaterialEditWindow();
+	ig_DisneyMaterialEditWindow->SetWindowName("DisneyMaterialWindow");
+	ImGUIManager::AddWindow(ig_DisneyMaterialEditWindow);
 
 	
 	//== オブジェクト設定 ==//
@@ -73,107 +81,105 @@ void Scene_Game::Start()
 
 	SkyBox->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.VertexShader = Shader::GetVertexShader("Unlit");
 	SkyBox->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.PixelShader = Shader::GetPixelShader("Unlit");
-
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(SkyBox->GetComponent<MeshRenderer>());
 	
 	Hierarchy.push_back(SkyBox);
 	
 
-	////== 車体 ==//
-	//Body = new GameObject();
-	//
-	//Body->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
-	//
-	//Hierarchy.push_back(Body);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Body->GetComponent<MeshRenderer>());
-	//
-	//Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
-	//
-	//Body->transform->position.x = -5.0f;
-	//
-	//Body->transform->Rotate(0.0f, DirectX::XMConvertToRadians(-90.0f), 0.0f);
-	//
-	//
-	////== マフラー ==//
-	//Muffler = new GameObject();
-	//
-	//Muffler->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
-	//
-	//Muffler->Set_Parent(Body);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Muffler->GetComponent<MeshRenderer>());
-	//
-	////== エンジン ==//
-	//Engine = new GameObject();
-	//
-	//Engine->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj");
-	//
-	//Engine->Set_Parent(Body);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Engine->GetComponent<MeshRenderer>());
-	//
-	////== ハンドル ==//
-	//Handle = new GameObject();
-	//
-	//Handle->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Handle.obj");
-	//
-	//Handle->Set_Parent(Body);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Handle->GetComponent<MeshRenderer>());
-	//
-	////== フロントフェンダー ==//
-	//FrontFender = new GameObject();
-	//
-	//FrontFender->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontFender.obj");
-	//
-	//FrontFender->Set_Parent(Body);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontFender->GetComponent<MeshRenderer>());
-	//
-	////== フロントタイヤ ==//
-	//FrontTire = new GameObject();
-	//
-	//FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
-	//
-	//FrontTire->Set_Parent(Body);
-	//
-	//FrontTire->transform->position = Vector3(0.0f, 40.0f, 102.0f);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontTire->GetComponent<MeshRenderer>());
-	//
-	////== リアタイヤ ==//
-	//RearTire = new GameObject();
-	//
-	//RearTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearTire.obj");
-	//
-	//RearTire->Set_Parent(Body);
-	//
-	//RearTire->transform->position = Vector3(0.0f, 41.0f, -92.5f);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(RearTire->GetComponent<MeshRenderer>());
-	//
-	//
+	//== 車体 ==//
+	Body = new GameObject();
+	
+	Body->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
+	
+	Hierarchy.push_back(Body);
+	
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Body->GetComponent<MeshRenderer>());
+	
+	Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
+
+	Body->transform->position.x = -5.0f;
+
+	Body->transform->Rotate(0.0f, DirectX::XMConvertToRadians(-90.0f), 0.0f);
+	
+	
+	//== マフラー ==//
+	Muffler = new GameObject();
+	
+	Muffler->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
+	
+	Muffler->Set_Parent(Body);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Muffler->GetComponent<MeshRenderer>());
+	
+	//== エンジン ==//
+	Engine = new GameObject();
+	
+	Engine->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj");
+	
+	Engine->Set_Parent(Body);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Engine->GetComponent<MeshRenderer>());
+	
+	//== ハンドル ==//
+	Handle = new GameObject();
+	
+	Handle->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Handle.obj");
+	
+	Handle->Set_Parent(Body);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Handle->GetComponent<MeshRenderer>());
+	
+	//== フロントフェンダー ==//
+	FrontFender = new GameObject();
+	
+	FrontFender->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontFender.obj");
+
+	FrontFender->Set_Parent(Body);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontFender->GetComponent<MeshRenderer>());
+
+	//== フロントタイヤ ==//
+	FrontTire = new GameObject();
+	
+	FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
+	
+	FrontTire->Set_Parent(Body);
+
+	FrontTire->transform->position = Vector3(0.0f, 40.0f, 102.0f);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontTire->GetComponent<MeshRenderer>());
+	
+	//== リアタイヤ ==//
+	RearTire = new GameObject();
+	
+	RearTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearTire.obj");
+	
+	RearTire->Set_Parent(Body);
+
+	RearTire->transform->position = Vector3(0.0f, 41.0f, -92.5f);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(RearTire->GetComponent<MeshRenderer>());
+
+
 	//== テストスフィア ==//
 	Sphere = new GameObject();
-	
+
 	Sphere->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Sphere.obj");
-	
-	Sphere->transform->position.x = -6.0f;
+
+	Sphere->transform->position.x = 4.0f;
 	Sphere->transform->position.y = 1.0f;
-	
+
 	Hierarchy.push_back(Sphere);
-	
+
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Sphere->GetComponent<MeshRenderer>());
-	
-	////== スタジオ（Bypass） ==//
-	//Studio_Bypass = new GameObject();
-	//
-	//Studio_Bypass->AddComponent<MeshRenderer>()->Load("Asset\\model\\Studio_Bypass.obj");
-	//
-	//Hierarchy.push_back(Studio_Bypass);
-	//
-	//ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass->GetComponent<MeshRenderer>());
+
+	//== スタジオ（Bypass） ==//
+	Studio_Bypass = new GameObject();
+
+	Studio_Bypass->AddComponent<MeshRenderer>()->Load("Asset\\model\\Studio_Bypass.obj");
+
+	Hierarchy.push_back(Studio_Bypass);
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass->GetComponent<MeshRenderer>());
 
 
 	//== テストUI ==//
@@ -208,6 +214,9 @@ void Scene_Game::Start()
 	//デバッグデータ読み込み処理
 	ig_DebugWindow->Init();
 
+	//Disneyマテリアル編集ウィンドウの初期化
+	ig_DisneyMaterialEditWindow->Init();
+
 	//オブジェクトの描画処理
 	for (const auto& e : Hierarchy)
 	{
@@ -226,8 +235,8 @@ void Scene_Game::Update()
 
 
 	//タイヤの回転
-	//FrontTire->transform->Rotate(0.01f, 0.0f, 0.0f);
-	//RearTire->transform->Rotate(0.01f, 0.0f, 0.0f);
+	FrontTire->transform->Rotate(0.01f, 0.0f, 0.0f);
+	RearTire->transform->Rotate(0.01f, 0.0f, 0.0f);
 
 
 	//== バイクの操作 ==//
@@ -271,6 +280,10 @@ void Scene_Game::Update()
 	DirLight_buf->SetAmbient(ig_DebugWindow->Light_Ambient);
 	DirLight_buf->SetDirection(ig_DebugWindow->Light_Direction);
 	DirLight_buf->SetIntensity(ig_DebugWindow->Light_Intensity);
+
+
+	//DisneyMaterial
+	D3D->SetDisneyMaterial(ig_DisneyMaterialEditWindow->Disney_Material);
 
 
 	//== バイブレーションテスト ==//

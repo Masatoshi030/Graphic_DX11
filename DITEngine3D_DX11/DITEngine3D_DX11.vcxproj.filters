@@ -264,13 +264,29 @@
     <FxCompile Include="Asset\shader\unlitTextureVS.hlsl">
       <Filter>リソース ファイル\頂点シェーダー</Filter>
     </FxCompile>
+    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\PointLight_VS.hlsl">
+      <Filter>リソース ファイル\頂点シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
     <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl">
       <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
       <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
+    <FxCompile Include="Asset\shader\vertexLightingPS.hlsl">
+      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
+    </FxCompile>
     <FxCompile Include="Asset\shader\DirectionalLight_VS.hlsl" />
+    <FxCompile Include="Asset\shader\DirectionalLight_PS.hlsl" />
     <FxCompile Include="Asset\shader\DisneyBRDF_PS.hlsl" />
   </ItemGroup>
 </Project>

@@ -81,7 +81,7 @@ namespace FileLoader
 	{
 		char returnValue[256];
 
-		GetPrivateProfileString(_section, _key, "0.0", returnValue, sizeof(char) * 256, IniFileList[_IniFileName]);
+		GetPrivateProfileString(_section, _key, "1.0", returnValue, sizeof(char) * 256, IniFileList[_IniFileName]);
 
 		return stof(returnValue);
 	}

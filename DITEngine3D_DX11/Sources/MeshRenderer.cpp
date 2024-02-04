@@ -35,7 +35,18 @@ void MeshRenderer::Draw()
 	{
 		//== マテリアルを設定 ==//
 
-		D3D->SetDisneyMaterial(Model->SubsetArray[i].Material.Disney_Material);
+		//メタリックが0.00fにならないようにする
+		if (Model->SubsetArray[i].Material.Material.Metalic.x < 0.1f)
+		{
+			Model->SubsetArray[i].Material.Material.Metalic.x = 0.1f;
+		}
+
+		if (Model->SubsetArray[i].Material.Material.Shininess < 0.1f)
+		{
+			Model->SubsetArray[i].Material.Material.Shininess = 0.1f;
+		}
+
+		D3D->SetMaterial(Model->SubsetArray[i].Material.Material);
 
 		//== マテリアルごとにシェーダーを設定 ==//
 
@@ -59,7 +70,7 @@ void MeshRenderer::Draw()
 		MipMap* environmentTexture_MipMap = DITEngine::GetEnvironmentMipMap();
 
 		//スペキュラー強度を最大で割ってテクスチャ総数を掛けることで一番近いミップレベルを計算する
-		int mipLevel = (Model->SubsetArray[i].Material.Disney_Material.Roughness.x) * (environmentTexture_MipMap->GetTextureCount() - 1);
+		int mipLevel = (1.00f - Model->SubsetArray[i].Material.Material.Shininess) * (environmentTexture_MipMap->GetTextureCount() - 1);
 
 		//テクスチャを取得
 		Texture* environmentTexture_Texture = environmentTexture_MipMap->GetTexture_MipLevel(mipLevel);
@@ -196,6 +207,8 @@ void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)
 			//名前のコピー
 			strcpy(Model->SubsetArray[i].Material.Name, modelObj.SubsetArray[i].Material.Name);
 
+			Model->SubsetArray[i].Material.Material = modelObj.SubsetArray[i].Material.Material;
+
 			Model->SubsetArray[i].Material.Texture = nullptr;
 
 			// s-jisをワイド文字に
@@ -208,6 +221,11 @@ void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)
 				ws.c_str(),
 				nullptr,
 				&Model->SubsetArray[i].Material.Texture);
+
+			if (Model->SubsetArray[i].Material.Texture)
+				Model->SubsetArray[i].Material.Material.TextureEnable = true;
+			else
+				Model->SubsetArray[i].Material.Material.TextureEnable = false;
 
 		}
 	}
@@ -405,6 +423,7 @@ void MeshRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 			{
 				if (strcmp(str, materialArray[i].Name) == 0)
 				{
+					_ModelObj->SubsetArray[sc].Material.Material = materialArray[i].Material;
 					strcpy(_ModelObj->SubsetArray[sc].Material.TextureName, materialArray[i].TextureName);
 					strcpy(_ModelObj->SubsetArray[sc].Material.Name, materialArray[i].Name);
 
@@ -534,45 +553,46 @@ void MeshRenderer::LoadMaterial(const char* _FileName, MODEL_MATERIAL** _Materia
 			fscanf(file, "%s", materialArray[mc].Name);
 			strcpy(materialArray[mc].TextureName, "");
 
-			//materialArray[mc].Material.Emission.x = 0.0f;
-			//materialArray[mc].Material.Emission.y = 0.0f;
-			//materialArray[mc].Material.Emission.z = 0.0f;
-			//materialArray[mc].Material.Emission.w = 0.0f;
+			materialArray[mc].Material.Emission.x = 0.0f;
+			materialArray[mc].Material.Emission.y = 0.0f;
+			materialArray[mc].Material.Emission.z = 0.0f;
+			materialArray[mc].Material.Emission.w = 0.0f;
 		}
 		else if (strcmp(str, "Ka") == 0)
 		{
 			//アンビエント
-			//fscanf(file, "%f", &materialArray[mc].Material.Ambient.x);
-			//fscanf(file, "%f", &materialArray[mc].Material.Ambient.y);
-			//fscanf(file, "%f", &materialArray[mc].Material.Ambient.z);
-			//materialArray[mc].Material.Ambient.w = 1.0f;
+			fscanf(file, "%f", &materialArray[mc].Material.Ambient.x);
+			fscanf(file, "%f", &materialArray[mc].Material.Ambient.y);
+			fscanf(file, "%f", &materialArray[mc].Material.Ambient.z);
+			materialArray[mc].Material.Ambient.w = 1.0f;
 		}
 		else if (strcmp(str, "Kd") == 0)
 		{
 			//ディフューズ
-			//fscanf(file, "%f", &materialArray[mc].Material.Diffuse.x);
-			//fscanf(file, "%f", &materialArray[mc].Material.Diffuse.y);
-			//fscanf(file, "%f", &materialArray[mc].Material.Diffuse.z);
-			//materialArray[mc].Material.Diffuse.w = 1.0f;
+			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.x);
+			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.y);
+			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.z);
+			materialArray[mc].Material.Diffuse.w = 1.0f;
 		}
 		else if (strcmp(str, "Ks") == 0)
 		{
 			//スペキュラ
-			//fscanf(file, "%f", &materialArray[mc].Material.Specular.x);
-			//fscanf(file, "%f", &materialArray[mc].Material.Specular.y);
-			//fscanf(file, "%f", &materialArray[mc].Material.Specular.z);
-			//materialArray[mc].Material.Specular.w = 1.0f;
+			fscanf(file, "%f", &materialArray[mc].Material.Specular.x);
+			fscanf(file, "%f", &materialArray[mc].Material.Specular.y);
+			fscanf(file, "%f", &materialArray[mc].Material.Specular.z);
+			materialArray[mc].Material.Specular.w = 1.0f;
 		}
 		else if (strcmp(str, "Ns") == 0)
 		{
 			//スペキュラ強度
-			//fscanf(file, "%f", &materialArray[mc].Material.Shininess);
-			//materialArray[mc].Material.Shininess = (materialArray[mc].Material.Shininess / 1000.0f);
+			fscanf(file, "%f", &materialArray[mc].Material.Shininess);
+
+			materialArray[mc].Material.Shininess = (materialArray[mc].Material.Shininess / 1000.0f);
 		}
 		else if (strcmp(str, "d") == 0)
 		{
 			//アルファ
-			//fscanf(file, "%f", &materialArray[mc].Material.Diffuse.w);
+			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.w);
 		}
 		else if (strcmp(str, "map_Kd") == 0)
 		{
@@ -587,7 +607,7 @@ void MeshRenderer::LoadMaterial(const char* _FileName, MODEL_MATERIAL** _Materia
 			strcat(materialArray[mc].TextureName, path);
 		}
 
-		//materialArray[mc].Material.Metalic.x = 1.0f;
+		materialArray[mc].Material.Metalic.x = 1.0f;
 	}
 
 	fclose(file);

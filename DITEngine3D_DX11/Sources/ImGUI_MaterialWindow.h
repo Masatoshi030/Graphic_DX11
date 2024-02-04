@@ -9,15 +9,11 @@ struct MATERIAL_EDITOR
 {
 	const char* materialName;
 
-	std::list<DISNEY_MATERIAL*> SameMaterialList;
+	std::list<MATERIAL*> SameMaterialList;
 
 	Vector4 BaseColor = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	float Metaric = 0.0f;
-	float Specular = 0.0f;
-	float Roughness = 0.01f;
-	float Anisotropic = 0.0f;
-	float ClearCoat = 0.0f;
-	float ClearCoatGloss = 0.0f;
+	float Smoothness = 0.01f;
 };
 
 class ImGUI_MaterialWindow : public ImGUIWindowBase
@@ -36,5 +32,5 @@ public:
 	void Draw_ItemSetting();
 
 	void AddMaterialEditor_MeshRenderer(MeshRenderer* _meshRenderer);
-	void AddMaterialEditor(const char* _materinalName, DISNEY_MATERIAL* _material);
+	void AddMaterialEditor(const char* _materinalName, MATERIAL* _material);
 };

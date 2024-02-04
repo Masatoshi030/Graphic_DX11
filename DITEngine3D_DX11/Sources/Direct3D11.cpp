@@ -187,11 +187,11 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->VSSetConstantBuffers(2, 1, &ProjectionBuffer);
 
 
-	bufferDesc.ByteWidth = sizeof(DISNEY_MATERIAL);
+	bufferDesc.ByteWidth = sizeof(MATERIAL);
 
-	Device->CreateBuffer(&bufferDesc, NULL, &Disney_MaterialBuffer);
-	DeviceContext->VSSetConstantBuffers(3, 1, &Disney_MaterialBuffer);
-	DeviceContext->PSSetConstantBuffers(3, 1, &Disney_MaterialBuffer);
+	Device->CreateBuffer(&bufferDesc, NULL, &MaterialBuffer);
+	DeviceContext->VSSetConstantBuffers(3, 1, &MaterialBuffer);
+	DeviceContext->PSSetConstantBuffers(3, 1, &MaterialBuffer);
 
 
 	bufferDesc.ByteWidth = sizeof(LIGHT);
@@ -236,6 +236,13 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->PSSetConstantBuffers(9, 1, &SystemInfoBuffer);
 
 
+	bufferDesc.ByteWidth = sizeof(DISNEY_MATERIAL);
+
+	Device->CreateBuffer(&bufferDesc, NULL, &Disney_MaterialBuffer);
+	DeviceContext->VSSetConstantBuffers(10, 1, &Disney_MaterialBuffer);
+	DeviceContext->PSSetConstantBuffers(10, 1, &Disney_MaterialBuffer);
+
+
 	// ライト初期化
 	LIGHT light{};
 	light.Enable = true;
@@ -244,6 +251,13 @@ void DIRECT3D11::Init(Application* _APP)
 	light.Ambient = Color(0.1f, 0.1f, 0.1f, 1.0f);
 	light.Diffuse = Color(1.5f, 1.5f, 1.5f, 1.0f);
 	SetLight(light);
+
+
+	// マテリアル初期化
+	MATERIAL material{};
+	material.Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	material.Ambient = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
 }
 
 void DIRECT3D11::Render_DrawBegin()
@@ -262,19 +276,12 @@ void DIRECT3D11::Release()
 {
 
 	//定数バッファーを解放
-
 	WorldBuffer->Release();
 	ViewBuffer->Release();
 	ProjectionBuffer->Release();
 	LightBuffer->Release();
 	PointLightBuffer->Release();
-	EyeInfoBuffer->Release();
-	EnvironmentMapInfoBuffer->Release();
-	UIInfoBuffer->Release();
-	SystemInfoBuffer->Release();
-	Disney_MaterialBuffer->Release();
-
-
+	MaterialBuffer->Release();
 
 	//D3Dシステム
 	DeviceContext->ClearState();
@@ -385,9 +392,11 @@ void DIRECT3D11::SetProjectionMatrix(XMMATRIX* ProjectionMatrix)
 	DeviceContext->UpdateSubresource(ProjectionBuffer, 0, NULL, &projection, 0, 0);
 }
 
-void DIRECT3D11::SetDisneyMaterial(DISNEY_MATERIAL _Disney_Material)
+
+
+void DIRECT3D11::SetMaterial(MATERIAL Material)
 {
-	DeviceContext->UpdateSubresource(Disney_MaterialBuffer, 0, NULL, &_Disney_Material, 0, 0);
+	DeviceContext->UpdateSubresource(MaterialBuffer, 0, NULL, &Material, 0, 0);
 }
 
 void DIRECT3D11::SetLight(LIGHT Light)
@@ -423,6 +432,11 @@ void DIRECT3D11::SetUIInfoBuffer(DirectX::XMMATRIX* _UI_Info)
 void DIRECT3D11::SetGPUSystemInfo(GPU_SYSTEM_INFO _System_Info)
 {
 	DeviceContext->UpdateSubresource(SystemInfoBuffer, 0, NULL, &_System_Info, 0, 0);
+}
+
+void DIRECT3D11::SetDisneyMaterial(DISNEY_MATERIAL _Disney_Material)
+{
+	DeviceContext->UpdateSubresource(Disney_MaterialBuffer, 0, NULL, &_Disney_Material, 0, 0);
 }
 
 void DIRECT3D11::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)
