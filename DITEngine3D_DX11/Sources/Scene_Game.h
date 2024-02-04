@@ -31,7 +31,6 @@ private:
 	//ImGUIWindow
 	ImGUI_DebugWindow* ig_DebugWindow;
 	ImGUI_MaterialWindow* ig_MaterialWindow;
-	ImGUI_DisneyMaterialEditWindow* ig_DisneyMaterialEditWindow;
 
 public:
 

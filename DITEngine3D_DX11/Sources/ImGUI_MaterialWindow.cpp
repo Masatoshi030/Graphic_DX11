@@ -18,7 +18,11 @@ void ImGUI_MaterialWindow::Init()
 		e.BaseColor.float4[3] = FileLoader::IniLoad_Float(e.materialName, "BaseColor_A", "MaterialData");
 
 		e.Metaric = FileLoader::IniLoad_Float(e.materialName, "Metaric", "MaterialData");
-		e.Smoothness = FileLoader::IniLoad_Float(e.materialName, "Smoothness", "MaterialData");
+		e.Specular = FileLoader::IniLoad_Float(e.materialName, "Specular", "MaterialData");
+		e.Roughness = FileLoader::IniLoad_Float(e.materialName, "Roughness", "MaterialData");
+		e.Anisotropic = FileLoader::IniLoad_Float(e.materialName, "Anisotropic", "MaterialData");
+		e.ClearCoat = FileLoader::IniLoad_Float(e.materialName, "ClearCoat", "MaterialData");
+		e.ClearCoatGloss = FileLoader::IniLoad_Float(e.materialName, "ClearCoatGloss", "MaterialData");
 	}
 
 
@@ -27,9 +31,13 @@ void ImGUI_MaterialWindow::Init()
 	{
 		for (auto& f : e.SameMaterialList)
 		{
-			f->Diffuse = DirectX::SimpleMath::Color(e.BaseColor.xmfloat4);
-			f->Metalic.x = e.Metaric;
-			f->Shininess = e.Smoothness;
+			f->BaseColor = DirectX::SimpleMath::Color(e.BaseColor.xmfloat4);
+			f->Metallic.x = e.Metaric;
+			f->Specular.x = e.Specular;
+			f->Roughness.x = e.Roughness;
+			f->Anisotropic.x = e.Anisotropic;
+			f->ClearCoat.x = e.ClearCoat;
+			f->ClearCoatGloss.x = e.ClearCoatGloss;
 		}
 	}
 }
@@ -53,14 +61,30 @@ void ImGUI_MaterialWindow::Draw_ItemSetting()
 			ImGui::Text("Metaric");
 			ImGui::SliderFloat("Metaric", &e.Metaric, 0.0f, 1.0f);
 
-			ImGui::Text("Smoothness");
-			ImGui::SliderFloat("Smoothness", &e.Smoothness, 0.01f, 1.0f);
+			ImGui::Text("Specular");
+			ImGui::SliderFloat("Specular", &e.Specular, 0.0f, 1.0f);
+
+			ImGui::Text("Roughness");
+			ImGui::SliderFloat("Roughness", &e.Roughness, 0.01f, 1.0f);
+
+			ImGui::Text("Anisotropic");
+			ImGui::SliderFloat("Anisotropic", &e.Anisotropic, 0.01f, 1.0f);
+
+			ImGui::Text("ClearCoat");
+			ImGui::SliderFloat("ClearCoat", &e.ClearCoat, 0.01f, 1.0f);
+
+			ImGui::Text("ClearCoatGloss");
+			ImGui::SliderFloat("ClearCoatGloss", &e.ClearCoatGloss, 0.01f, 1.0f);
 
 			for (auto& f : e.SameMaterialList)
 			{
-				f->Diffuse = DirectX::SimpleMath::Color(e.BaseColor.xmfloat4);
-				f->Metalic.x = e.Metaric;
-				f->Shininess = e.Smoothness;
+				f->BaseColor = DirectX::SimpleMath::Color(e.BaseColor.xmfloat4);
+				f->Metallic.x = e.Metaric;
+				f->Specular.x = e.Specular;
+				f->Roughness.x = e.Roughness;
+				f->Anisotropic.x = e.Anisotropic;
+				f->ClearCoat.x = e.ClearCoat;
+				f->ClearCoatGloss.x = e.ClearCoatGloss;
 			}
 
 			ImGui::TreePop();
@@ -75,12 +99,12 @@ void ImGUI_MaterialWindow::AddMaterialEditor_MeshRenderer(MeshRenderer* _meshRen
 	{
 		AddMaterialEditor(
 			_meshRenderer->GetSubset_Index(i)->Material.Name,
-			&_meshRenderer->GetSubset_Index(i)->Material.Material
+			&_meshRenderer->GetSubset_Index(i)->Material.Disney_Material
 		);
 	}
 }
 
-void ImGUI_MaterialWindow::AddMaterialEditor(const char* _materinalName, MATERIAL* _material)
+void ImGUI_MaterialWindow::AddMaterialEditor(const char* _materinalName, DISNEY_MATERIAL* _material)
 {
 	//重複チェック
 	MATERIAL_EDITOR* materialEditor_buf = CheckDuplication(_materinalName);
@@ -132,6 +156,10 @@ ImGUI_MaterialWindow::~ImGUI_MaterialWindow()
 		FileLoader::IniWrite(e.materialName, "BaseColor_A", e.BaseColor.float4[3], "MaterialData");
 
 		FileLoader::IniWrite(e.materialName, "Metaric", e.Metaric, "MaterialData");
-		FileLoader::IniWrite(e.materialName, "Smoothness", e.Smoothness, "MaterialData");
+		FileLoader::IniWrite(e.materialName, "Specular", e.Specular, "MaterialData");
+		FileLoader::IniWrite(e.materialName, "Roughness", e.Roughness, "MaterialData");
+		FileLoader::IniWrite(e.materialName, "Anisotropic", e.Anisotropic, "MaterialData");
+		FileLoader::IniWrite(e.materialName, "ClearCoat", e.ClearCoat, "MaterialData");
+		FileLoader::IniWrite(e.materialName, "ClearCoatGloss", e.ClearCoatGloss, "MaterialData");
 	}
 }
