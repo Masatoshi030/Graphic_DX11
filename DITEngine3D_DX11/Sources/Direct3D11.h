@@ -31,21 +31,6 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector2 TexCoord;
 };
 
-
-//マテリアル
-struct MATERIAL
-{
-	DirectX::SimpleMath::Color Ambient;
-	DirectX::SimpleMath::Color Diffuse;
-	DirectX::SimpleMath::Color Specular;
-	DirectX::SimpleMath::Color Emission;
-	float Shininess;
-	BOOL TextureEnable;
-	float Dummy[2];
-	DirectX::SimpleMath::Vector4 Metalic;
-};
-
-
 //平行光源
 struct LIGHT
 {
@@ -126,7 +111,6 @@ private:
 	ID3D11Buffer*				WorldBuffer;
 	ID3D11Buffer*				ViewBuffer;
 	ID3D11Buffer*				ProjectionBuffer;
-	ID3D11Buffer*				MaterialBuffer;
 	ID3D11Buffer*				LightBuffer;
 	ID3D11Buffer*				PointLightBuffer;
 	ID3D11Buffer*				EyeInfoBuffer;
@@ -199,10 +183,6 @@ public:
 	//=================================================
 	//
 	void SetProjectionMatrix(DirectX::XMMATRIX* ProjectionMatrix);
-
-	//=================================================
-	//
-	void SetMaterial(MATERIAL Material);
 
 	//=================================================
 	//
@@ -295,11 +275,6 @@ public:
 	ID3D11Buffer* Get_ProjectionBuffer()
 	{
 		return D3D->ProjectionBuffer;
-	}
-
-	ID3D11Buffer* Get_MaterialBuffer()
-	{
-		return D3D->MaterialBuffer;
 	}
 
 	ID3D11Buffer* Get_LightBuffer()
