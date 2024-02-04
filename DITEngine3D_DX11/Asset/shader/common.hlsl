@@ -16,23 +16,27 @@ cbuffer ProjectionBuffer : register(b2)
 }
 
 
-
-
-struct MATERIAL
+struct DISNEY_MATERIAL
 {
-	float4 Ambient;			//環境光
-	float4 Diffuse;			//拡散　全体の明るさ
-	float4 Specular;		//鏡面反射光
-	float4 Emission;		//発光
-	float Shininess;		//
-	bool TextureEnable;
-	float2 Dummy;
+    //ベースカラー
+    float4 BaseColor;
+    //メタリック
     float4 Metallic;
+    //スペキュラー強度
+    float4 Specular;
+    //ラフネス
+    float4 Roughness;
+    //異方性反射
+    float4 Anisotropic;
+    //クリアコート強度
+    float4 ClearCoat;
+    //クリアコート光沢強度
+    float4 ClearCoatGloss;
 };
 
-cbuffer MaterialBuffer : register(b3)
+cbuffer CB_Disney_Material : register(b3)
 {
-	MATERIAL Material;
+    DISNEY_MATERIAL Disney_Material;
 }
 
 
@@ -101,29 +105,6 @@ cbuffer SystemInfo : register(b9)
 {
     float4 ScreenSize;
     float4 ScreenAspect;
-}
-
-struct DISNEY_MATERIAL
-{
-    //ベースカラー
-    float4 BaseColor;
-    //メタリック
-    float4 Metallic;
-    //スペキュラー強度
-    float4 Specular;
-    //ラフネス
-    float4 Roughness;
-    //異方性反射
-    float4 Anisotropic;
-    //クリアコート強度
-    float4 ClearCoat;
-    //クリアコート光沢強度
-    float4 ClearCoatGloss;
-};
-
-cbuffer CB_Disney_Material : register(b10)
-{
-    DISNEY_MATERIAL Disney_Material;
 }
 
 

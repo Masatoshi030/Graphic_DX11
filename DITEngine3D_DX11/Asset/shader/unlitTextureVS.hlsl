@@ -11,6 +11,6 @@ void main(in VS_IN In, out PS_IN Out)
 
 	Out.Position = mul(In.Position, wvp);
 	Out.TexCoord = In.TexCoord;
-	Out.Diffuse = In.Diffuse * Material.Diffuse;
+	Out.Diffuse = In.Diffuse * Disney_Material.BaseColor;
 }
 

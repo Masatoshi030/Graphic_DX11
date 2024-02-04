@@ -25,8 +25,7 @@ void main(in VS_IN In, out PS_IN Out)
     //Out.Diffuse = In.Diffuse * d * Light_Sun.Diffuse;
     Out.Diffuse = In.Diffuse;
     Out.Diffuse += In.Diffuse * Light_Sun.Ambient;
-    Out.Diffuse += Material.Emission;
-    Out.Diffuse.a = In.Diffuse.a * Material.Diffuse.a;
+    Out.Diffuse.a = In.Diffuse.a * Disney_Material.BaseColor.a;
 
 
     Out.Position = mul(In.Position, wvp);

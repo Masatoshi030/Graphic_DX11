@@ -128,7 +128,7 @@ float4 ps_main(PS_IN input) : SV_Target
     //== 拡散反射BRDF ==//
     
     //フレネル反射を考慮した拡散反射を計算　光の強さも考慮
-    float diffuseFromFrensnel = CalcDiffuseFromFresnel_Disney(N, L, V) * Light_Sun.Intensity.x;
+    float diffuseFromFrensnel = CalcDiffuseFromFresnel_Disney(N, L, V);
     
     //メタリックとラフネスから拡散反射の影響度を計算
     diffuseFromFrensnel *= max(Disney_Material.Roughness.x, 1 - Disney_Material.Metallic.x);
@@ -137,7 +137,7 @@ float4 ps_main(PS_IN input) : SV_Target
     float3 lambertDiffuse = Light_Sun.Diffuse * NdotL / PIE;
     
     //最終的な拡散反射光を計算
-    float3 diffuse = albedoColor.rbg * diffuseFromFrensnel * lambertDiffuse;
+    float3 diffuse = diffuseFromFrensnel * lambertDiffuse;
     
     
     //== 鏡面反射BRDF ==//
@@ -189,16 +189,13 @@ float4 ps_main(PS_IN input) : SV_Target
     //== 合成 ==//
     
     //各計算結果を合成
-    returnColor.rgb = diffuse + specular * specularColor + clearCoat;
+    returnColor.rgb = diffuse * Light_Sun.Intensity.x * albedoColor.rgb + specular * specularColor + clearCoat;
     
     //環境光とアルベドの適用
-    returnColor += Light_Sun.Ambient * albedoColor;
+    returnColor.rgb += Light_Sun.Ambient.rgb * albedoColor.rgb;
     
     
     //== 環境テクスチャ適用 ==//
-    
-    // 視点からピクセルまでのベクトルと法線ベクトルから反射ベクトルを計算
-    //float3 dir = reflect(-V, N);
     
     // ぼかしの度合いをラフネスから計算
     float blurAmount = Disney_Material.Roughness.x;
@@ -208,8 +205,6 @@ float4 ps_main(PS_IN input) : SV_Target
 
     // ぼかしを適用
     reflectedDir = lerp(reflectedDir, normalize(N), blurAmount);
-
-
     
     //反射ベクトルから球状に強制
     float coordX = atan2(reflectedDir.x, reflectedDir.z) / PIE;
@@ -220,9 +215,10 @@ float4 ps_main(PS_IN input) : SV_Target
     
     float2 enviromentMap_SphereUV = float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f;
     
-    //環境マップをサンプリング
+    //環境マップのカラー
     float4 environmentColor = 0;
     
+    //環境マップをサンプリング
     environmentColor = g_environmentMap.Sample(g_SamplerState, enviromentMap_SphereUV);
     
     //環境マップを合成
