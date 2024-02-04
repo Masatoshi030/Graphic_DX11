@@ -217,7 +217,6 @@ void Scene_Game::Start()
 	//Disneyマテリアル編集ウィンドウの初期化
 	ig_DisneyMaterialEditWindow->Init();
 
-
 	//オブジェクトの描画処理
 	for (const auto& e : Hierarchy)
 	{

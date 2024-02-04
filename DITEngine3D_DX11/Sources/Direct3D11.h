@@ -95,24 +95,12 @@ struct DISNEY_MATERIAL
 	DirectX::SimpleMath::Color BaseColor;
 	//メタリック
 	DirectX::SimpleMath::Vector4 Metallic;
-	//サブサーフェス
-	DirectX::SimpleMath::Vector4 SubSurface;
 	//スペキュラー強度
 	DirectX::SimpleMath::Vector4 Specular;
-	//スペキュラーチント
-	DirectX::SimpleMath::Vector4 SpecularTint;
 	//ラフネス
 	DirectX::SimpleMath::Vector4 Roughness;
 	//異方性反射
 	DirectX::SimpleMath::Vector4 Anisotropic;
-	//異方性反射X
-	DirectX::SimpleMath::Vector4 Anisotropic_X;
-	// 異方性反射Y
-	DirectX::SimpleMath::Vector4 Anisotropic_Y;
-	//シーン
-	DirectX::SimpleMath::Vector4 Sheen;
-	//シーンチ  ント
-	DirectX::SimpleMath::Vector4 SheenTint;
 	//クリアコート強度
 	DirectX::SimpleMath::Vector4 ClearCoat;
 	//クリアコート光沢強度

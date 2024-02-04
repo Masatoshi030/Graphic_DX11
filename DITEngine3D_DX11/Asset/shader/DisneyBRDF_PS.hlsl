@@ -102,7 +102,7 @@ float4 ps_main(PS_IN input) : SV_Target
     float NdotV = saturate(dot(N, V));
     
     //TangentとBinormal
-    float3 tangent = normalize(cross(input.norw.xyz, float3(0, 1, 0)));
+    float3 tangent = normalize(cross(N, float3(0.0001, 1, 0.0001)));
     float3 binormal = normalize(cross(tangent, N));
     
     
@@ -198,20 +198,35 @@ float4 ps_main(PS_IN input) : SV_Target
     //== 環境テクスチャ適用 ==//
     
     // 視点からピクセルまでのベクトルと法線ベクトルから反射ベクトルを計算
-    float3 dir = reflect(-V, N);
+    //float3 dir = reflect(-V, N);
+    
+    // ぼかしの度合いをラフネスから計算
+    float blurAmount = Disney_Material.Roughness.x;
+
+    // 環境マップからの反射ベクトルを計算
+    float3 reflectedDir = reflect(-V, N);
+
+    // ぼかしを適用
+    reflectedDir = lerp(reflectedDir, normalize(N), blurAmount);
+
+
     
     //反射ベクトルから球状に強制
-    float coordX = atan2(dir.x, dir.z) / PIE;
-    float coordY = asin(dir.y) / (PIE / 2.0f);
+    float coordX = atan2(reflectedDir.x, reflectedDir.z) / PIE;
+    float coordY = asin(reflectedDir.y) / (PIE / 2.0f);
     
     //UVの計算
-    float2 EnvironmentMap_UV = float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f;
+    float3 environmentMap_UV = reflectedDir;
+    
+    float2 enviromentMap_SphereUV = float2(coordX, coordY) * float2(0.5f, -0.5f) + 0.5f;
     
     //環境マップをサンプリング
-    float4 EnvironmentColor = g_environmentMap.Sample(g_SamplerState, EnvironmentMap_UV);
+    float4 environmentColor = 0;
+    
+    environmentColor = g_environmentMap.Sample(g_SamplerState, enviromentMap_SphereUV);
     
     //環境マップを合成
-    returnColor *= ((EnvironmentColor - 1.0) * max(Disney_Material.Metallic.x + 0.1, 0)) + 1.0;
+    returnColor *= ((environmentColor - 1.0) * max(Disney_Material.Metallic.x + 0.1, 0)) + 1.0;
     
     //BRDSの未実装による透明度の修正
     returnColor.a = 1.0;

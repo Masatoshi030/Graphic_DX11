@@ -109,24 +109,12 @@ struct DISNEY_MATERIAL
     float4 BaseColor;
     //メタリック
     float4 Metallic;
-    //サブサーフェス
-    float4 SubSurface;
     //スペキュラー強度
     float4 Specular;
-    //スペキュラーチント
-    float4 SpecularTint;
     //ラフネス
     float4 Roughness;
     //異方性反射
     float4 Anisotropic;
-    //異方性反射　X
-    float4 Anisotropic_X;
-    //異方性反射Y
-    float4 Anisotropic_Y;
-    //シーン
-    float4 Sheen;
-    //シーンチ  ント
-    float4 SheenTint;
     //クリアコート強度
     float4 ClearCoat;
     //クリアコート光沢強度
