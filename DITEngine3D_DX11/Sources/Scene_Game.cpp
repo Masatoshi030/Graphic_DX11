@@ -83,16 +83,19 @@ void Scene_Game::Start()
 	Body = new GameObject();
 	
 	Body->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
+
+	Body->AddComponent<Spring>()->SetStretchMaxMin(0.2f, 0.0f);
+
+	Body->GetComponent<Spring>()->StretchSpeed = 0.0002f;
 	
 	Hierarchy.push_back(Body);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Body->GetComponent<MeshRenderer>());
 	
-	Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
-	
 	Body->transform->position.x = -5.0f;
 	
 	Body->transform->Rotate(0.0f, DirectX::XMConvertToRadians(-90.0f), 0.0f);
+
 	
 	
 	//== マフラー ==//
@@ -121,14 +124,34 @@ void Scene_Game::Start()
 	Handle->Set_Parent(Body);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Handle->GetComponent<MeshRenderer>());
+
+	//== サスペンションスプリング ==//
+
+	SuspensionSpring = new GameObject();
+
+	SuspensionSpring->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj");
+
+	SuspensionSpring->GetComponent<MeshRenderer>()->Enable = false;
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(SuspensionSpring->GetComponent<MeshRenderer>());
+
+	SuspensionSpring->transform->position = Vector3(0.0f, 1.054f, 1.706f);
+	SuspensionSpring->transform->rotation = Vector3(-0.452f, 0.0f, 0.0f);
+
+	SuspensionSpring->AddComponent<Spring>()->SetStretchMaxMin(0.2f, 0.0f);
+
+	SuspensionSpring->Set_Parent(Body);
 	
 	//== フロントフェンダー ==//
 	FrontFender = new GameObject();
 	
 	FrontFender->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontFender.obj");
+
+	FrontFender->Set_Parent(SuspensionSpring);
 	
-	FrontFender->Set_Parent(Body);
-	
+	FrontFender->transform->position = Vector3(0.0f, -0.2f, -2.006f);
+	FrontFender->transform->rotation = Vector3(0.452f, 0.0f, 0.0f);
+
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontFender->GetComponent<MeshRenderer>());
 	
 	//== フロントタイヤ ==//
@@ -136,9 +159,9 @@ void Scene_Game::Start()
 	
 	FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
 	
-	FrontTire->Set_Parent(Body);
+	FrontTire->Set_Parent(FrontFender);
 	
-	FrontTire->transform->position = Vector3(0.0f, 40.0f, 102.0f);
+	FrontTire->transform->position = Vector3(0.0f, 0.813f, 1.832f);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontTire->GetComponent<MeshRenderer>());
 	
@@ -149,7 +172,7 @@ void Scene_Game::Start()
 	
 	RearTire->Set_Parent(Body);
 	
-	RearTire->transform->position = Vector3(0.0f, 41.0f, -92.5f);
+	RearTire->transform->position = Vector3(0.0f, 0.813f, -2.069f);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(RearTire->GetComponent<MeshRenderer>());
 	
@@ -167,13 +190,27 @@ void Scene_Game::Start()
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Sphere->GetComponent<MeshRenderer>());
 	
 	//== スタジオ（Bypass） ==//
-	Studio_Bypass = new GameObject();
-	
-	Studio_Bypass->AddComponent<MeshRenderer>()->Load("Asset\\model\\Studio_Bypass.obj");
-	
-	Hierarchy.push_back(Studio_Bypass);
-	
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass->GetComponent<MeshRenderer>());
+
+	//５つのステージをループ
+	for (int i = 0; i < 5; i++)
+	{
+		Studio_Bypass[i] = new GameObject();
+
+		MeshRenderer* Studio_Bypass_MeshRenderer = Studio_Bypass[i]->AddComponent<MeshRenderer>();
+		
+		Studio_Bypass_MeshRenderer->Load("Asset\\model\\Studio_Bypass.obj");
+
+		Hierarchy.push_back(Studio_Bypass[i]);
+
+		Studio_Bypass[i]->transform->position.x -= 56.0f * i;
+
+		Studio_Bypass[i]->transform->position.z += 4.0f;
+
+		ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass_MeshRenderer);
+	}
+
+
+	float a = sinf(DirectX::XMConvertToRadians(180.0f));
 
 
 	//== テストUI ==//
@@ -208,6 +245,8 @@ void Scene_Game::Start()
 	//デバッグデータ読み込み処理
 	ig_DebugWindow->Init();
 
+	
+
 	//オブジェクトの描画処理
 	for (const auto& e : Hierarchy)
 	{
@@ -224,13 +263,20 @@ void Scene_Game::Update()
 		return;
 	}
 
+	float BikeSpeed = 200.0f;
+
+
+	//エンジンとマフラーの振動
+	double Vib = Time::GetWorldTime().MMSecond;
+
+	Engine->transform->position.y = sin(Vib) * 0.002;
+	Muffler->transform->position.y = sin(Vib) * 0.003;
 
 	//タイヤの回転
-	FrontTire->transform->Rotate(0.01f, 0.0f, 0.0f);
-	RearTire->transform->Rotate(0.01f, 0.0f, 0.0f);
+	FrontTire->transform->Rotate(0.002f * BikeSpeed, 0.0f, 0.0f);
+	RearTire->transform->Rotate(0.002f * BikeSpeed, 0.0f, 0.0f);
 
-
-	//== バイクの操作 ==//
+	//== カメラの操作 ==//
 	MainCamera->transform->Translate(
 		Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
 		0.0f,
@@ -242,6 +288,34 @@ void Scene_Game::Update()
 		Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
 		0.0f
 	);
+
+
+
+	Body->transform->Translate(0.0f, sin(Time::GetWorldTime().Get_Second_Float() * 10.0f) * 0.0005f, 0.0f);
+	FrontFender->transform->position.y += cos(Time::GetWorldTime().Get_Second_Float() * 10.0f) * 0.0005f;
+	RearTire->transform->position.y += cos(Time::GetWorldTime().Get_Second_Float() * 10.0f) * 0.0005f;
+
+	//車体の揺れ
+	if (rand() % 40 == 0)
+	{
+		Body->GetComponent<Spring>()->SetStretch((rand() % 2) * 0.01f);
+	}
+	
+	//フロントフェンダーの揺れ
+	if (rand() % 20 == 0)
+	{
+		SuspensionSpring->GetComponent<Spring>()->SetStretch((rand() % 2) * 0.01f);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		Studio_Bypass[i]->transform->Translate(0.001f * BikeSpeed, 0.0f, 0.0f);
+
+		if (Studio_Bypass[i]->transform->position.x >= 84.0f)
+		{
+			Studio_Bypass[i]->transform->position.x -= 224.0f;
+		}
+	}
 
 
 	//== デバッグウィンドウの値を設定 ==//
@@ -262,6 +336,10 @@ void Scene_Game::Update()
 	//スケール
 	TestUI->transform->scale.x = ig_DebugWindow->UI_Scale_X_Slider;
 	TestUI->transform->scale.y = ig_DebugWindow->UI_Scale_Y_Slider;
+
+	//FrontFender->transform->position = ig_DebugWindow->CubePosition;
+	//FrontFender->transform->rotation = ig_DebugWindow->CubeRotation;
+	//FrontFender->transform->scale = ig_DebugWindow->CubeScale;
 
 
 	//DirectionalLight
@@ -308,6 +386,10 @@ void Scene_Game::Draw()
 		MainCamera->transform->position.z,
 		0.0f
 	);
+
+	eye_info.DistanceFog_Color = ig_DebugWindow->DistanceFog_Color.simpleMath_vector4;
+
+	eye_info.DistanceFog_Distance.x = ig_DebugWindow->DistanceFog_Distance;
 
 	D3D->SetEyeInfo(eye_info);
 

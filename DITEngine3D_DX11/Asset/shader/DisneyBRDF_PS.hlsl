@@ -227,5 +227,10 @@ float4 ps_main(PS_IN input) : SV_Target
     //BRDSの未実装による透明度の修正
     returnColor.a = 1.0;
     
+    
+    //== 距離フォグ ==//
+    
+    returnColor = lerp(returnColor, Eye_Info.DistanceFog_Color, distance(Eye_Info.EyePosition.xyz, input.posw.xyz) * Eye_Info.DistanceFog_Distance.x);
+    
     return returnColor;
 }

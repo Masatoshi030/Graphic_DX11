@@ -144,6 +144,9 @@
     <ClInclude Include="Sources\ImGUI_DisneyMaterialEditWindow.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Spring.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Direct3D11.cpp">
@@ -248,6 +251,9 @@
     <ClCompile Include="Sources\ImGUI_DisneyMaterialEditWindow.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Spring.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Sources\SceneManager.h">
@@ -256,6 +262,7 @@
     <None Include="Sources\KeyInputDifinitionList.h">
       <Filter>ヘッダー ファイル</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl">

@@ -176,6 +176,7 @@
     <ClInclude Include="Sources\Transform.h" />
     <ClInclude Include="Sources\utftosjisconv.h" />
     <ClInclude Include="Sources\WinMain.h" />
+    <ClInclude Include="Sources\Spring.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\ImGUI_DisneyMaterialEditWindow.cpp" />
@@ -215,8 +216,10 @@
     <ClCompile Include="Sources\UISpriteRenderer.cpp" />
     <ClCompile Include="Sources\utftosjisconv.cpp" />
     <ClCompile Include="Sources\WinMain.cpp" />
+    <ClCompile Include="Sources\Spring.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Sources\KeyInputDifinitionList.h" />
     <None Include="Sources\SceneManager.h" />
   </ItemGroup>

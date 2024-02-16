@@ -22,11 +22,13 @@ private:
 	GameObject* FrontTire;
 	GameObject* RearTire;
 
-	GameObject* Studio_Bypass;
+	GameObject* Studio_Bypass[5];
 
 	GameObject* Sphere;
 
 	GameObject* TestUI;
+
+	GameObject* SuspensionSpring;
 
 	//ImGUIWindow
 	ImGUI_DebugWindow* ig_DebugWindow;

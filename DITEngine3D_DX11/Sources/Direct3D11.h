@@ -56,6 +56,8 @@ struct LIGHT_POINT
 struct EYE_INFO
 {
 	DirectX::SimpleMath::Vector4 EyePosition;	//視点の座標
+	DirectX::SimpleMath::Vector4 DistanceFog_Color;   //距離フォグの色
+	DirectX::SimpleMath::Vector4 DistanceFog_Distance;//距離フォグの距離
 };
 
 

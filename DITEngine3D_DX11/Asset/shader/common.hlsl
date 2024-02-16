@@ -77,6 +77,8 @@ cbuffer PointLightBuffer : register(b5)
 struct EYE_INFO
 {
     float4 EyePosition; //視点の座標
+    float4 DistanceFog_Color;   //距離フォグの色
+    float4 DistanceFog_Distance;//距離フォグの距離
 };
 
 cbuffer EyeInfo : register(b6)

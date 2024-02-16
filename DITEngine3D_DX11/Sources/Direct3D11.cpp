@@ -402,6 +402,9 @@ void DIRECT3D11::SetPointLight(LIGHT_POINT Light_Point)
 
 void DIRECT3D11::SetEyeInfo(EYE_INFO Eye_Info)
 {
+	//‹t”‚É‚·‚é
+	Eye_Info.DistanceFog_Distance.x = 1.0f / Eye_Info.DistanceFog_Distance.x;
+
 	DeviceContext->UpdateSubresource(EyeInfoBuffer, 0, NULL, &Eye_Info, 0, 0);
 }
 
