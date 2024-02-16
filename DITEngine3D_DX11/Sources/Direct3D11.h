@@ -31,21 +31,6 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector2 TexCoord;
 };
 
-
-//マテリアル
-struct MATERIAL
-{
-	DirectX::SimpleMath::Color Ambient;
-	DirectX::SimpleMath::Color Diffuse;
-	DirectX::SimpleMath::Color Specular;
-	DirectX::SimpleMath::Color Emission;
-	float Shininess;
-	BOOL TextureEnable;
-	float Dummy[2];
-	DirectX::SimpleMath::Vector4 Metalic;
-};
-
-
 //平行光源
 struct LIGHT
 {
@@ -54,6 +39,7 @@ struct LIGHT
 	DirectX::SimpleMath::Vector4 Direction;
 	DirectX::SimpleMath::Color Diffuse;
 	DirectX::SimpleMath::Color Ambient;
+	DirectX::SimpleMath::Vector4 Intensity;
 };
 
 
@@ -70,6 +56,8 @@ struct LIGHT_POINT
 struct EYE_INFO
 {
 	DirectX::SimpleMath::Vector4 EyePosition;	//視点の座標
+	DirectX::SimpleMath::Vector4 DistanceFog_Color;   //距離フォグの色
+	DirectX::SimpleMath::Vector4 DistanceFog_Distance;//距離フォグの距離
 };
 
 
@@ -85,6 +73,25 @@ struct GPU_SYSTEM_INFO
 {
 	DirectX::SimpleMath::Vector4 ScreenSize;	//xy
 	DirectX::SimpleMath::Vector4 ScreenAspect;	//x
+};
+
+//Disney BRDF マテリアル
+struct DISNEY_MATERIAL
+{
+	//ベースカラー
+	DirectX::SimpleMath::Color BaseColor;
+	//メタリック
+	DirectX::SimpleMath::Vector4 Metallic;
+	//スペキュラー強度
+	DirectX::SimpleMath::Vector4 Specular;
+	//ラフネス
+	DirectX::SimpleMath::Vector4 Roughness;
+	//異方性反射
+	DirectX::SimpleMath::Vector4 Anisotropic;
+	//クリアコート強度
+	DirectX::SimpleMath::Vector4 ClearCoat;
+	//クリアコート光沢強度
+	DirectX::SimpleMath::Vector4 ClearCoatGloss;
 };
 
 
@@ -106,13 +113,13 @@ private:
 	ID3D11Buffer*				WorldBuffer;
 	ID3D11Buffer*				ViewBuffer;
 	ID3D11Buffer*				ProjectionBuffer;
-	ID3D11Buffer*				MaterialBuffer;
 	ID3D11Buffer*				LightBuffer;
 	ID3D11Buffer*				PointLightBuffer;
 	ID3D11Buffer*				EyeInfoBuffer;
 	ID3D11Buffer*				EnvironmentMapInfoBuffer;
 	ID3D11Buffer*				UIInfoBuffer;
 	ID3D11Buffer*				SystemInfoBuffer;
+	ID3D11Buffer*				Disney_MaterialBuffer;
 
 	ID3D11DepthStencilState*	DepthStateEnable;
 	ID3D11DepthStencilState*	DepthStateDisable;
@@ -181,10 +188,6 @@ public:
 
 	//=================================================
 	//
-	void SetMaterial(MATERIAL Material);
-
-	//=================================================
-	//
 	void SetLight(LIGHT Light);
 
 	//=================================================
@@ -206,6 +209,10 @@ public:
 	//=================================================
 	//
 	void SetGPUSystemInfo(GPU_SYSTEM_INFO _System_Info);
+
+	//=================================================
+	//
+	void SetDisneyMaterial(DISNEY_MATERIAL _Disney_Material);
 
 	//=================================================
 	//
@@ -270,11 +277,6 @@ public:
 	ID3D11Buffer* Get_ProjectionBuffer()
 	{
 		return D3D->ProjectionBuffer;
-	}
-
-	ID3D11Buffer* Get_MaterialBuffer()
-	{
-		return D3D->MaterialBuffer;
 	}
 
 	ID3D11Buffer* Get_LightBuffer()

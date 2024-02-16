@@ -4,6 +4,7 @@
 
 #include "ImGUI_DebugWindow.h"
 #include "ImGUI_MaterialWindow.h"
+#include "ImGUI_DisneyMaterialEditWindow.h"
 
 class Scene_Game : public Scene
 {
@@ -21,11 +22,13 @@ private:
 	GameObject* FrontTire;
 	GameObject* RearTire;
 
-	GameObject* Studio_Bypass;
+	GameObject* Studio_Bypass[5];
 
 	GameObject* Sphere;
 
 	GameObject* TestUI;
+
+	GameObject* SuspensionSpring;
 
 	//ImGUIWindow
 	ImGUI_DebugWindow* ig_DebugWindow;

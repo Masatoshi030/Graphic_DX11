@@ -22,14 +22,11 @@ void Scene_Game::Start()
 
 	//頂点シェーダー
 	Shader::AddVertexShader("Asset/shader/DirectionalLight_VS.cso", "Directional");
-	Shader::AddVertexShader("Asset/shader/PointLight_VS.cso", "PointLight");
 	Shader::AddVertexShader("Asset/shader/unlitTextureVS.cso", "Unlit");
 	Shader::AddVertexShader("Asset/shader/UI_BaseShader_VS.cso", "UI_Base");
 
 	//ピクセルシェーダー
-	Shader::AddPixelShader("Asset/shader/SpecularReflection_PS.cso", "Specular");
-	Shader::AddPixelShader("Asset/shader/DirectionalLight_PS.cso", "Directional");
-	Shader::AddPixelShader("Asset/shader/PointLight_PS.cso", "PointLight");
+	Shader::AddPixelShader("Asset/shader/DisneyBRDF_PS.cso", "Disney");
 	Shader::AddPixelShader("Asset/shader/unlitTexturePS.cso", "Unlit");
 	Shader::AddPixelShader("Asset/shader/UI_BaseShader_PS.cso", "UI_Base");
 
@@ -76,6 +73,8 @@ void Scene_Game::Start()
 
 	SkyBox->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.VertexShader = Shader::GetVertexShader("Unlit");
 	SkyBox->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.PixelShader = Shader::GetPixelShader("Unlit");
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(SkyBox->GetComponent<MeshRenderer>());
 	
 	Hierarchy.push_back(SkyBox);
 	
@@ -84,16 +83,19 @@ void Scene_Game::Start()
 	Body = new GameObject();
 	
 	Body->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Body.obj");
+
+	Body->AddComponent<Spring>()->SetStretchMaxMin(0.2f, 0.0f);
+
+	Body->GetComponent<Spring>()->StretchSpeed = 0.0002f;
 	
 	Hierarchy.push_back(Body);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Body->GetComponent<MeshRenderer>());
 	
-	Body->transform->scale = Vector3(0.02f, 0.02f, 0.02f);
-
 	Body->transform->position.x = -5.0f;
-
+	
 	Body->transform->Rotate(0.0f, DirectX::XMConvertToRadians(-90.0f), 0.0f);
+
 	
 	
 	//== マフラー ==//
@@ -102,7 +104,7 @@ void Scene_Game::Start()
 	Muffler->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
 	
 	Muffler->Set_Parent(Body);
-
+	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Muffler->GetComponent<MeshRenderer>());
 	
 	//== エンジン ==//
@@ -111,7 +113,7 @@ void Scene_Game::Start()
 	Engine->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Engine.obj");
 	
 	Engine->Set_Parent(Body);
-
+	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Engine->GetComponent<MeshRenderer>());
 	
 	//== ハンドル ==//
@@ -120,27 +122,47 @@ void Scene_Game::Start()
 	Handle->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Handle.obj");
 	
 	Handle->Set_Parent(Body);
-
+	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Handle->GetComponent<MeshRenderer>());
+
+	//== サスペンションスプリング ==//
+
+	SuspensionSpring = new GameObject();
+
+	SuspensionSpring->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Cube.obj");
+
+	SuspensionSpring->GetComponent<MeshRenderer>()->Enable = false;
+
+	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(SuspensionSpring->GetComponent<MeshRenderer>());
+
+	SuspensionSpring->transform->position = Vector3(0.0f, 1.054f, 1.706f);
+	SuspensionSpring->transform->rotation = Vector3(-0.452f, 0.0f, 0.0f);
+
+	SuspensionSpring->AddComponent<Spring>()->SetStretchMaxMin(0.2f, 0.0f);
+
+	SuspensionSpring->Set_Parent(Body);
 	
 	//== フロントフェンダー ==//
 	FrontFender = new GameObject();
 	
 	FrontFender->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontFender.obj");
 
-	FrontFender->Set_Parent(Body);
+	FrontFender->Set_Parent(SuspensionSpring);
+	
+	FrontFender->transform->position = Vector3(0.0f, -0.2f, -2.006f);
+	FrontFender->transform->rotation = Vector3(0.452f, 0.0f, 0.0f);
 
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontFender->GetComponent<MeshRenderer>());
-
+	
 	//== フロントタイヤ ==//
 	FrontTire = new GameObject();
 	
 	FrontTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_FrontTire.obj");
 	
-	FrontTire->Set_Parent(Body);
-
-	FrontTire->transform->position = Vector3(0.0f, 40.0f, 102.0f);
-
+	FrontTire->Set_Parent(FrontFender);
+	
+	FrontTire->transform->position = Vector3(0.0f, 0.813f, 1.832f);
+	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(FrontTire->GetComponent<MeshRenderer>());
 	
 	//== リアタイヤ ==//
@@ -149,32 +171,46 @@ void Scene_Game::Start()
 	RearTire->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_RearTire.obj");
 	
 	RearTire->Set_Parent(Body);
-
-	RearTire->transform->position = Vector3(0.0f, 41.0f, -92.5f);
-
+	
+	RearTire->transform->position = Vector3(0.0f, 0.813f, -2.069f);
+	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(RearTire->GetComponent<MeshRenderer>());
-
-
+	
+	
 	//== テストスフィア ==//
 	Sphere = new GameObject();
-
+	
 	Sphere->AddComponent<MeshRenderer>()->Load("Asset\\model\\BaseModel\\Sphere.obj");
-
+	
 	Sphere->transform->position.x = 4.0f;
 	Sphere->transform->position.y = 1.0f;
-
+	
 	Hierarchy.push_back(Sphere);
-
+	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Sphere->GetComponent<MeshRenderer>());
-
+	
 	//== スタジオ（Bypass） ==//
-	Studio_Bypass = new GameObject();
 
-	Studio_Bypass->AddComponent<MeshRenderer>()->Load("Asset\\model\\Studio_Bypass.obj");
+	//５つのステージをループ
+	for (int i = 0; i < 5; i++)
+	{
+		Studio_Bypass[i] = new GameObject();
 
-	Hierarchy.push_back(Studio_Bypass);
+		MeshRenderer* Studio_Bypass_MeshRenderer = Studio_Bypass[i]->AddComponent<MeshRenderer>();
+		
+		Studio_Bypass_MeshRenderer->Load("Asset\\model\\Studio_Bypass.obj");
 
-	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass->GetComponent<MeshRenderer>());
+		Hierarchy.push_back(Studio_Bypass[i]);
+
+		Studio_Bypass[i]->transform->position.x -= 56.0f * i;
+
+		Studio_Bypass[i]->transform->position.z += 4.0f;
+
+		ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Studio_Bypass_MeshRenderer);
+	}
+
+
+	float a = sinf(DirectX::XMConvertToRadians(180.0f));
 
 
 	//== テストUI ==//
@@ -209,6 +245,7 @@ void Scene_Game::Start()
 	//デバッグデータ読み込み処理
 	ig_DebugWindow->Init();
 
+	
 
 	//オブジェクトの描画処理
 	for (const auto& e : Hierarchy)
@@ -226,13 +263,20 @@ void Scene_Game::Update()
 		return;
 	}
 
+	float BikeSpeed = 200.0f;
+
+
+	//エンジンとマフラーの振動
+	double Vib = Time::GetWorldTime().MMSecond;
+
+	Engine->transform->position.y = sin(Vib) * 0.002;
+	Muffler->transform->position.y = sin(Vib) * 0.003;
 
 	//タイヤの回転
-	FrontTire->transform->Rotate(0.01f, 0.0f, 0.0f);
-	RearTire->transform->Rotate(0.01f, 0.0f, 0.0f);
+	FrontTire->transform->Rotate(0.002f * BikeSpeed, 0.0f, 0.0f);
+	RearTire->transform->Rotate(0.002f * BikeSpeed, 0.0f, 0.0f);
 
-
-	//== バイクの操作 ==//
+	//== カメラの操作 ==//
 	MainCamera->transform->Translate(
 		Input::GetGamePad_LeftStick().x * 0.0000001f * Time::GetDeltaTime(),
 		0.0f,
@@ -244,6 +288,34 @@ void Scene_Game::Update()
 		Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
 		0.0f
 	);
+
+
+
+	Body->transform->Translate(0.0f, sin(Time::GetWorldTime().Get_Second_Float() * 10.0f) * 0.0005f, 0.0f);
+	FrontFender->transform->position.y += cos(Time::GetWorldTime().Get_Second_Float() * 10.0f) * 0.0005f;
+	RearTire->transform->position.y += cos(Time::GetWorldTime().Get_Second_Float() * 10.0f) * 0.0005f;
+
+	//車体の揺れ
+	if (rand() % 40 == 0)
+	{
+		Body->GetComponent<Spring>()->SetStretch((rand() % 2) * 0.01f);
+	}
+	
+	//フロントフェンダーの揺れ
+	if (rand() % 20 == 0)
+	{
+		SuspensionSpring->GetComponent<Spring>()->SetStretch((rand() % 2) * 0.01f);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		Studio_Bypass[i]->transform->Translate(0.001f * BikeSpeed, 0.0f, 0.0f);
+
+		if (Studio_Bypass[i]->transform->position.x >= 84.0f)
+		{
+			Studio_Bypass[i]->transform->position.x -= 224.0f;
+		}
+	}
 
 
 	//== デバッグウィンドウの値を設定 ==//
@@ -265,6 +337,10 @@ void Scene_Game::Update()
 	TestUI->transform->scale.x = ig_DebugWindow->UI_Scale_X_Slider;
 	TestUI->transform->scale.y = ig_DebugWindow->UI_Scale_Y_Slider;
 
+	//FrontFender->transform->position = ig_DebugWindow->CubePosition;
+	//FrontFender->transform->rotation = ig_DebugWindow->CubeRotation;
+	//FrontFender->transform->scale = ig_DebugWindow->CubeScale;
+
 
 	//DirectionalLight
 	DirectionalLight* DirLight_buf = DirectionalLight_Obj->GetComponent<DirectionalLight>();
@@ -272,6 +348,7 @@ void Scene_Game::Update()
 	DirLight_buf->SetLightColor(ig_DebugWindow->Light_Diffuse);
 	DirLight_buf->SetAmbient(ig_DebugWindow->Light_Ambient);
 	DirLight_buf->SetDirection(ig_DebugWindow->Light_Direction);
+	DirLight_buf->SetIntensity(ig_DebugWindow->Light_Intensity);
 
 
 	//== バイブレーションテスト ==//
@@ -309,6 +386,10 @@ void Scene_Game::Draw()
 		MainCamera->transform->position.z,
 		0.0f
 	);
+
+	eye_info.DistanceFog_Color = ig_DebugWindow->DistanceFog_Color.simpleMath_vector4;
+
+	eye_info.DistanceFog_Distance.x = ig_DebugWindow->DistanceFog_Distance;
 
 	D3D->SetEyeInfo(eye_info);
 

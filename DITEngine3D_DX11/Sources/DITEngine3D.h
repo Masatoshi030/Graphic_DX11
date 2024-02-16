@@ -23,6 +23,7 @@
 #include "Light.h"
 #include "DirectionalLight.h"
 #include "UISpriteRenderer.h"
+#include "Spring.h"
 
 //•Ö—˜‚È’è‹`
 

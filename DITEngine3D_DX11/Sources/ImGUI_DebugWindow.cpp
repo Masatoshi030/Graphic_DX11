@@ -30,6 +30,16 @@ void ImGUI_DebugWindow::Init()
 	Light_Direction.float3[0] = FileLoader::IniLoad_Float("DirectionalLight", "Direction_X", "DebugData");
 	Light_Direction.float3[1] = FileLoader::IniLoad_Float("DirectionalLight", "Direction_Y", "DebugData");
 	Light_Direction.float3[2] = FileLoader::IniLoad_Float("DirectionalLight", "Direction_Z", "DebugData");
+
+	Light_Intensity = FileLoader::IniLoad_Float("DirectionalLight", "Intensity", "DebugData");
+
+
+	DistanceFog_Color.x = FileLoader::IniLoad_Float("DistanceFog", "Color_X", "DebugData");
+	DistanceFog_Color.y = FileLoader::IniLoad_Float("DistanceFog", "Color_Y", "DebugData");
+	DistanceFog_Color.z = FileLoader::IniLoad_Float("DistanceFog", "Color_Z", "DebugData");
+	DistanceFog_Color.w = FileLoader::IniLoad_Float("DistanceFog", "Color_W", "DebugData");
+
+	DistanceFog_Distance = FileLoader::IniLoad_Float("DistanceFog", "Distance", "DebugData");
 }
 
 ImGUI_DebugWindow::~ImGUI_DebugWindow()
@@ -57,6 +67,15 @@ ImGUI_DebugWindow::~ImGUI_DebugWindow()
 	FileLoader::IniWrite("DirectionalLight", "Direction_X", Light_Direction.float3[0], "DebugData");
 	FileLoader::IniWrite("DirectionalLight", "Direction_Y", Light_Direction.float3[1], "DebugData");
 	FileLoader::IniWrite("DirectionalLight", "Direction_Z", Light_Direction.float3[2], "DebugData");
+
+	FileLoader::IniWrite("DirectionalLight", "Intensity", Light_Intensity, "DebugData");
+
+	FileLoader::IniWrite("DistanceFog", "Color_X", DistanceFog_Color.x, "DebugData");
+	FileLoader::IniWrite("DistanceFog", "Color_Y", DistanceFog_Color.y, "DebugData");
+	FileLoader::IniWrite("DistanceFog", "Color_Z", DistanceFog_Color.z, "DebugData");
+	FileLoader::IniWrite("DistanceFog", "Color_W", DistanceFog_Color.w, "DebugData");
+
+	FileLoader::IniWrite("DistanceFog", "Distance", DistanceFog_Distance, "DebugData");
 }
 
 void ImGUI_DebugWindow::Draw_WindowSetting()
@@ -80,6 +99,11 @@ void ImGUI_DebugWindow::Draw_ItemSetting()
 		GameTime.MMSecond
 	);
 
+	ImGui::Text(
+		"Time(Second): %f",
+		GameTime.Get_Second_Float()
+	);
+
 
 	//== DirectionalLight ==//
 
@@ -95,10 +119,19 @@ void ImGUI_DebugWindow::Draw_ItemSetting()
 	ImGui::SliderFloat("s_Y", &UI_Scale_Y_Slider, 0.0f, 10.0f);
 
 
+	ImGui::SliderFloat3("CubePosition", CubePosition.float3, -5.0f, 5.0f, "%.3f", 0);
+	ImGui::SliderFloat3("CubeRotation", CubeRotation.float3, -5.0f, 5.0f, "%.3f", 0);
+	ImGui::SliderFloat3("CubeScale", CubeScale.float3, -5.0f, 5.0f, "%.3f", 0);
+
+
 	//== DirectionalLight ==//
 
 	ImGui::Text("DirectionalLight");
 	ImGui::ColorPicker4("Light_Diffuse", Light_Diffuse.float4, 0);
 	ImGui::ColorPicker4("Light_Ambient", Light_Ambient.float4, 0);
 	ImGui::SliderFloat3("Light_Direction", Light_Direction.float3, -1.0f, 1.0f, "%.3f");
+	ImGui::SliderFloat("Light_Intensity", &Light_Intensity, 0.0f, 10.0f, "%.3f");
+
+	ImGui::ColorPicker4("DistanceFog_Color", DistanceFog_Color.float4, 0);
+	ImGui::SliderFloat("DistanceFog_Distance", &DistanceFog_Distance, 1.0f, 100.0f);
 }

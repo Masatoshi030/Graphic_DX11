@@ -95,13 +95,6 @@ void UISpriteRenderer::Draw()
 	UINT offset = 0;
 	D3D->Get_ID3D11DeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
 
-	// マテリアル設定
-	MATERIAL material;
-	ZeroMemory(&material, sizeof(material));
-	material.Diffuse = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
-	material.TextureEnable = true;
-	D3D->SetMaterial(material);
-
 	//テクスチャ設定
 	D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(1, 1, &m_Texture);
 

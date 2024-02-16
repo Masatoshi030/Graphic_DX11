@@ -1,5 +1,5 @@
 
-#define PIE 3.1415926f
+#define PIE 3.14159265358979323846f
 
 
 cbuffer WorldBuffer : register(b0)
@@ -16,23 +16,27 @@ cbuffer ProjectionBuffer : register(b2)
 }
 
 
-
-
-struct MATERIAL
+struct DISNEY_MATERIAL
 {
-	float4 Ambient;			//環境光
-	float4 Diffuse;			//拡散　全体の明るさ
-	float4 Specular;		//鏡面反射光
-	float4 Emission;		//発光
-	float Shininess;		//
-	bool TextureEnable;
-	float2 Dummy;
+    //ベースカラー
+    float4 BaseColor;
+    //メタリック
     float4 Metallic;
+    //スペキュラー強度
+    float4 Specular;
+    //ラフネス
+    float4 Roughness;
+    //異方性反射
+    float4 Anisotropic;
+    //クリアコート強度
+    float4 ClearCoat;
+    //クリアコート光沢強度
+    float4 ClearCoatGloss;
 };
 
-cbuffer MaterialBuffer : register(b3)
+cbuffer CB_Disney_Material : register(b3)
 {
-	MATERIAL Material;
+    DISNEY_MATERIAL Disney_Material;
 }
 
 
@@ -45,12 +49,15 @@ struct LIGHT_SUN
 	float4 Direction;
 	float4 Diffuse;
 	float4 Ambient;
+    float4 Intensity;
 };
 
 cbuffer SunLightBuffer : register(b4)
 {
 	LIGHT_SUN Light_Sun;
 }
+
+#define Sun
 
 
 // 点光源（Point Light）
@@ -70,6 +77,8 @@ cbuffer PointLightBuffer : register(b5)
 struct EYE_INFO
 {
     float4 EyePosition; //視点の座標
+    float4 DistanceFog_Color;   //距離フォグの色
+    float4 DistanceFog_Distance;//距離フォグの距離
 };
 
 cbuffer EyeInfo : register(b6)
@@ -86,13 +95,13 @@ struct ENVIRONMENTMAP_INFO
 cbuffer EnvironmentMapInfo : register(b7)
 {
     ENVIRONMENTMAP_INFO EnvironmentMap_Info;
-};
+}
 
 
 cbuffer UI_Info : register(b8)
 {
     float4x4 AffineMatrix;
-};
+}
 
 cbuffer SystemInfo : register(b9)
 {

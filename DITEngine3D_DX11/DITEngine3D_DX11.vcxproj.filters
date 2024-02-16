@@ -141,6 +141,12 @@
     <ClInclude Include="Sources\IniFileManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\ImGUI_DisneyMaterialEditWindow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Spring.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Direct3D11.cpp">
@@ -242,6 +248,12 @@
     <ClCompile Include="Sources\IniFileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ImGUI_DisneyMaterialEditWindow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Spring.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Sources\SceneManager.h">
@@ -250,6 +262,7 @@
     <None Include="Sources\KeyInputDifinitionList.h">
       <Filter>ヘッダー ファイル</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Asset\shader\UI_BaseShader_VS.hlsl">
@@ -258,28 +271,13 @@
     <FxCompile Include="Asset\shader\unlitTextureVS.hlsl">
       <Filter>リソース ファイル\頂点シェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="Asset\shader\vertexLightingVS.hlsl">
-      <Filter>リソース ファイル\頂点シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Asset\shader\PointLight_VS.hlsl">
-      <Filter>リソース ファイル\頂点シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Asset\shader\PointLight_PS.hlsl">
-      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Asset\shader\SpecularReflection_PS.hlsl">
-      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
-    </FxCompile>
     <FxCompile Include="Asset\shader\UI_BaseShader_PS.hlsl">
       <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Asset\shader\unlitTexturePS.hlsl">
       <Filter>リソース ファイル\ピクセルシェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="Asset\shader\vertexLightingPS.hlsl">
-      <Filter>リソース ファイル\ピクセルシェーダー</Filter>
-    </FxCompile>
     <FxCompile Include="Asset\shader\DirectionalLight_VS.hlsl" />
-    <FxCompile Include="Asset\shader\DirectionalLight_PS.hlsl" />
+    <FxCompile Include="Asset\shader\DisneyBRDF_PS.hlsl" />
   </ItemGroup>
 </Project>

@@ -187,11 +187,11 @@ void DIRECT3D11::Init(Application* _APP)
 	DeviceContext->VSSetConstantBuffers(2, 1, &ProjectionBuffer);
 
 
-	bufferDesc.ByteWidth = sizeof(MATERIAL);
+	bufferDesc.ByteWidth = sizeof(DISNEY_MATERIAL);
 
-	Device->CreateBuffer(&bufferDesc, NULL, &MaterialBuffer);
-	DeviceContext->VSSetConstantBuffers(3, 1, &MaterialBuffer);
-	DeviceContext->PSSetConstantBuffers(3, 1, &MaterialBuffer);
+	Device->CreateBuffer(&bufferDesc, NULL, &Disney_MaterialBuffer);
+	DeviceContext->VSSetConstantBuffers(3, 1, &Disney_MaterialBuffer);
+	DeviceContext->PSSetConstantBuffers(3, 1, &Disney_MaterialBuffer);
 
 
 	bufferDesc.ByteWidth = sizeof(LIGHT);
@@ -244,13 +244,6 @@ void DIRECT3D11::Init(Application* _APP)
 	light.Ambient = Color(0.1f, 0.1f, 0.1f, 1.0f);
 	light.Diffuse = Color(1.5f, 1.5f, 1.5f, 1.0f);
 	SetLight(light);
-
-
-	// マテリアル初期化
-	MATERIAL material{};
-	material.Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	material.Ambient = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	SetMaterial(material);
 }
 
 void DIRECT3D11::Render_DrawBegin()
@@ -269,12 +262,19 @@ void DIRECT3D11::Release()
 {
 
 	//定数バッファーを解放
+
 	WorldBuffer->Release();
 	ViewBuffer->Release();
 	ProjectionBuffer->Release();
 	LightBuffer->Release();
 	PointLightBuffer->Release();
-	MaterialBuffer->Release();
+	EyeInfoBuffer->Release();
+	EnvironmentMapInfoBuffer->Release();
+	UIInfoBuffer->Release();
+	SystemInfoBuffer->Release();
+	Disney_MaterialBuffer->Release();
+
+
 
 	//D3Dシステム
 	DeviceContext->ClearState();
@@ -385,11 +385,9 @@ void DIRECT3D11::SetProjectionMatrix(XMMATRIX* ProjectionMatrix)
 	DeviceContext->UpdateSubresource(ProjectionBuffer, 0, NULL, &projection, 0, 0);
 }
 
-
-
-void DIRECT3D11::SetMaterial(MATERIAL Material)
+void DIRECT3D11::SetDisneyMaterial(DISNEY_MATERIAL _Disney_Material)
 {
-	DeviceContext->UpdateSubresource(MaterialBuffer, 0, NULL, &Material, 0, 0);
+	DeviceContext->UpdateSubresource(Disney_MaterialBuffer, 0, NULL, &_Disney_Material, 0, 0);
 }
 
 void DIRECT3D11::SetLight(LIGHT Light)
@@ -404,6 +402,9 @@ void DIRECT3D11::SetPointLight(LIGHT_POINT Light_Point)
 
 void DIRECT3D11::SetEyeInfo(EYE_INFO Eye_Info)
 {
+	//逆数にする
+	Eye_Info.DistanceFog_Distance.x = 1.0f / Eye_Info.DistanceFog_Distance.x;
+
 	DeviceContext->UpdateSubresource(EyeInfoBuffer, 0, NULL, &Eye_Info, 0, 0);
 }
 

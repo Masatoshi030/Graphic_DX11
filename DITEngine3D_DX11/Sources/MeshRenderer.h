@@ -15,8 +15,9 @@
 struct MODEL_MATERIAL
 {
 	char						Name[256];
-	
-	MATERIAL					Material;
+
+	DISNEY_MATERIAL		Disney_Material;
+
 	char						TextureName[256];
 	ID3D11VertexShader*			VertexShader;
 	ID3D11InputLayout*			InputLayout;

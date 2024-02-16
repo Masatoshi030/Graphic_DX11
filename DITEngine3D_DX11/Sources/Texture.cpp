@@ -40,7 +40,7 @@ HRESULT Texture::Create(const char* _filePath)
 		ws.c_str(),
 		res.GetAddressOf(),
 		&pSRV);
-	
+
 	//ƒŠƒ\[ƒXî•ñ‚©‚ç‰æ‘œ‚Ì‚‚³‚Æ•‚ğæ“¾
 
 	ID3D11Texture2D* pTex = 0;
@@ -61,6 +61,7 @@ HRESULT Texture::Create(DXGI_FORMAT format, UINT width, UINT height, const void*
 	D3D11_TEXTURE2D_DESC desc = MakeTextureDesc(format, width, height);
 	return CreateResource(desc, pData);
 }
+
 
 UINT Texture::GetWidth() const
 {

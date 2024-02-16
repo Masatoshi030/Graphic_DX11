@@ -28,6 +28,11 @@ public:
 		Minutes /= 60;
 	};
 
+	float Get_Second_Float()
+	{
+		return (float)Second + ((float)MMSecond / 1000.0f);
+	}
+
 };
 
 namespace Time
