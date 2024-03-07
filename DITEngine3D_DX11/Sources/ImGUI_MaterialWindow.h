@@ -18,6 +18,7 @@ struct MATERIAL_EDITOR
 	float Anisotropic = 0.0f;
 	float ClearCoat = 0.0f;
 	float ClearCoatGloss = 0.0f;
+	float NormalMap_Intensity = 0.0f;
 };
 
 class ImGUI_MaterialWindow : public ImGUIWindowBase

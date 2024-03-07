@@ -123,7 +123,7 @@
     <ClInclude Include="Sources\ImGui\imstb_textedit.h">
       <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ImGUI_DebugWindow.h">
+    <ClInclude Include="Sources\ImGUI_WorldSettingWindow.h">
       <Filter>ソース ファイル\ImGUI\Window</Filter>
     </ClInclude>
     <ClInclude Include="Sources\DirectionalLight.h">
@@ -230,7 +230,7 @@
     <ClCompile Include="Sources\ImGui\imgui_widgets.cpp">
       <Filter>ソース ファイル\ImGUI\ライブラリ</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ImGUI_DebugWindow.cpp">
+    <ClCompile Include="Sources\ImGUI_WorldSettingWindow.cpp">
       <Filter>ソース ファイル\ImGUI\Window</Filter>
     </ClCompile>
     <ClCompile Include="Sources\ImGUIWindowBase.cpp">

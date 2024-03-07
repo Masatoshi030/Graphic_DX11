@@ -92,6 +92,10 @@ struct DISNEY_MATERIAL
 	DirectX::SimpleMath::Vector4 ClearCoat;
 	//クリアコート光沢強度
 	DirectX::SimpleMath::Vector4 ClearCoatGloss;
+	//法線マップの強さ
+	DirectX::SimpleMath::Vector4 NormalMap_Intensity;
+	//テクスチャの有無 0:アルベド 1:ノーマル
+	float TextureEnable[4];
 };
 
 

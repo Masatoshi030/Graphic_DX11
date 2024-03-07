@@ -7,15 +7,22 @@ void Scene_Game::Start()
 	//== 環境画像の設定（ミップレベルごとにロード） ==//
 
 	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_1000x500.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_500x250.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_250x125.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_125x62.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_62x30.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_32x14.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_14x6.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_6x2.jpg");
-	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_3x1.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000_blur_1px.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000_blur_2px.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000_blur_4px.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000_blur_8px.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000_blur_16px.jpg");
+	DITEngine::GetEnvironmentMipMap()->AddTexture("Asset/texture/MapTexture/parking_garage_2000x1000_blur_32px.jpg");
+
+
+	SheetNormalMap = new Texture();
+	SheetNormalMap->Create("Asset/model/SheetNormal.jpg");	
+	
+	RoadNormalMap = new Texture();
+	RoadNormalMap->Create("Asset/model/Asphalt_Normal.png");	
+	
+	TestNoise_MetallicMap = new Texture();
+	TestNoise_MetallicMap->Create("Asset/model/TestNoise.jpg");
 
 	
 	//== シェーダー設定 ==//
@@ -34,9 +41,9 @@ void Scene_Game::Start()
 	//== ImGUI設定 ==//
 
 	//デバッグウィンドウ
-	ig_DebugWindow = new ImGUI_DebugWindow();
-	ig_DebugWindow->SetWindowName("DebugWindow");
-	ImGUIManager::AddWindow(ig_DebugWindow);
+	ig_WorldSettingWindow = new ImGUI_WorldSettingWindow();
+	ig_WorldSettingWindow->SetWindowName("DebugWindow");
+	ImGUIManager::AddWindow(ig_WorldSettingWindow);
 
 	//マテリアルウィンドウ
 	ig_MaterialWindow = new ImGUI_MaterialWindow();
@@ -87,6 +94,11 @@ void Scene_Game::Start()
 	Body->AddComponent<Spring>()->SetStretchMaxMin(0.2f, 0.0f);
 
 	Body->GetComponent<Spring>()->StretchSpeed = 0.0002f;
+
+	//ノーマルマップ有効
+	Body->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Sheet")->Material.Disney_Material.TextureEnable[1] = 1.0f;
+	Body->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Sheet")->Material.NormalMap = SheetNormalMap->GetResource();
+
 	
 	Hierarchy.push_back(Body);
 	
@@ -103,6 +115,9 @@ void Scene_Game::Start()
 	
 	Muffler->AddComponent<MeshRenderer>()->Load("Asset\\model\\CB400SF\\CB400SF_Muffler.obj");
 	
+	Muffler->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Muffler")->Material.Disney_Material.TextureEnable[2] = 1.0f;
+	Muffler->GetComponent<MeshRenderer>()->GetSubset_MaterialName("Muffler")->Material.MetallicMap = TestNoise_MetallicMap->GetResource();
+
 	Muffler->Set_Parent(Body);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Muffler->GetComponent<MeshRenderer>());
@@ -136,7 +151,7 @@ void Scene_Game::Start()
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(SuspensionSpring->GetComponent<MeshRenderer>());
 
 	SuspensionSpring->transform->position = Vector3(0.0f, 1.054f, 1.706f);
-	SuspensionSpring->transform->rotation = Vector3(-0.452f, 0.0f, 0.0f);
+	SuspensionSpring->transform->rotation = Vector3(-0.44f, 0.0f, 0.0f);
 
 	SuspensionSpring->AddComponent<Spring>()->SetStretchMaxMin(0.2f, 0.0f);
 
@@ -184,10 +199,15 @@ void Scene_Game::Start()
 	
 	Sphere->transform->position.x = 4.0f;
 	Sphere->transform->position.y = 1.0f;
+
+	Sphere->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.Disney_Material.TextureEnable[2] = 1.0f;
+	Sphere->GetComponent<MeshRenderer>()->GetSubset_Index(0)->Material.MetallicMap = TestNoise_MetallicMap->GetResource();
+
 	
 	Hierarchy.push_back(Sphere);
 	
 	ig_MaterialWindow->AddMaterialEditor_MeshRenderer(Sphere->GetComponent<MeshRenderer>());
+
 	
 	//== スタジオ（Bypass） ==//
 
@@ -199,6 +219,14 @@ void Scene_Game::Start()
 		MeshRenderer* Studio_Bypass_MeshRenderer = Studio_Bypass[i]->AddComponent<MeshRenderer>();
 		
 		Studio_Bypass_MeshRenderer->Load("Asset\\model\\Studio_Bypass.obj");
+
+		//ノーマルマップ有効
+		Studio_Bypass_MeshRenderer->GetSubset_MaterialName("Road")->Material.Disney_Material.TextureEnable[1] = 1.0f;
+		Studio_Bypass_MeshRenderer->GetSubset_MaterialName("Road")->Material.NormalMap = RoadNormalMap->GetResource();
+
+		Studio_Bypass_MeshRenderer->GetSubset_MaterialName("WalkRoad")->Material.Disney_Material.TextureEnable[1] = 1.0f;
+		Studio_Bypass_MeshRenderer->GetSubset_MaterialName("WalkRoad")->Material.NormalMap = RoadNormalMap->GetResource();
+
 
 		Hierarchy.push_back(Studio_Bypass[i]);
 
@@ -228,13 +256,13 @@ void Scene_Game::Start()
 	uis_buf->SetPixelShader(Shader::GetPixelShader("UI_Base"));
 
 	//デバッグウィンドウの初期化
-	ig_DebugWindow->UI_Position_X_Slider = TestUI->transform->position.x;
-	ig_DebugWindow->UI_Position_Y_Slider = TestUI->transform->position.y;
+	ig_WorldSettingWindow->UI_Position_X_Slider = TestUI->transform->position.x;
+	ig_WorldSettingWindow->UI_Position_Y_Slider = TestUI->transform->position.y;
 
-	ig_DebugWindow->UI_Rotation_Slider = TestUI->transform->rotation.z;
+	ig_WorldSettingWindow->UI_Rotation_Slider = TestUI->transform->rotation.z;
 
-	ig_DebugWindow->UI_Scale_X_Slider = TestUI->transform->scale.x;
-	ig_DebugWindow->UI_Scale_Y_Slider = TestUI->transform->scale.y;
+	ig_WorldSettingWindow->UI_Scale_X_Slider = TestUI->transform->scale.x;
+	ig_WorldSettingWindow->UI_Scale_Y_Slider = TestUI->transform->scale.y;
 
 	Hierarchy.push_back(TestUI);
 
@@ -243,7 +271,7 @@ void Scene_Game::Start()
 	ig_MaterialWindow->Init();
 
 	//デバッグデータ読み込み処理
-	ig_DebugWindow->Init();
+	ig_WorldSettingWindow->Init();
 
 	
 
@@ -262,6 +290,7 @@ void Scene_Game::Update()
 		SCENE_MANAGER->LoadScene(EXIT_NUM_SCENE);
 		return;
 	}
+
 
 	float BikeSpeed = 200.0f;
 
@@ -288,6 +317,48 @@ void Scene_Game::Update()
 		Input::GetGamePad_RightStick().x * 0.0000001f * Time::GetDeltaTime(),
 		0.0f
 	);
+
+	//if (Input::GetKeyState(KEY_INPUT_W) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Translate(0.0f, 0.0f, 0.005f * Time::GetDeltaTime());
+	//}	
+	//
+	//if (Input::GetKeyState(KEY_INPUT_S) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Translate(0.0f, 0.0f, -0.005f * Time::GetDeltaTime());
+	//}
+	//
+	//if (Input::GetKeyState(KEY_INPUT_D) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Translate(0.005f * Time::GetDeltaTime(), 0.0f, 0.0f);
+	//}
+	//
+	//if (Input::GetKeyState(KEY_INPUT_A) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Translate(-0.005f * Time::GetDeltaTime(), 0.0f, 0.0f);
+	//}
+	//
+	//
+	//
+	//if (Input::GetKeyState(KEY_INPUT_UP) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Rotate(-0.0005f * Time::GetDeltaTime(), 0.0f, 0.0f);
+	//}
+	//
+	//if (Input::GetKeyState(KEY_INPUT_DOWN) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Rotate(0.0005f * Time::GetDeltaTime(), 0.0f, 0.0f);
+	//}
+	//
+	//if (Input::GetKeyState(KEY_INPUT_RIGHT) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Rotate(0.0f, 0.001f * Time::GetDeltaTime(), 0.0f);
+	//}
+	//
+	//if (Input::GetKeyState(KEY_INPUT_LEFT) == Input::KEY_WHILE_DOWN)
+	//{
+	//	MainCamera->transform->Rotate(0.0f, -0.001f * Time::GetDeltaTime(), 0.0f);
+	//}
 
 
 
@@ -321,21 +392,21 @@ void Scene_Game::Update()
 	//== デバッグウィンドウの値を設定 ==//
 
 	//FPS表示
-	ig_DebugWindow->FPS = Time::Get_FPS();
+	ig_WorldSettingWindow->FPS = Time::Get_FPS();
 	//時間表示
-	ig_DebugWindow->GameTime = Time::GetWorldTime();
+	ig_WorldSettingWindow->GameTime = Time::GetWorldTime();
 
 
 	//座標
-	TestUI->transform->position.x = ig_DebugWindow->UI_Position_X_Slider;
-	TestUI->transform->position.y = ig_DebugWindow->UI_Position_Y_Slider;
+	TestUI->transform->position.x = ig_WorldSettingWindow->UI_Position_X_Slider;
+	TestUI->transform->position.y = ig_WorldSettingWindow->UI_Position_Y_Slider;
 
 	//回転
-	TestUI->transform->rotation.z = DirectX::XMConvertToRadians(ig_DebugWindow->UI_Rotation_Slider);
+	TestUI->transform->rotation.z = DirectX::XMConvertToRadians(ig_WorldSettingWindow->UI_Rotation_Slider);
 
 	//スケール
-	TestUI->transform->scale.x = ig_DebugWindow->UI_Scale_X_Slider;
-	TestUI->transform->scale.y = ig_DebugWindow->UI_Scale_Y_Slider;
+	TestUI->transform->scale.x = ig_WorldSettingWindow->UI_Scale_X_Slider;
+	TestUI->transform->scale.y = ig_WorldSettingWindow->UI_Scale_Y_Slider;
 
 	//FrontFender->transform->position = ig_DebugWindow->CubePosition;
 	//FrontFender->transform->rotation = ig_DebugWindow->CubeRotation;
@@ -345,10 +416,10 @@ void Scene_Game::Update()
 	//DirectionalLight
 	DirectionalLight* DirLight_buf = DirectionalLight_Obj->GetComponent<DirectionalLight>();
 
-	DirLight_buf->SetLightColor(ig_DebugWindow->Light_Diffuse);
-	DirLight_buf->SetAmbient(ig_DebugWindow->Light_Ambient);
-	DirLight_buf->SetDirection(ig_DebugWindow->Light_Direction);
-	DirLight_buf->SetIntensity(ig_DebugWindow->Light_Intensity);
+	DirLight_buf->SetLightColor(ig_WorldSettingWindow->Light_Diffuse);
+	DirLight_buf->SetAmbient(ig_WorldSettingWindow->Light_Ambient);
+	DirLight_buf->SetDirection(ig_WorldSettingWindow->Light_Direction);
+	DirLight_buf->SetIntensity(ig_WorldSettingWindow->Light_Intensity);
 
 
 	//== バイブレーションテスト ==//
@@ -387,9 +458,9 @@ void Scene_Game::Draw()
 		0.0f
 	);
 
-	eye_info.DistanceFog_Color = ig_DebugWindow->DistanceFog_Color.simpleMath_vector4;
+	eye_info.DistanceFog_Color = ig_WorldSettingWindow->DistanceFog_Color.simpleMath_vector4;
 
-	eye_info.DistanceFog_Distance.x = ig_DebugWindow->DistanceFog_Distance;
+	eye_info.DistanceFog_Distance.x = ig_WorldSettingWindow->DistanceFog_Distance;
 
 	D3D->SetEyeInfo(eye_info);
 
@@ -399,4 +470,12 @@ void Scene_Game::Draw()
 	{
 		e->Draw();
 	}
+}
+
+void Scene_Game::Release()
+{
+	//テクスチャ解放
+	delete SheetNormalMap;
+	delete RoadNormalMap;
+	delete TestNoise_MetallicMap;
 }

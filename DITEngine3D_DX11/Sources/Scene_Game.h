@@ -2,7 +2,9 @@
 
 #include "Scene.h"
 
-#include "ImGUI_DebugWindow.h"
+#include "Texture.h"
+
+#include "ImGUI_WorldSettingWindow.h"
 #include "ImGUI_MaterialWindow.h"
 #include "ImGUI_DisneyMaterialEditWindow.h"
 
@@ -30,8 +32,12 @@ private:
 
 	GameObject* SuspensionSpring;
 
+	Texture* SheetNormalMap;
+	Texture* RoadNormalMap;
+	Texture* TestNoise_MetallicMap;
+
 	//ImGUIWindow
-	ImGUI_DebugWindow* ig_DebugWindow;
+	ImGUI_WorldSettingWindow* ig_WorldSettingWindow;
 	ImGUI_MaterialWindow* ig_MaterialWindow;
 
 public:
@@ -39,4 +45,5 @@ public:
 	void Start();
 	void Update();
 	void Draw();
+	void Release();
 };

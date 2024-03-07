@@ -142,7 +142,7 @@
     <ClInclude Include="Sources\IniFileManager.h" />
     <ClInclude Include="Sources\DirectionalLight.h" />
     <ClInclude Include="Sources\DITEngineSystem.h" />
-    <ClInclude Include="Sources\ImGUI_DebugWindow.h" />
+    <ClInclude Include="Sources\ImGUI_WorldSettingWindow.h" />
     <ClInclude Include="Sources\ImGUIManager.h" />
     <ClInclude Include="Sources\ImGUIWindowBase.h" />
     <ClInclude Include="Sources\ImGui\imconfig.h" />
@@ -182,7 +182,7 @@
     <ClCompile Include="Sources\ImGUI_DisneyMaterialEditWindow.cpp" />
     <ClCompile Include="Sources\IniFileManager.cpp" />
     <ClCompile Include="Sources\DirectionalLight.cpp" />
-    <ClCompile Include="Sources\ImGUI_DebugWindow.cpp" />
+    <ClCompile Include="Sources\ImGUI_WorldSettingWindow.cpp" />
     <ClCompile Include="Sources\ImGUIManager.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />

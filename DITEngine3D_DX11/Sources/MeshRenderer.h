@@ -23,6 +23,8 @@ struct MODEL_MATERIAL
 	ID3D11InputLayout*			InputLayout;
 	ID3D11PixelShader*			PixelShader;
 	ID3D11ShaderResourceView*	Texture;
+	ID3D11ShaderResourceView*	NormalMap;
+	ID3D11ShaderResourceView*	MetallicMap;
 };
 
 

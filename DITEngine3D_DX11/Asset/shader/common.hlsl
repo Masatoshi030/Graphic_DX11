@@ -32,6 +32,10 @@ struct DISNEY_MATERIAL
     float4 ClearCoat;
     //クリアコート光沢強度
     float4 ClearCoatGloss;
+    //法線マップの強さ
+    float4 NormalMap_Intensity;
+    //テクスチャ有無
+    float4 TextureEnable;   
 };
 
 cbuffer CB_Disney_Material : register(b3)

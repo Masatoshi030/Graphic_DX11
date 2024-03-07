@@ -259,7 +259,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/Users/masat/Desktop/自作エンジン/素材/CB400SF_SpeedMeter.png
+map_Kd CB400SF_SpeedMeter.png
 
 newmtl Suspension
 Ns 821.749695
@@ -289,7 +289,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/Users/masat/Desktop/自作エンジン/素材/CB400SF_TachoMeter.png
+map_Kd CB400SF_TachoMeter.png
 
 newmtl Tank
 Ns 892.059265

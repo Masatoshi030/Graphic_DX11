@@ -23,6 +23,7 @@ void ImGUI_MaterialWindow::Init()
 		e.Anisotropic = FileLoader::IniLoad_Float(e.materialName, "Anisotropic", "MaterialData");
 		e.ClearCoat = FileLoader::IniLoad_Float(e.materialName, "ClearCoat", "MaterialData");
 		e.ClearCoatGloss = FileLoader::IniLoad_Float(e.materialName, "ClearCoatGloss", "MaterialData");
+		e.NormalMap_Intensity = FileLoader::IniLoad_Float(e.materialName, "NormalMap_Intensity", "MaterialData");
 	}
 
 
@@ -38,6 +39,7 @@ void ImGUI_MaterialWindow::Init()
 			f->Anisotropic.x = e.Anisotropic;
 			f->ClearCoat.x = e.ClearCoat;
 			f->ClearCoatGloss.x = e.ClearCoatGloss;
+			f->NormalMap_Intensity.x = e.NormalMap_Intensity;
 		}
 	}
 }
@@ -75,6 +77,9 @@ void ImGUI_MaterialWindow::Draw_ItemSetting()
 
 			ImGui::Text("ClearCoatGloss");
 			ImGui::SliderFloat("ClearCoatGloss", &e.ClearCoatGloss, 0.01f, 1.0f);
+						
+			ImGui::Text("NormalMap_Intensity");
+			ImGui::SliderFloat("NormalMap_Intensity", &e.NormalMap_Intensity, 0.00f, 10.0f);
 
 			for (auto& f : e.SameMaterialList)
 			{
@@ -85,6 +90,7 @@ void ImGUI_MaterialWindow::Draw_ItemSetting()
 				f->Anisotropic.x = e.Anisotropic;
 				f->ClearCoat.x = e.ClearCoat;
 				f->ClearCoatGloss.x = e.ClearCoatGloss;
+				f->NormalMap_Intensity.x = e.NormalMap_Intensity;
 			}
 
 			ImGui::TreePop();
@@ -95,7 +101,7 @@ void ImGUI_MaterialWindow::Draw_ItemSetting()
 void ImGUI_MaterialWindow::AddMaterialEditor_MeshRenderer(MeshRenderer* _meshRenderer)
 {
 
-	for (int i = 0; i < _meshRenderer->GetModel()->SubsetNum; i++)
+	for (unsigned int i = 0; i < _meshRenderer->GetModel()->SubsetNum; i++)
 	{
 		AddMaterialEditor(
 			_meshRenderer->GetSubset_Index(i)->Material.Name,
@@ -161,5 +167,6 @@ ImGUI_MaterialWindow::~ImGUI_MaterialWindow()
 		FileLoader::IniWrite(e.materialName, "Anisotropic", e.Anisotropic, "MaterialData");
 		FileLoader::IniWrite(e.materialName, "ClearCoat", e.ClearCoat, "MaterialData");
 		FileLoader::IniWrite(e.materialName, "ClearCoatGloss", e.ClearCoatGloss, "MaterialData");
+		FileLoader::IniWrite(e.materialName, "NormalMap_Intensity", e.NormalMap_Intensity, "MaterialData");
 	}
 }

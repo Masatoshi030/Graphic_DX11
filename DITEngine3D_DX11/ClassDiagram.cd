@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ImGUI_DebugWindow" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAOAgCAAQAEIBAAQEAAAAAAYAAACAAEAAAA=</HashCode>
+      <FileName>Sources\ImGUI_DebugWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImGUI_DisneyMaterialEditWindow" Collapsed="true">
+    <Position X="7.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACACAAAAAAAAAAAAACAAAAAAAAAACIAAAAAA=</HashCode>
+      <FileName>Sources\ImGUI_DisneyMaterialEditWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectionalLight" Collapsed="true">
+    <Position X="14.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAQAoAAAAAAAAAAAAIAAAAAAACGABAAAAA=</HashCode>
+      <FileName>Sources\DirectionalLight.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImGUIManager" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAQAAAAAAAAAAAAACAEAAAAA=</HashCode>
+      <FileName>Sources\ImGUIManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImGUIWindowBase" Collapsed="true">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQACACAAAAAgIAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Sources\ImGUIWindowBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImGUI_MaterialWindow" Collapsed="true">
+    <Position X="5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAACACAAAAAIAAAAAAAAAAAgAAAAAACgAAAAAA=</HashCode>
+      <FileName>Sources\ImGUI_MaterialWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MipMap" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAQAAAQAAAAAAAgAAQAABAAAAA=</HashCode>
+      <FileName>Sources\MipMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UISpriteRenderer" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAACAAAhAAAAAAAAAgACCAAIAAEAACABAAEBA=</HashCode>
+      <FileName>Sources\UISpriteRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application" Collapsed="true">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAgAAAABACAAEAAAEQoAAAAAACAAAAQAIAYAAAAgI=</HashCode>
+      <FileName>Sources\Application.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Camera" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgAAACAAAiAAAAAAAgAAAAAAAAAAAAICABAAAAA=</HashCode>
+      <FileName>Sources\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Component" Collapsed="true">
+    <Position X="8.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAACAAAgAAAAAACAAAAAAAAAAAAgBCABAAAAA=</HashCode>
+      <FileName>Sources\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DIRECT3D11" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>cNAAMQABEAEEQxwkAwAABAAAAQEDBpKBwBCCmRYkAwA=</HashCode>
+      <FileName>Sources\Direct3D11.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAACAAACAIAgBBAIAARAAAAAAEAAAABAAEAAIAAAA=</HashCode>
+      <FileName>Sources\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PointLight" Collapsed="true">
+    <Position X="12" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAQAgAAAAAAAAAAAAAQAAABAAACABEAAAA=</HashCode>
+      <FileName>Sources\Light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshRenderer" Collapsed="true">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAiAAAAACAAgAAAAAIgAAAAAABACAACAgAABAAAAA=</HashCode>
+      <FileName>Sources\MeshRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="5.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAgAAgAAAAAAAQAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Sources\Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene_Game" Collapsed="true">
+    <Position X="5.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAACCAAgABgAcBAAABAAAAAIIABBAgAAAAAAA=</HashCode>
+      <FileName>Sources\Scene_Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector4" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAQAAAQAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Sources\SystemFormat.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector3" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAQAAAQAAAAAAAACgAAAAAAI=</HashCode>
+      <FileName>Sources\SystemFormat.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector2" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAEQAAAQAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Sources\SystemFormat.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="2.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAgAQAQAAAAABAAAAAAEAAAAIAWkAAAAA=</HashCode>
+      <FileName>Sources\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderTarget" Collapsed="true">
+    <Position X="2.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAIAQAAAAAAAAAAEAAAAAAAgBACAI=</HashCode>
+      <FileName>Sources\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TIME" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAIAAQAAQAIAEAAAAAAAAAA=</HashCode>
+      <FileName>Sources\Time.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Transform" Collapsed="true">
+    <Position X="9.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACAAAAAQAAAACAIAECEAAAAAAAAAAGAAAAAAA=</HashCode>
+      <FileName>Sources\Transform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SCENE_MANAGERSYSTEM" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAARABAAAAAAAAAAQAACAAAAEAAAAAAQAAEAAAEAAA=</HashCode>
+      <FileName>Sources\SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Yu Gothic UI" Size="9" />
+</ClassDiagram>

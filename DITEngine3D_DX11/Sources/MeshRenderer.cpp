@@ -51,6 +51,18 @@ void MeshRenderer::Draw()
 		if (Model->SubsetArray[i].Material.Texture)
 		{
 			D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(1, 1, &Model->SubsetArray[i].Material.Texture);
+		}		
+		
+		//ノーマルマップ
+		if (Model->SubsetArray[i].Material.Disney_Material.TextureEnable[1] == 1.0f)
+		{
+			D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(2, 1, &Model->SubsetArray[i].Material.NormalMap);
+		}		
+		
+		//ノーマルマップ
+		if (Model->SubsetArray[i].Material.Disney_Material.TextureEnable[2] == 1.0f)
+		{
+			D3D->Get_ID3D11DeviceContext()->PSSetShaderResources(3, 1, &Model->SubsetArray[i].Material.MetallicMap);
 		}
 
 
@@ -209,6 +221,14 @@ void MeshRenderer::LoadModel(const char* _FileName, MODEL* Model)
 				nullptr,
 				&Model->SubsetArray[i].Material.Texture);
 
+			if (Model->SubsetArray[i].Material.Texture != nullptr)
+			{
+				Model->SubsetArray[i].Material.Disney_Material.TextureEnable[0] = 1.0f;
+			}
+			else
+			{
+				Model->SubsetArray[i].Material.Disney_Material.TextureEnable[0] = 0.0f;
+			}
 		}
 	}
 
